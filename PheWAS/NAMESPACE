@@ -1,0 +1,2 @@
+export(phewas, mapICD9toPheWAS, mapPheWAStoExclusions, createPhewasTable, phenotypePlot, phewasManhattan, phenotypeManhattan, shiny, generateExample, addPhewasDescription, phewasMeta, phewasMetaModels)
+import(plyr, ggplot2)
