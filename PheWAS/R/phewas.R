@@ -21,6 +21,8 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
     cov=covariates
     adjustment=adjustments
     id=intersect(names(phenotypes),names(genotypes))
+    if(length(id)==0) {stop("There is no shared column to merge phenotypes and genotypes!")}
+    message(paste("Merging data using these shared columns: ",id))
     phenotypes=names(phenotypes)
     phenotypes=phenotypes[!(phenotypes %in% id)]
     genotypes=names(genotypes)
@@ -28,11 +30,13 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
     data=merge(phe,gen,by=id)
     if(!is.null(names(covariates)[-1])) {
       covariates=names(covariates)
+      if(sum(id %in% covariates)!=length(id)){stop(paste("The shared ID column(s) do not all exist in covariates: ",id))}
       covariates=covariates[!(covariates %in% id)]
       data=merge(data,cov,by=id)
     }
     if(!is.null(names(adjustments)[-1])) {
       adjustments=names(adjustments)
+      if(sum(id %in% adjustments)!=length(id)){stop(paste("The shared ID column(s) do not all exist in adjustments: ",id))}
       adjustments=as.list(c(NA,adjustments[!(adjustments %in% id)]))
       data=merge(data,adjustment,by=id)
     }

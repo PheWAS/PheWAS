@@ -1,0 +1,3 @@
+restrictPhewasByGender <- function(phenotypes,gender) {
+  
+}

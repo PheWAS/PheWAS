@@ -180,7 +180,9 @@ phenotypePlot <-
         scale_size("Size", range = c(point.size, 2*point.size)))
     }
     if(direction){
-      plot=plot+aes(shape = factor(direction)) + scale_shape("Direction", solid = TRUE)
+      plot=plot+aes(shape = factor(direction), fill=color) + 
+        scale_shape("Direction", solid = TRUE) + scale_shape_manual(values=c(25,24)) + 
+        scale_fill_manual(values= color.palette, guide="none") 
     }		
     #If annotation present, start the definitions, otherwise skip it
     if (annotate) 	{
