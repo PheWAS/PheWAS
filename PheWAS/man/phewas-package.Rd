@@ -12,8 +12,8 @@ This package provides the tools necessary to perform a PheWAS analysis.
 \tabular{ll}{
 Package: \tab PheWAS\cr
 Type: \tab Package\cr
-Version: \tab 0.9.3.1\cr
-Date: \tab 2014-04-09\cr
+Version: \tab 0.9.4\cr
+Date: \tab 2014-07-15\cr
 License: \tab GPL3\cr
 }
 With the package installed, the command \code{vignette("PheWAS-package")} will display the vignette

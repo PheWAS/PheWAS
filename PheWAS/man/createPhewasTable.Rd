@@ -8,7 +8,7 @@ This function takes a data frame with three columns: id, icd9 codes, and counts.
 }
 \usage{
 createPhewasTable(id.icd9.count, min.code.count = 2, add.exclusions = T,
-  translate = T, aggregate.fun = sum, fast = T)
+  translate = T, aggregate.fun = sum, fast = T, id.gender)
 }
 
 \arguments{
@@ -29,6 +29,9 @@ Aggregate function for duplicated ICD9 or phewas codes in an individual.
 }
   \item{fast}{
 Uses the SparseM package to greatly improve speeds. Default is TRUE. Can be disabled if SparseM is not available.
+}
+  \item{id.gender}{
+If supplied, restrict the phenotypes by gender. This should be a data frame with the first column being the id and the second the gender, "M" or "F", of the individual. Individuals with any other specification will have all gender specific phenotypes set to NA.
 }
 }
 \details{

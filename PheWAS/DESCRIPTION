@@ -1,11 +1,11 @@
 Package: PheWAS
 Type: Package
 Title: Phenome Wide Association Studies (PheWAS)
-Version: 0.9.3.1
-Date: 2014-04-09
+Version: 0.9.4
+Date: 2014-07-15
 Author: Robert Carroll, Josh Denny, Lisa Bastarache
 Maintainer: Robert Carroll <Robert.J.Carroll@Vanderbilt.edu>
-URL: http://www.ncbi.nlm.nih.gov/pubmed/20335276
+URL: http://www.ncbi.nlm.nih.gov/pubmed/24733291
 Description: This package contains methods to perform Phenome Wide Association 
  Studies (PheWAS). These methods include the conversion of ICD9 codes to PheWAS
  codes, exclusion status, statistical analysis, and plotting.

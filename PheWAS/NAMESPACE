@@ -1,2 +1,2 @@
-export(phewas, mapICD9toPheWAS, mapPheWAStoExclusions, createPhewasTable, phenotypePlot, phewasManhattan, phenotypeManhattan, shiny, generateExample, addPhewasDescription, phewasMeta, phewasMetaModels)
+export(phewas, mapICD9toPheWAS, mapPheWAStoExclusions, createPhewasTable, phenotypePlot, phewasManhattan, phenotypeManhattan, shiny, generateExample, addPhewasDescription, phewasMeta, phewasMetaModels, restrictPhewasByGender, gender_restriction)
 import(plyr, ggplot2)

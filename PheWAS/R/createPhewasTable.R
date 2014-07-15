@@ -1,5 +1,5 @@
 createPhewasTable <-
-  function(id.icd9.count, min.code.count=2, add.exclusions=T, translate=T, aggregate.fun=sum, fast=T)
+  function(id.icd9.count, min.code.count=2, add.exclusions=T, translate=T, aggregate.fun=sum, fast=T, id.gender)
   {
 
     if(fast) {
@@ -58,6 +58,10 @@ createPhewasTable <-
     }
     
     
+    }
+    #If there are gender restrictions, set them to NA
+    if(!missing(id.gender)) {
+      phens=restrictPhewasByGender(phens,id.gender)
     }
     phens
   }
