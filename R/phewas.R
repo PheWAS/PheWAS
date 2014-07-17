@@ -65,7 +65,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   n.tests=length(successful.phenotypes)
   successful.phenotypes=unique(successful.phenotypes)
   successful.genotypes=unique(na.omit(sapply(result,function(x){attributes(x)$successful.genotype})))
-  sig=rbind.fill(result)
+  sig=rbind_all(result)
   
   
   #Add significance thresholds

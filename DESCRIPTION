@@ -10,6 +10,6 @@ Description: This package contains methods to perform Phenome Wide Association
  Studies (PheWAS). These methods include the conversion of ICD9 codes to PheWAS
  codes, exclusion status, statistical analysis, and plotting.
 License: GPL-3
-Depends: plyr, ggplot2 (>= 0.9.3)
+Depends: dplyr, ggplot2 (>= 0.9.3)
 Suggests: MASS, snowfall, shiny, SparseM, meta
 LazyData: yes

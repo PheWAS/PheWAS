@@ -1,19 +1,18 @@
-\name{gender_restriction}
-\alias{gender_restriction}
+\name{pheinfo}
+\alias{pheinfo}
 \docType{data}
 \title{
-Data frame containing potential gender-restricted phewas codes.
+Data frame containing phewas code information.
 }
 \description{
-Some phewas codes are only typical for one gender or the other; this data frame describes those restrictions.
+This data frame contains the description for every phewas code.
 }
 \usage{data(pheinfo)}
 \format{
-  A data frame with 1898 observations on the following 3 variables.
+  A data frame with 1845 observations on the following 2 variables.
   \describe{
-    \item{\code{phewas_code}}{The PheWAS code}
-    \item{\code{male_only}}{Logical value for a male-only analysis}
-    \item{\code{female_only}}{Logical value for a male-only analysis}
+    \item{\code{phewas_code}}{a character vector}
+    \item{\code{phewas_description}}{a character vector}
   }
 }
 \source{

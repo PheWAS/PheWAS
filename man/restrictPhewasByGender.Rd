@@ -17,8 +17,6 @@ restrictPhewasByGender(phenotypes,id.gender)
   A data frame with the first column being the id and the second the gender, "M" or "F", of the individual. Individuals with any other specification will have all gender specific phenotypes set to NA.
 }
 }
-\details{
-}
 \value{
 The \code{phenotypes} data frame with NA values for individuals that do not match the gender for gender-specific codes.
 }
