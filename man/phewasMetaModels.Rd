@@ -51,7 +51,7 @@ results.2$study="250.2"
 #Join the two sets of PheWAS results
 results=rbind(results.1,results.2)
 #Perform the meta analysis, and do not assume fixed effects.
-results.meta=phewasMetaModels(results, fixed=FALSE, keep.both=FALSE)
+results.meta=phewasMetaModels(results)
 results.meta$`250.2 rsEXAMPLE NA`
 }
 \keyword{ htest }

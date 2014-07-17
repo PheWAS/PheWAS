@@ -22,15 +22,15 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F, my.data, 
   n_no_snp=sum(is.na(d[,gen]))
   d=d[!is.na(d[,gen]),]
   n_total=dim(d)[1]
-  n_cases=NA
-  n_controls=NA
-  allele_freq=NA
-  HWE_pval=NA
-  or=NA
-  se=NA
-  p=NA
-  beta=NA
-  type=NA
+  n_cases=NA_integer_
+  n_controls=NA_integer_
+  allele_freq=NA_real_
+  HWE_pval=NA_real_
+  or=NA_real_
+  se=NA_real_
+  p=NA_real_
+  beta=NA_real_
+  type=NA_character_
   note=""
   model=NA
   if(length(unique(na.omit(d[,phe])))<=1 | length(unique(na.omit(d[,gen]))) <=1) {
