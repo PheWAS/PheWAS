@@ -4,7 +4,7 @@
 Perform meta-analysis of PheWAS results
 }
 \description{
-This function wraps the \code{\link[meta:metagen]{meta package's metagen}} function to meta analyze \code{phewas} results.
+This function wraps the meta package's \code{\link[meta]{metagen}} function to meta analyze \code{phewas} results.
 }
 \usage{
 phewasMeta(results, fixed=T, keep.both=T, ...)
