@@ -11,7 +11,8 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F, my.data, 
   #Subset the data
   d=data[,na.omit(unlist(c(gen,phe,covariates,adjustment)))]
   #Turn adjustment into a string, if not NA
-  if(!is.na(adjustment[1])) adjustment=paste(adjustment,collapse=",")
+  if(!is.na(adjustment[1])) {adjustment=paste(adjustment,collapse=",")}
+  else {adjustment=NA_character_} #Make sure it is a character NA for aggregation
   #Alter phe_o if necessary for the regression formula
   if(suppressWarnings(!is.na(as.numeric(phe_o)))) {
     phe=paste0("pheno_",phe_o)
