@@ -1,5 +1,5 @@
 addPhewasDescription <- function(data, keep.unmatched.rows=F,for.plots=F) {
-  if(class(data) %in% c("character", "factor")) {data=data.frame(phenotype=data,stringsAsFactors=F)}
+  if(class(data)[1] %in% c("character", "factor")) {data=data.frame(phenotype=data,stringsAsFactors=F)}
   names=names(data)
   first_match=grep("pheno|phewas",names,ignore.case=T)[1]
   if(is.na(first_match)) {
@@ -8,8 +8,8 @@ addPhewasDescription <- function(data, keep.unmatched.rows=F,for.plots=F) {
   } else {
     name=names[first_match]
   }
-  if(class(data[,name])!="character") {
-    if(class(data[,name])=="factor") {
+  if(class(getElement(data,name))!="character") {
+    if(class(getElement(data,name))=="factor") {
       warning("Factor phenotype input mapped to characters")
       data[,name]=as.character(data[,name])
     } else {

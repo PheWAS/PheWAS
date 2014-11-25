@@ -27,7 +27,7 @@ plink --recodeA --bfile example\_data --extract interesting\_snps\\
 This will recode the binary plink data "example\_data", extracting the SNPs under investigation to the file "r\_genotypes.raw". This raw data can be loaded into R with a single command\footnote{See \url{http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml#recode} for details}:\\
 \code{genotypes=read.table("r\_genotypes.raw",header=TRUE)}\\
 Alternatively, assuming IIDs are unique, the following will load the data ready to be put into \code{phewas}.\\
-\code{> genotypes=read.table("r\_genotypes.raw",header=TRUE)[,c(-1,-3:-6)]\\> names(geno)[1]="id"}
+\code{> genotypes=read.table("r\_genotypes.raw",header=TRUE)[,c(-1,-3:-6)]\\> names(genotypes)[1]="id"}
 
 \subsection{Data from file}
 R has robust methods for loading data from files\footnote{See \code{?read.table} in R for the read methods discussed here.}. For this section we will consider an example where the user may have exported their chart review data into a csv from a spreadsheet software.\\
