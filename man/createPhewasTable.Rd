@@ -27,9 +27,6 @@ Should the input ICD-9 codes be translated to phewas codes?
   \item{aggregate.fun}{
 Aggregate function for duplicated ICD9 or phewas codes in an individual.
 }
-  \item{fast}{
-Uses the SparseM package to greatly improve speeds. Default is TRUE. Can be disabled if SparseM is not available.
-}
   \item{id.gender}{
 If supplied, restrict the phenotypes by gender. This should be a data frame with the first column being the id and the second the gender, "M" or "F", of the individual. Individuals with any other specification will have all gender specific phenotypes set to NA.
 }
@@ -38,8 +35,6 @@ If supplied, restrict the phenotypes by gender. This should be a data frame with
 By default, this function returns a wide format data frame with boolean phenotypes suitable for PheWAS analysis. Specifying a \code{min.code.count=NA} will permit continuous code count phenotypes.
 
 The default exclusions can be skipped with \code{add.exclusions=F}. In conjuntion with \code{translate=F} (and optionally adjusting \code{min.code.count} and \code{aggregate.fun}), one can use this function as a simple reshaping wrapper.
-
-\code{fast} improves speed by using alternate methods to the native R \code{reshape} function, but requires SparseM. For large data sets, this can improve performance by an order of magnitude.
 }
 \value{
 A data frame. The first column, named "id", contains the supplied id for each individual. The following columns are all present phewas codes. They contain T/F/NA for case/control/exclude or continuous/NA if min.code.count was NA.
@@ -57,7 +52,7 @@ ex=generateExample(n=500,hit="335")
 #Extract the icd9 data
 id.icd9.count=ex$id.icd9.count
 #Create the PheWAS code table
-phenotypes=createPhewasTable(id.icd9.count,fast=TRUE)
+phenotypes=createPhewasTable(id.icd9.count)
 phenotypes[1:10,1:10]
 }
 \keyword{ utilities }

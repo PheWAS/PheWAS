@@ -6,9 +6,9 @@ mapPheWAStoExclusions <-
     else {
       input = data.frame(id=ids, exclusion_criteria=phewas.codes)
     }
-    output = merge(input,phewas_exclude)
+    output = inner_join(input,phewas_exclude,by="exclusion_criteria")
     output = output[,!(names(output)=="exclusion_criteria")]
-    names(output)[names(output)=="code"]="exclusion"
+    names(output)[names(output)=="code"]="phe"
     output=unique(output)
     output
   }
