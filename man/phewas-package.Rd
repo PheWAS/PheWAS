@@ -12,8 +12,8 @@ This package provides the tools necessary to perform a PheWAS analysis.
 \tabular{ll}{
 Package: \tab PheWAS\cr
 Type: \tab Package\cr
-Version: \tab 0.9.4.1\cr
-Date: \tab 2014-11-25\cr
+Version: \tab 0.9.5\cr
+Date: \tab 2014-12-05\cr
 License: \tab GPL3\cr
 }
 With the package installed, the command \code{vignette("PheWAS-package")} will display the vignette
@@ -68,7 +68,7 @@ id.icd9.count=ex$id.icd9.count
 genotypes=ex$genotypes
 #Create the PheWAS code table- translates the icd9s, adds 
 #exclusions, and reshapes to a wide format
-phenotypes=createPhewasTable(id.icd9.count,fast=TRUE)
+phenotypes=createPhewasTable(id.icd9.count)
 #Run the PheWAS
 results=phewas(phenotypes,genotypes,cores=1,
   significance.threshold=c("bonferroni"))
