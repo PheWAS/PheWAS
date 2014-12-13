@@ -16,7 +16,7 @@ plotServer <-function(results) { function(input, output) {
   alpha <- reactive({
     as.numeric(input$alpha)
   })
-  a.corrected <- reactive({
+  a_corrected <- reactive({
     if(input$mtcor=="Alpha") {
       return(as.numeric(input$alpha))
     }
