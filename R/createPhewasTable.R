@@ -27,7 +27,7 @@ createPhewasTable <-
     }
     
     #If there is request for a min code count, adjust counts to NA if needed
-    if(!is.na(min.code.count)) {
+    if(!is.na(min.code.count)&(max(!is.na(phecode$count)&phecode$count<min.code.count))) {
       phecode[!is.na(phecode$count)&phecode$count<min.code.count,]$count=NA
     } 
     
