@@ -22,30 +22,23 @@ createPhewasTable <-
     if(add.exclusions) {
       message("Mapping exclusions...")
       exclusions=mapPheWAStoExclusions(phecode$phe,phecode$id)
-      exclusions$count=NA
+      exclusions$count=-1
       phecode=rbind(phecode,exclusions)
     }
     
-    #If there is request for a min code count, adjust counts to NA if needed
+    #If there is request for a min code count, adjust counts to -1 if needed
     if(!is.na(min.code.count)&(max(!is.na(phecode$count)&phecode$count<min.code.count))) {
-      phecode[!is.na(phecode$count)&phecode$count<min.code.count,]$count=NA
+      phecode[!is.na(phecode$count)&phecode$count<min.code.count,]$count=-1
     } 
     
-    
-    message("Coalescing exclusions and min.code.count as applicable...")
-    coalesce=function(count) {
-      no.na=na.omit(count)
-      ret=NA_integer_
-      if(length(no.na)>0) {ret=max(no.na)}
-      ret
+    if(!is.na(min.code.count)|add.exclusions) {
+      message("Coalescing exclusions and min.code.count as applicable...")
+      phecode=ungroup(summarize(group_by(phecode,id,phe),count=max(count)))
     }
-    phecode=ungroup(summarize(group_by(phecode,id,phe),count=coalesce(count)))
     
     
-    
-    #For min.code.count, turn into a binary outcome
+    #For min.code.count, use logical fill
     if(!is.na(min.code.count)) { 
-      phecode$count=phecode$count>0
       fill=FALSE
     } else {
       #Fill for no min.code.count
@@ -54,6 +47,11 @@ createPhewasTable <-
 
     message("Reshaping data...")
     phens=spread(phecode,phe,count,fill=fill)
+    
+    #Set exclusions to NA
+    phens[phens==-1]=NA
+    #Change to logical if there is a min code count
+    if(!is.na(min.code.count)) {phens[,-1]=phens[,-1]>0}
 
 
     #If there are gender restrictions, set them to NA
