@@ -35,7 +35,9 @@ createPhewasTable <-
     message("Coalescing exclusions and min.code.count as applicable...")
     coalesce=function(count) {
       no.na=na.omit(count)
-      ifelse(length(no.na)>0,max(no.na),NA)
+      ret=NA_integer_
+      if(length(no.na)>0) {ret=max(no.na)}
+      ret
     }
     phecode=ungroup(summarize(group_by(phecode,id,phe),count=coalesce(count)))
     
