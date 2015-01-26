@@ -11,7 +11,7 @@ createPhewasTable <-
       names(id.icd9.count)=c("id","icd9","count")
       message("Mapping ICD-9 codes to PheWAS codes...")
       phemapped=mapICD9toPheWAS(id.icd9.count)
-      phemapped=data.frame(id=phemapped[,"id"],phe=phemapped[,"phewas_code"],count=phemapped[,"count"])
+      phemapped=phemapped %>% mutate(phe=phewas_code) %>% select(id,phe,count)   
     }
     
     message("Aggregating PheWAS codes...")
