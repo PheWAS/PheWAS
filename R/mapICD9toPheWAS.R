@@ -16,7 +16,7 @@ function(..., icd9s, add.info=F, keep.icd9=F) {
     output=inner_join(output,pheinfo,by="phewas_code")
   }
   if(!keep.icd9) {
-    output=subset(output, select = -icd9)
+    output=output %>% select(-icd9)
   }
   output
 }
