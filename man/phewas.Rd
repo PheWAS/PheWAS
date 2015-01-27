@@ -99,7 +99,7 @@ ex=generateExample(hit="335")
 id.icd9.count=ex$id.icd9.count
 genotypes=ex$genotypes
 #Create the PheWAS code table- translates the icd9s, adds exclusions, and reshapes to a wide format
-phenotypes=createPhewasTable(id.icd9.count,fast=TRUE)
+phenotypes=createPhewasTable(id.icd9.count)
 #Run the PheWAS
 results=phewas(phenotypes,genotypes,cores=4,significance.threshold=c("bonferroni"))
 }
