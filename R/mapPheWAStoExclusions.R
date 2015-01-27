@@ -7,9 +7,6 @@ mapPheWAStoExclusions <-
       input = data.frame(id=ids, exclusion_criteria=phewas.codes)
     }
     output = inner_join(input,phewas_exclude,by="exclusion_criteria")
-    output = output %>% select(-exclusion_criteria) %>% 
-      transmute(phe=code) %>% 
-      select(id,exclusion) %>% 
-      distinct()
+    output = output %>% transmute(id,exclusion=code) %>% distinct()
     output
   }
