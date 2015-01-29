@@ -21,8 +21,9 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F, my.data, 
   #Exclude the exclusions for the target phenotype
   d=d[!is.na(d[,phe]),]
   n_no_snp=sum(is.na(d[,gen]))
-  d=d[!is.na(d[,gen]),]
-  n_total=dim(d)[1]
+  #Exclude rows with missing data
+  d=na.omit(d)
+  n_total=nrow(d)
   n_cases=NA_integer_
   n_controls=NA_integer_
   allele_freq=NA_real_
@@ -34,7 +35,9 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F, my.data, 
   type=NA_character_
   note=""
   model=NA
-  if(length(unique(na.omit(d[,phe])))<=1 | length(unique(na.omit(d[,gen]))) <=1) {
+  if(n_total<min.records) {
+    note=paste(note,"[Error: <",min.records," complete records]")
+  } else if(length(unique(na.omit(d[,phe])))<=1 | length(unique(na.omit(d[,gen]))) <=1) {
     note=paste(note,"[Error: non-varying phenotype or genotype]")
   } else {
     if(additive.genotypes) {

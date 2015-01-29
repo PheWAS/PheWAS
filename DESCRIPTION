@@ -1,8 +1,8 @@
 Package: PheWAS
 Type: Package
 Title: Phenome Wide Association Studies (PheWAS)
-Version: 0.9.5.1
-Date: 2015-01-27
+Version: 0.9.5.1-1
+Date: 2015-01-29
 Author: Robert Carroll, Josh Denny, Lisa Bastarache
 Maintainer: Robert Carroll <Robert.J.Carroll@Vanderbilt.edu>
 URL: http://www.ncbi.nlm.nih.gov/pubmed/24733291
