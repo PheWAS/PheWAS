@@ -12,7 +12,7 @@ This package provides the tools necessary to perform a PheWAS analysis.
 \tabular{ll}{
 Package: \tab PheWAS\cr
 Type: \tab Package\cr
-Version: \tab 0.9.5.1-1\cr
+Version: \tab 0.9.6\cr
 Date: \tab 2015-01-29\cr
 License: \tab GPL3\cr
 }
