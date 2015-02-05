@@ -7,7 +7,7 @@ Map PheWAS codes to their exclusions
 This function maps phewas codes (optionally with ids for individuals) to a set of PheWAS code exclusions.
 }
 \usage{
-mapPheWAStoExclusions(phewas.codes, ids=NA)
+mapPheWAStoExclusions(phewas.codes, ids)
 }
 \arguments{
   \item{phewas.codes}{
