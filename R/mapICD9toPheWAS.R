@@ -1,10 +1,10 @@
 mapICD9toPheWAS <-
 function(..., icd9s, add.info=F, keep.icd9=F) {
   if(!missing(icd9s)) {
-    input=data.frame(list(...),icd9=icd9s)
+    input=tbl_df(data.frame(list(...),icd9=icd9s))
   }
   else {
-    input=data.frame(...)
+    input=tbl_df(data.frame(...))
   }
   if(is.null(input$icd9)) {
     stop("Must supply a data frame with an 'icd9' column or specify the icd9s parameter")
