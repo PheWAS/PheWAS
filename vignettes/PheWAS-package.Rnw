@@ -76,7 +76,7 @@ An alternate method is to use the \code{data} parameter with name vectors in the
 > results=phewas(phenotypes=names(phenotypes)[-1],genotypes=c("rs1234","rs5678"),\\
 +    data=mydata)
 \end{example}
-The \code{phewas} function can be used for more than just generic PheWAS. In the following example, \code{outcomes} and \code{predictors} are used for a phenotype only analysis. Note that these parameters are simply alternate names for \code{phenotypes} and \code{genotypes}, repsectively.
+The \code{phewas} function can be used for more than just generic PheWAS. In the following example, \code{outcomes} and \code{predictors} are used for a phenotype only analysis. Note that these parameters are simply alternate names for \code{phenotypes} and \code{genotypes}, respectively.
 \begin{example}
 > max.a1c.results=phewas(outcomes=phenotypes,\\
 +    predictors=csv.phenotypes[,c("id","max.a1c")])
