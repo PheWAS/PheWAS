@@ -60,7 +60,7 @@ The minimum number of records to perform a test. For logistic regression, there 
 Uses the \code{MASS} package and the \code{confint} function to calculate a confidence interval at the specified level. \code{MASS::confint} uses a profile likelihood method, which takes some time to compute. Output is stored in the \code{lower} and \code{upper} columns. Logistic models will report OR CIs and linear models will report beta CIs. Default is NA, which does not calculate confidence intervals.
 }
   \item{quick.confint.level}{
-Calculate a confidence interval based on \code{beta ± qnorm * SE}. Output is stored in the \code{lower.q} and \code{upper.q} columns. Logistic models will return have the exponentiated OR confidence intervals.
+Calculate a confidence interval based on \code{beta + or - qnorm * SE}. Output is stored in the \code{lower.q} and \code{upper.q} columns. Logistic models will return have the exponentiated OR confidence intervals.
 }
 }
 \details{
@@ -103,6 +103,7 @@ Robert Carroll
 \code{\link[PheWAS:createPhewasTable]{createPhewasTable}} 
 }
 \examples{
+\donttest{
 #Generate some example data
 ex=generateExample(hit="335")
 #Extract the two parts from the returned list
@@ -111,7 +112,8 @@ genotypes=ex$genotypes
 #Create the PheWAS code table- translates the icd9s, adds exclusions, and reshapes to a wide format
 phenotypes=createPhewasTable(id.icd9.count)
 #Run the PheWAS
-results=phewas(phenotypes,genotypes,cores=4,significance.threshold=c("bonferroni"))
+results=phewas(phenotypes,genotypes,cores=4)
+}
 }
 \keyword{ models }
 

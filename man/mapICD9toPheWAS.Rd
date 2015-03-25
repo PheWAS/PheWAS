@@ -35,11 +35,12 @@ A data frame containing the input columns in ... and the phewas codes. The origi
 }
 \author{
 Robert Carroll
+Laura Wiley
 }
 
 \examples{
 icd9codes=c("008","714.1","250.00")
-phewascodes=mapICD9toPheWAS(icd9codes)$phewas_code
+phewascodes=mapICD9toPheWAS(icd9s=icd9codes)$phewas_code
 head(phewascodes)
 }
 \keyword{ utilities }
