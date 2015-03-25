@@ -8,7 +8,7 @@ This function takes a data frame with three columns: id, icd9 codes, and counts.
 }
 \usage{
 createPhewasTable(id.icd9.count, min.code.count = 2, add.exclusions = T,
-  translate = T, aggregate.fun = sum, fast = T, id.gender)
+  translate = T, aggregate.fun = sum, id.gender)
 }
 
 \arguments{
@@ -41,12 +41,14 @@ A data frame. The first column, named "id", contains the supplied id for each in
 }
 \author{
 Robert Carroll
+Laura Wiley
 }
 \examples{
 #Simple example
-id_icd9_count=data.frame(id=c(1,2,2,2,3),icd9=c("714","250.11","714.1","714","250.11"),count=c(1,5,1,1,0))
+id_icd9_count=data.frame(id=c(1,2,2,2,3),icd9=c("714","250.11","714.1","714","250.11"),
+  count=c(1,5,1,1,0))
 createPhewasTable(id_icd9_count)
-
+\donttest{
 #Complex example
 ex=generateExample(n=500,hit="335")
 #Extract the icd9 data
@@ -54,5 +56,6 @@ id.icd9.count=ex$id.icd9.count
 #Create the PheWAS code table
 phenotypes=createPhewasTable(id.icd9.count)
 phenotypes[1:10,1:10]
+}
 }
 \keyword{ utilities }

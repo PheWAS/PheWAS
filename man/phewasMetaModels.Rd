@@ -30,29 +30,31 @@ A \code{by} object with named entries containing the meta analysis models. Each 
 }
 
 \examples{
+\donttest{
 #Generate some example data
 ex=generateExample(hit="335")
 #Extract the two parts from the returned list
 id.icd9.count=ex$id.icd9.count
 genotypes=ex$genotypes
 #Create the PheWAS code table- translates the icd9s, adds exclusions, and reshapes to a wide format
-phenotypes=createPhewasTable(id.icd9.count,fast=TRUE)
+phenotypes=createPhewasTable(id.icd9.count)
 #Run the PheWAS
-results.1=phewas(phenotypes,genotypes,cores=4,significance.threshold=c("bonferroni"))
+results.1=phewas(phenotypes,genotypes,cores=2,significance.threshold=c("bonferroni"))
 #Set up a study identifier
 results.1$study="335"
 #Perform another PheWAS
 ex=generateExample(hit="250.2")
 id.icd9.count=ex$id.icd9.count
 genotypes=ex$genotypes
-phenotypes=createPhewasTable(id.icd9.count,fast=TRUE)
-results.2=phewas(phenotypes,genotypes,cores=4,significance.threshold=c("bonferroni"))
+phenotypes=createPhewasTable(id.icd9.count)
+results.2=phewas(phenotypes,genotypes,cores=2,significance.threshold=c("bonferroni"))
 results.2$study="250.2"
 #Join the two sets of PheWAS results
 results=rbind(results.1,results.2)
 #Perform the meta analysis, and do not assume fixed effects.
 results.meta=phewasMetaModels(results)
 results.meta$`250.2 rsEXAMPLE NA`
+}
 }
 \keyword{ htest }
 

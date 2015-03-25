@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{url,Rd}
 \newenvironment{example}{\begin{alltt}\small}{\end{alltt}}
+%\VignetteIndexEntry{PheWAS Package}
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}

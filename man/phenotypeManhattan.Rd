@@ -7,7 +7,9 @@ Plot phenotype association data in a Manhattan plot.
 \code{phenotype_manhattan} wraps \code{phenotypePlot} to provide some intuitive Manhattan plot centric options. Can plot data directly from \code{phewas}.
 }
 \usage{
-phenotypeManhattan(d, suggestive.line = 0.05, genomewide.line, sort.by.p = F, sort.by.category.p = F, OR.size = F, OR.direction = F, annotate.level, y.axis.interval = 5, y.axis.label = expression(-log[10](italic(p))), max.y, ...)
+phenotypeManhattan(d, suggestive.line = 0.05, genomewide.line, sort.by.p = F, 
+  sort.by.category.p = F, OR.size = F, OR.direction = F, annotate.level, 
+  y.axis.interval = 5, y.axis.label = expression(-log[10](italic(p))), max.y, ...)
 }
 \arguments{
   \item{d}{
