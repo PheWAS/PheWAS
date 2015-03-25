@@ -1,10 +1,11 @@
 createPhewasTable <-
   function(id.icd9.count, min.code.count=2, add.exclusions=T, translate=T, aggregate.fun=sum, id.gender)
   {
+    id.icd9.count<-id.icd9.count
     if(!translate) {
       #Warn about exclusions if input is not translated.
       if(add.exclusions){warning("Codes are not translated, but exclusions are to be applied. Ensure that the icd9 column is phewas codes or disable add.exclusions for accurate results.")}
-      phemapped=data.frame(id=id.icd9.count[,1],phe=id.icd9.count[,2],count=id.icd9.count[,3])
+      phemapped=tbl_df(data.frame(id=id.icd9.count[,1],phe=id.icd9.count[,2],count=id.icd9.count[,3]))
     } else {
       #check to make sure numeric ICD9 codes were not passed in
       if(class(id.icd9.count[,2]) %in% c("integer","numeric")) {stop("Numeric ICD-9 codes passed in, so an accurate mapping is not possible. E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
@@ -23,7 +24,7 @@ createPhewasTable <-
       message("Mapping exclusions...")
       exclusions=mapPheWAStoExclusions(phecode$phe,phecode$id)
       exclusions$count=-1
-      phecode=rbind(phecode,exclusions)
+      phecode=rbind(phecode,exclusions %>% transmute(id,phe=exclusion,count))
     }
     
     #If there is request for a min code count, adjust counts to -1 if needed
