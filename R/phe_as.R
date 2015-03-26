@@ -111,7 +111,7 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
   #Add confidence intervals if requested.
   if(!is.na(confint.level)) {
     if(!is.na(model)[1]){
-      conf=confint(model,c("(Intercept)",gens),level=confint.level)
+      suppressMessages(conf<-confint(model,c("(Intercept)",gens),level=confint.level))
       lower=conf[-1,1]
       upper=conf[-1,2]
       if(type=="logistic") {
