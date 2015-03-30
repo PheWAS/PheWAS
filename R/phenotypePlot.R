@@ -131,8 +131,8 @@ phenotypePlot <-
     plot=ggplot(d,ylab=y.axis.label,xlab=x.axis.label)
 
     #Include lines for significance thresholds
-    if (!missing(suggestive.line)) plot=plot+geom_hline(yintercept=suggestive.line,colour="blue", alpha=I(1/3),size=1)
-    if (!missing(significant.line)) plot=plot+geom_hline(yintercept=significant.line,colour="red",alpha=I(1/3),size=1)
+    if (!missing(suggestive.line)&!is.na(suggestive.line)) plot=plot+geom_hline(yintercept=suggestive.line,colour="blue", alpha=I(1/3),size=1)
+    if (!missing(significant.line)&!is.na(significant.line)) plot=plot+geom_hline(yintercept=significant.line,colour="red",alpha=I(1/3),size=1)
 
     plot=plot+aes(seq,value,size=size,colour=color)
     if(!sizes) plot=plot+scale_size(range=c(point.size,point.size),guide="none")

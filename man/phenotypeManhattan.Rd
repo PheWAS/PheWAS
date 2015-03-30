@@ -16,10 +16,10 @@ phenotypeManhattan(d, suggestive.line = 0.05, genomewide.line, sort.by.p = F,
 A data frame containing \code{phenotype} and \code{p}.
 }
   \item{suggestive.line}{
-Draw a blue line at this p-value to show a suggestive significance threshold.
+Draw a blue line at this p-value to show a suggestive significance threshold. Defaults to 0.05. An NA value will result in no line.
 }
   \item{genomewide.line}{
-Draw a red line at this p-value to show a genome wide significance threshold. Defaults to suggestive.line divided by the number of non-NA p-values.
+Draw a red line at this p-value to show a genome wide significance threshold. Defaults to suggestive.line divided by the number of non-NA p-values. An NA value will result in no line.
 }
   \item{sort.by.p}{
 Sort the plot by the p-value. Defaults to false.
@@ -34,7 +34,7 @@ Adjust point size based on odds ratios? Requires d to contain the \code{OR} colu
 Adjust point shape based on odds ratio direction? Requires d to contain the \code{OR} column. Default is FALSE.
 }
   \item{annotate.level}{
-Annotate points at or below this \code{p}.
+Annotate points at or below this \code{p}. Defaults to genomewide.line.
 }
   \item{y.axis.interval}{
 The -log10 interval for y axis labeling. Defaults to 5.
