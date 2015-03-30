@@ -9,7 +9,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
     if(!missing(predictors)) genotypes=predictors
     else stop("Either genotypes or predictors must be passed in.")
   }
-  if(is.na(MASS.confint.level)) {
+  if(!is.na(MASS.confint.level)) {
     if(!require(MASS)) {stop("Producing confidence intervals using the MASS::confint method requires MASS to be installed. 
                              Please install MASS or use the quick confidence intervals")}
   }
