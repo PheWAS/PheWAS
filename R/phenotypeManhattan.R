@@ -16,7 +16,7 @@ phenotypeManhattan <-
     genomewide.line=-log10(genomewide.line)
     suggestive.line=-log10(suggestive.line)
     if(missing(annotate.level)) {
-      if(is.na(genomewide.line) {annotate.level=-log10(min(d$p,na.rm=T))}
+      if(is.na(genomewide.line)) {annotate.level=-log10(min(d$p,na.rm=T))}
       else{annotate.level=genomewide.line}
     }
     else {annotate.level=-log10(annotate.level)}
