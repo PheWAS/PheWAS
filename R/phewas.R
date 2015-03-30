@@ -1,6 +1,6 @@
 phewas <-
 function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcomes, predictors, cores=1, additive.genotypes=T, 
-         significance.threshold, alpha=0.05, unadjusted=F, return.models=F, min.records=20) {
+         significance.threshold, alpha=0.05, unadjusted=F, return.models=F, min.records=20, MASS.confint.level=NA,quick.confint.level) {
   if(missing(phenotypes)) {
     if(!missing(outcomes)) phenotypes=outcomes
     else stop("Either phenotypes or outcomes must be passed in.")
@@ -8,6 +8,10 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   if(missing(genotypes)) {
     if(!missing(predictors)) genotypes=predictors
     else stop("Either genotypes or predictors must be passed in.")
+  }
+  if(!is.na(MASS.confint.level)) {
+    if(!require(MASS)) {stop("Producing confidence intervals using the MASS::confint method requires MASS to be installed. 
+                             Please install MASS or use the quick confidence intervals")}
   }
   association_method=phe_as
   if(unadjusted) {
@@ -47,15 +51,16 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   message("Finding associations...")
   #If parallel, run the snowfall version.
   if(para) {
-    require(snowfall)
+    if(!require(snowfall)) {stop("The package 'snowfall' is required for multicore processing")}
     sfInit(parallel=para, cpus=cores)
+    if(!is.na(MASS.confint.level)) {sfLibrary(MASS)}
     sfExport("data", "covariates")
     #Loop across every phenotype- iterate in parallel
-    result <- sfClusterApplyLB(full_list, phe_as, additive.genotypes, min.records,return.models)
+    result <- sfClusterApplyLB(full_list, association_method, additive.genotypes, confint.level=MASS.confint.level, min.records,return.models)
     sfStop()
   } else {
     #Otherwise, just use lapply.
-    result=lapply(full_list,FUN=phe_as, additive.genotypes, min.records,return.models, data, covariates)
+    result=lapply(full_list,FUN=association_method, additive.genotypes, min.records,return.models, confint.level=MASS.confint.level, data, covariates)
   }
   if(return.models) {
     models=lapply(result,function(x){attributes(x)$model})
@@ -133,5 +138,16 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   if(!missing(outcomes)) names(sig)[names(sig)=="phenotype"]="outcome"
   if(!missing(predictors)) names(sig)[names(sig)=="snp"]="predictor"
   if(return.models){sig=list(results=sig,models=models)}
+  if(!missing(quick.confint.level)) {
+    if(quick.confint.level>=1|quick.confint.level<=0) {warning("Quick confidence interval requested, but a value in the range (0,1) was not supplied")}
+    else {
+      sig.names=names(sig)
+      two.sided=(1-quick.confint.level)/2
+      sig=sig %>% mutate(lower.q=beta+se*qnorm(two.sided),upper.q=beta+se*qnorm(two.sided,lower.tail=F))
+      sig=sig  %>% mutate(lower.q=ifelse(sig$type=="logistic",exp(lower.q),lower.q),
+                      upper.q=ifelse(sig$type=="logistic",exp(upper.q),upper.q))
+      sig=sig[,c(sig.names[1:5],"lower.q","upper.q",sig.names[6:length(sig.names)])]
+    }
+  }
   return(sig)
 }

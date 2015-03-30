@@ -11,7 +11,7 @@ This function will perform a PheWAS analysis, optionally adjusting for other var
 phewas(phenotypes, genotypes, data, covariates = c(NA), adjustments = list(NA), 
   outcomes, predictors, cores = 1, additive.genotypes = T, 
   significance.threshold, alpha = 0.05, unadjusted = F, return.models = F,
-  min.records = 20)
+  min.records = 20, MASS.confint.level=NA, quick.confint.level)
 }
 \arguments{
   \item{phenotypes}{
@@ -56,6 +56,12 @@ Return a list the complete models, with the names equal to the string formula us
   \item{min.records}{
 The minimum number of records to perform a test. For logistic regression, there must be at least this number of each cases and controls, for linear regression this total number of records. Default is 20.
 }
+  \item{MASS.confint.level}{
+Uses the \code{MASS} package and the \code{confint} function to calculate a confidence interval at the specified level. \code{MASS::confint} uses a profile likelihood method, which takes some time to compute. Output is stored in the \code{lower} and \code{upper} columns. Logistic models will report OR CIs and linear models will report beta CIs. Default is NA, which does not calculate confidence intervals.
+}
+  \item{quick.confint.level}{
+Calculate a confidence interval based on \code{beta + or - qnorm * SE}. Output is stored in the \code{lower.q} and \code{upper.q} columns. Logistic models will return have the exponentiated OR confidence intervals.
+}
 }
 \details{
 The complete data frame can be passed in using the \code{data} parameter with name vectors in \code{phenotypes, genotypes, covariates, and adjustments} parameters. Alternatively, \code{phenotypes, genotypes, covariates, and adjustments} can each be data frames. They will be merged using the shared columns between \code{phenotypes} and \code{genotypes}, ideally being an ID column.
@@ -70,8 +76,12 @@ The following are the default rows included in the returned data frame. The attr
 \item{snp}{The predictor under study}
 \item{adjustment}{The one off adjustment used}
 \item{beta}{The beta coefficient for the predictor}
-\item{OR}{For logistic regression, the odds ratio for the predictor}
 \item{SE}{The standard error for the beta coefficient}
+\item{lower.p}{The lower bound of the quick confidence interval, if requested}
+\item{upper.p}{The upper bound of the quick confidence interval, if requested}
+\item{lower}{The lower bound of the \code{MASS::confint} confidence interval, if requested}
+\item{upper}{The upper bound of the \code{MASS::confint} confidence interval, if requested}
+\item{OR}{For logistic regression, the odds ratio for the predictor}
 \item{p}{The p-value for the predictor}
 \item{type}{The type of regression model used}
 \item{n_total}{The total number of records in the analysis}
@@ -93,6 +103,7 @@ Robert Carroll
 \code{\link[PheWAS:createPhewasTable]{createPhewasTable}} 
 }
 \examples{
+\donttest{
 #Generate some example data
 ex=generateExample(hit="335")
 #Extract the two parts from the returned list
@@ -101,7 +112,8 @@ genotypes=ex$genotypes
 #Create the PheWAS code table- translates the icd9s, adds exclusions, and reshapes to a wide format
 phenotypes=createPhewasTable(id.icd9.count)
 #Run the PheWAS
-results=phewas(phenotypes,genotypes,cores=4,significance.threshold=c("bonferroni"))
+results=phewas(phenotypes,genotypes,cores=4)
+}
 }
 \keyword{ models }
 

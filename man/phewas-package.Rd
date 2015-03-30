@@ -12,8 +12,8 @@ This package provides the tools necessary to perform a PheWAS analysis.
 \tabular{ll}{
 Package: \tab PheWAS\cr
 Type: \tab Package\cr
-Version: \tab 0.9.5.1-1\cr
-Date: \tab 2015-01-29\cr
+Version: \tab 0.9.6\cr
+Date: \tab 2015-03-30\cr
 License: \tab GPL3\cr
 }
 With the package installed, the command \code{vignette("PheWAS-package")} will display the vignette
@@ -55,6 +55,7 @@ The original PheWAS manuscript can be found here: http://www.ncbi.nlm.nih.gov/pu
 \code{\link[PheWAS:phewasMeta]{phewasMeta}}
 }
 \examples{
+\donttest{
 #Install the recommended packages, if necessary
 #install.packages(c("snowfall","shiny","MASS","meta"))
 #Load the PheWAS package
@@ -81,5 +82,6 @@ results_d=addPhewasDescription(results)
 results_d[results_d$bonferroni&!is.na(results_d$p),]
 #List the top 10 results
 results_d[order(results_d$p)[1:10],]
+}
 }
 

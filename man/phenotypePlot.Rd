@@ -30,10 +30,10 @@ Maximum \code{value} for the plot. If missing, defaults to the maximum value.
 Maximum number of \code{phenotype}s for the plot. If missing, defaults to the total number.
 }
   \item{suggestive.line}{
-Blue line drawn at \code{value} to emphasize interesting data points.
+Blue line drawn at \code{value} to emphasize interesting data points. Missing or an NA value will result in no line.
 }
   \item{significant.line}{
-Red line drawn at \code{value} to emphasize interesting data points.
+Red line drawn at \code{value} to emphasize interesting data points. Missing or an NA value will result in no line.
 }
   \item{size.x.labels}{
 The size of the x axis labels.

@@ -15,7 +15,10 @@ phenotypeManhattan <-
     if(missing(genomewide.line)) genomewide.line=suggestive.line/nrow(d)
     genomewide.line=-log10(genomewide.line)
     suggestive.line=-log10(suggestive.line)
-    if(missing(annotate.level)) {annotate.level=genomewide.line}
+    if(missing(annotate.level)) {
+      if(is.na(genomewide.line)) {annotate.level=-log10(min(d$p,na.rm=T))}
+      else{annotate.level=genomewide.line}
+    }
     else {annotate.level=-log10(annotate.level)}
     #Nudge all of the p=0 results to the smallest double
     if(sum(d$p==0)>0)d[d$p==0,]$p=.Machine$double.xmin

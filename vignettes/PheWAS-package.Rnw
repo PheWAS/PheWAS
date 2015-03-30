@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{url,Rd}
 \newenvironment{example}{\begin{alltt}\small}{\end{alltt}}
+%\VignetteIndexEntry{PheWAS Package}
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}
@@ -19,18 +20,35 @@ There are many potential data sources and types; this necessitates that users ha
 \subsection{Preparing plink data}
 Genome wide data is stored commonly stored in plink formats\footnote{See
   \url{http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml}
-  for plink data format details.}. The simplest method to import data from plink is the \code{--recodeA} parameter in plink. Running the following in a terminal will get one started:\\
+  for plink data format details.}. The simplest method to import data from plink is the \code{--recodeA} parameter in plink\footnote{See \url{http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml#recode} for details}. Running the following in a terminal will get one started:\\
 \code{
 plink --recodeA --bfile example\_data --extract interesting\_snps\\
 \ --out r\_genotypes
 }\\
-This will recode the binary plink data "example\_data", extracting the SNPs under investigation to the file "r\_genotypes.raw". This raw data can be loaded into R with a single command\footnote{See \url{http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml#recode} for details}:\\
+This will recode the binary plink data "example\_data", extracting the SNPs under investigation to the file "r\_genotypes.raw". This raw data can be loaded into R with a single command:\\
 \code{genotypes=read.table("r\_genotypes.raw",header=TRUE)}\\
-Alternatively, assuming IIDs are unique, the following will load the data ready to be put into \code{phewas}.\\
-\code{> genotypes=read.table("r\_genotypes.raw",header=TRUE)[,c(-1,-3:-6)]\\> names(genotypes)[1]="id"}
+Alternatively, assuming FIDs are unique, the following will load the data ready to be put into \code{phewas}.
+\begin{example}
+> genotypes=read.table("r\_genotypes.raw",header=TRUE)[,c(-2:-6)]
+> names(genotypes)[1]="id"
+\end{example}
 
 \subsection{Data from file}
-R has robust methods for loading data from files\footnote{See \code{?read.table} in R for the read methods discussed here.}. For this section we will consider an example where the user may have exported their chart review data into a csv from a spreadsheet software.\\
+R has robust methods for loading data from files\footnote{See \code{?read.table} in R for the read methods discussed here.}. For this section we will consider two examples. The first is loading a csv file containg id, icd9, and count data as appropriate for a classic PheWAS.\\
+\emph{id.icd9.count.csv}:
+\begin{example}
+id,icd9,count
+1,410,2
+1,410.1,1
+1,414.0,6
+2,250.02,13
+...
+\end{example}
+This can be loaded using \code{csv.phenotypes=\\
+\ read.csv("id.icd9.count.csv",colClasses=c("integer","character","integer"))}\\
+Pay special attention to the \code{colClasses} parameter: we need to ensure that the ICD9 codes are read as character strings so they do not lose trailing or leading zeros. This table is appropriate for use in \code{createPhewasTable}.\\
+\\
+Another example is that the user may have exported their chart review data into a csv from a spreadsheet software.\\
 \emph{example\_phenotype.csv}:
 \begin{example}
 id,T2D,max.a1c
@@ -67,25 +85,25 @@ If one wishes to speed up the analysis, a multi-threaded approach is available u
 \end{example}
 One can additionally provide covariates. In this case, we will consider an analysis adjusted by max.a1c.
 \begin{example}
-> results=phewas(phenotypes=phenotypes,genotypes=genotypes,\\
+> results=phewas(phenotypes=phenotypes,genotypes=genotypes,
 +    covariates=csv.phenotypes[,c("id","max.a1c")])
 \end{example}
 An alternate method is to use the \code{data} parameter with name vectors in the \code{phenotype}, \code{genotype}, and \code{covariates} parameters.
 \begin{example}
 > mydata=merge(phenotypes,genotypes)
-> results=phewas(phenotypes=names(phenotypes)[-1],genotypes=c("rs1234","rs5678"),\\
+> results=phewas(phenotypes=names(phenotypes)[-1],genotypes=c("rs1234","rs5678"),
 +    data=mydata)
 \end{example}
-The \code{phewas} function can be used for more than just generic PheWAS. In the following example, \code{outcomes} and \code{predictors} are used for a phenotype only analysis. Note that these parameters are simply alternate names for \code{phenotypes} and \code{genotypes}, repsectively.
+The \code{phewas} function can be used for more than just generic PheWAS. In the following example, \code{outcomes} and \code{predictors} are used for a phenotype only analysis. Note that these parameters are simply alternate names for \code{phenotypes} and \code{genotypes}, respectively.
 \begin{example}
-> max.a1c.results=phewas(outcomes=phenotypes,\\
+> max.a1c.results=phewas(outcomes=phenotypes,
 +    predictors=csv.phenotypes[,c("id","max.a1c")])
 \end{example}
 The \code{phewasMeta} method can assist in meta-analysis of multiple PheWAS, e.g., if one has multiple genotype platforms of data to analyze. It wraps the \code{metagen} method of the \pkg{meta} package.
 \begin{example}
 > results.omni1=phewas(phenotypes=phenotypes.omni1,genotypes=genotypes.omni1)
 > results.omni1$study="Omni 1"
-> results.omni.express=phewas(phenotypes=phenotypes.omni.express,\\
+> results.omni.express=phewas(phenotypes=phenotypes.omni.express,
 +    genotypes=genotypes.omni.express)
 > results.omni.express$study="Omni Express"
 > results.merged=rbind(results.omni1,results.omni.express)
