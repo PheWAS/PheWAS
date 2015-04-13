@@ -1,13 +1,13 @@
-\name{add_phewas_groups}
-\alias{add_phewas_groups}
+\name{addPhewasGroups}
+\alias{addPhewasGroups}
 \title{
 Add PheWAS code groups to existing data.
 }
 \description{
-\code{add_phewas_groups} adds the PheWAS code groups, found in the data \code{code_group_ranges}. Requires the full three digit codes in character format. This function is primarily to assist in plotting PheWAS results.
+\code{addPhewasGroups} adds the PheWAS code groups, found in the data \code{code_group_ranges}. Requires the full three digit codes in character format. This function is primarily to assist in plotting PheWAS results.
 }
 \usage{
-add_phewas_groups(d, keep_newlines = T)
+addPhewasGroups(d, keep_newlines = T)
 }
 \arguments{
   \item{d}{

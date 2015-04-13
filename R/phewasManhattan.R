@@ -12,7 +12,7 @@ phewasManhattan <-
     #Check to see if it looks 0-padded
     if(min(nchar(d$phenotype))<3) warning("Phenotypes with length <3 observed, ensure they are are 0-padded (e.g., \"008\")")
     #Add the groups
-    d=add_phewas_groups(d)
+    d=addPhewasGroups(d)
     
     #Call phenotype plot as normal.
     if(add.phewas.descriptions) {

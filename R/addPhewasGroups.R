@@ -1,4 +1,4 @@
-add_phewas_groups = function(d, keep_newlines=T) {
+addPhewasGroups = function(d, keep_newlines=T) {
   if(!length(d$phenotype)) stop("d must contain attribute 'phenotype'.")
   if(!keep_newlines) code_group_ranges$group=sub("\\n"," ",code_group_ranges$group)
   d=merge(d,code_group_ranges,by=c())
