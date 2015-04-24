@@ -124,7 +124,28 @@ This method returns a \pkg{ggplot2} object, which can be further manipulated usi
 The following is the complete example from the \pkg{PheWAS} package.
 <<example>>=
 library(PheWAS)
-example(PheWAS)
+#Set the random seed so it is replicable
+set.seed(1)
+#Generate some example data
+ex=generateExample()
+#Extract the two parts from the returned list
+id.icd9.count=ex$id.icd9.count
+genotypes=ex$genotypes
+#Create the PheWAS code table- translates the icd9s, adds 
+#exclusions, and reshapes to a wide format
+phenotypes=createPhewasTable(id.icd9.count)
+#Run the PheWAS
+results=phewas(phenotypes,genotypes,cores=1,
+  significance.threshold=c("bonferroni"))
+#Plot the results
+phewasManhattan(results, annotate.angle=0,
+  title="My Example PheWAS Manhattan Plot")
+#Add PheWAS descriptions
+results_d=addPhewasDescription(results)
+#List the significant results
+results_d[results_d$bonferroni&!is.na(results_d$p),]
+#List the top 10 results
+results_d[order(results_d$p)[1:10],]
 @
 <<label=plot,include=FALSE>>=
 phewasManhattan(results, annotate.angle=0)
