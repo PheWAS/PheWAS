@@ -1,8 +1,8 @@
 Package: PheWAS
 Type: Package
 Title: Phenome Wide Association Studies (PheWAS)
-Version: 0.9.6-2
-Date: 2015-04-24
+Version: 0.9.7
+Date: 2015-05-06
 Author: Robert Carroll, Josh Denny, Lisa Bastarache, Laura Wiley
 Maintainer: Robert Carroll <Robert.J.Carroll@Vanderbilt.edu>
 URL: http://www.ncbi.nlm.nih.gov/pubmed/24733291
@@ -11,5 +11,6 @@ Description: This package contains methods to perform Phenome Wide Association
  codes, exclusion status, statistical analysis, and plotting.
 License: GPL-3
 Depends: dplyr, tidyr, ggplot2 (>= 0.9.3)
-Suggests: MASS, snowfall, shiny, meta
+Imports: MASS, meta
+Suggests: snowfall
 LazyData: yes

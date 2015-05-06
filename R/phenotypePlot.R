@@ -18,7 +18,7 @@ phenotypePlot <-
            title= paste0("Phenotype Plot ", date()),
            x.axis.label="Phenotypes",
            y.axis.label="Values",
-           y.axis.interval=10) {
+           y.axis.interval=5) {
     #Check to ensure the input contains columns phenotype and value
     if ( sum(c("phenotype","value") %in% names(d))<2 ) stop("Data input must contain columns phenotype and value.")
     

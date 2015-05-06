@@ -1,6 +1,4 @@
 phewasMetaModels <- function(results, ...) {
-  #Stop the function if the meta package cannot be loaded
-  if(!require(meta)) {stop("PheWAS meta functions require the 'meta' package.")}
   results$adjustment=ifelse(is.na(results$adjustment),"NA",results$adjustment)
   out=by(results,INDICES=list(results$phenotype,results$snp,results$adjustment),
          FUN=function(a){
