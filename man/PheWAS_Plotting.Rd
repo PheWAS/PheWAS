@@ -166,7 +166,7 @@ A \code{ggplot2} plot. It contains PheWAS codes against their -log10 transformed
 }
 
 \seealso{
-\code{\link[PheWAS:PheWAS-package]{The PheWAS package}} for a complete example.
+\code{\link[PheWAS:phewas-package]{The PheWAS package}} for a complete example.
 }
 \keyword{ hplot }
 

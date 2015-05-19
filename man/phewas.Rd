@@ -57,7 +57,7 @@ Return a list the complete models, with the names equal to the string formula us
 The minimum number of records to perform a test. For logistic regression, there must be at least this number of each cases and controls, for linear regression this total number of records. Default is 20.
 }
   \item{MASS.confint.level}{
-Uses the \code{MASS} package and the \code{confint} function to calculate a confidence interval at the specified level. \code{MASS::confint} uses a profile likelihood method, which takes some time to compute. Output is stored in the \code{lower} and \code{upper} columns. Logistic models will report OR CIs and linear models will report beta CIs. Default is NA, which does not calculate confidence intervals.
+Uses the \code{MASS} package and the \code{confint} function to calculate a confidence interval at the specified level. \code{confint} uses a profile likelihood method, which takes some time to compute. Output is stored in the \code{lower} and \code{upper} columns. Logistic models will report OR CIs and linear models will report beta CIs. Default is NA, which does not calculate confidence intervals.
 }
   \item{quick.confint.level}{
 Calculate a confidence interval based on \code{beta + or - qnorm * SE}. Output is stored in the \code{lower.q} and \code{upper.q} columns. Logistic models will return have the exponentiated OR confidence intervals.
@@ -68,7 +68,7 @@ The complete data frame can be passed in using the \code{data} parameter with na
 
 \code{covariates} are those variables that are included in every model, e.g., age and gender. \code{adjustments} are additional variables that can be used to compare models by adjusting for potentially confounding factors. Including \code{NA} in the list will perform a set of analyses with no special adjustments, single names can be used for single adjustment, and a vector of names can be used for multiple special adjustments at once. An \code{adjustments} parameter of \code{list(NA, "BMI", c("BMI", "smoking"))} would adjust for no extra variable in all models, followed by adjusting additionally for BMI, and then perform another round of analyses using the BMI and smoking status variables. 
 
-These results can be directly plotted using the \code{\link[PheWAS:phewasManhattan]{phewasManhattan}} function, assuming that models are not returned. If they are, the \code{results} item of the returned list needs to be used.
+These results can be directly plotted using the \code{\link[PheWAS:PheWAS_Plotting]{phewasManhattan}} function, assuming that models are not returned. If they are, the \code{results} item of the returned list needs to be used.
 }
 \value{
 The following are the default rows included in the returned data frame. The attributes of the returned data frame contain additional information about the anaylsis.
@@ -79,8 +79,8 @@ The following are the default rows included in the returned data frame. The attr
 \item{SE}{The standard error for the beta coefficient}
 \item{lower.p}{The lower bound of the quick confidence interval, if requested}
 \item{upper.p}{The upper bound of the quick confidence interval, if requested}
-\item{lower}{The lower bound of the \code{MASS::confint} confidence interval, if requested}
-\item{upper}{The upper bound of the \code{MASS::confint} confidence interval, if requested}
+\item{lower}{The lower bound of the \code{confint} confidence interval, if requested}
+\item{upper}{The upper bound of the \code{confint} confidence interval, if requested}
 \item{OR}{For logistic regression, the odds ratio for the predictor}
 \item{p}{The p-value for the predictor}
 \item{type}{The type of regression model used}
