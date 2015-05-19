@@ -49,7 +49,6 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   if(para) {
     if(!requireNamespace("snowfall", quietly = TRUE)) {stop("The package 'snowfall' is required for multicore processing")}
     snowfall::sfInit(parallel=para, cpus=cores)
-    if(!is.na(MASS.confint.level)) {sfLibrary(MASS)}
     snowfall::sfExport("data", "covariates")
     #Loop across every phenotype- iterate in parallel
     result <- snowfall::sfClusterApplyLB(full_list, association_method, additive.genotypes, confint.level=MASS.confint.level, min.records,return.models)
