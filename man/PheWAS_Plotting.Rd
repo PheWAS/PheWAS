@@ -14,7 +14,8 @@ phewasManhattan(d, add.phewas.descriptions = T, ...)
 
 phenotypeManhattan(d, suggestive.line = 0.05, genomewide.line, sort.by.p = F, 
   sort.by.category.p = F, OR.size = F, OR.direction = F, annotate.level, 
-  y.axis.interval = 5, y.axis.label = expression(-log[10](italic(p))), max.y, ...)
+  y.axis.interval = 5, y.axis.label = expression(-log[10](italic(p))), max.y,
+  ...)
   
 phenotypePlot(d, max.y, max.x, suggestive.line, significant.line,
   size.x.labels = 9, size.y.labels = 9, switch.axis = F, sort.by.value = F,
@@ -78,7 +79,6 @@ The label for the y axis. Defaults to a stylized "-log10(p)" for the Manhattan p
 For the Manhattan plots, the maximum \code{-log10(p)} on the axis. Defaults to the larger of 4.4 or the maximum \code{-log10(p)}  in the supplied data.
 For \code{phenotypePlot}, the maximum \code{value} for the plot. If missing, defaults to the maximum value in the supplied data.
 }
-
   \item{max.x}{
 Maximum number of \code{phenotype}s for the plot. If missing, defaults to the total number.
 }
@@ -154,9 +154,12 @@ Title for the plot. Defaults to "Phenotype Plot" with the date and time.
 }
 \details{
 These functions are nested: \code{phewasManhattan} calls \code{phenotypeManhattan} which calls \code{phenotypePlot}.
-\code{phewasManhattan} generates a PheWAS Manhattan plot and can be used with a result data frame from \code{phewas}. This function only adds PheWAS code groupings and descriptions as applicable before calling \code{phenotypeManhattan}
+
+\code{phewasManhattan} generates a PheWAS Manhattan plot and can be used with a result data frame from \code{phewas}. This function only adds PheWAS code groupings and descriptions as applicable before calling \code{phenotypeManhattan}.
+
 \code{phenotypeManhattan} performs the transformations to the data and paramters for a -log10 scale.
-\code{phenotypePlot} does the actual plotting. It can be used to visualize non-p-value data. 
+
+\code{phenotypePlot} does the actual plotting and can be used to visualize non-p-value data. 
 }
 \value{
 A \code{ggplot2} plot. It contains PheWAS codes against their -log10 transformed p-values for \code{phewasManhattan}, generic phenotypes versus -log10 transformed p-values for \code{phenotypeManhattan}, and generic phenotypes versus generic values for \code{phenotypePlot}.
