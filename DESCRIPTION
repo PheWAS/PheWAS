@@ -12,5 +12,5 @@ Description: This package contains methods to perform Phenome Wide Association
 License: GPL-3
 Depends: dplyr, tidyr, ggplot2 (>= 0.9.3)
 Imports: MASS, meta
-Suggests: snowfall
+Suggests: snowfall, snow
 LazyData: yes

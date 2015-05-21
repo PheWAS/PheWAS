@@ -47,7 +47,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   message("Finding associations...")
   #If parallel, run the snowfall version.
   if(para) {
-    if(!requireNamespace("snowfall", quietly = TRUE)) {stop("The package 'snowfall' is required for multicore processing")}
+    if(!(requireNamespace("snow", quietly = TRUE)&requireNamespace("snowfall", quietly = TRUE))) {stop("The packages 'snowfall' and 'snow' are required for multicore processing")}
     snowfall::sfInit(parallel=para, cpus=cores)
     snowfall::sfExport("data", "covariates")
     #Loop across every phenotype- iterate in parallel
