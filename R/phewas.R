@@ -48,7 +48,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   #If parallel, run the parallel version.
   if(para) {
     cl = makeCluster(cores)
-    clusterExport(cl,c("data", "covariates"))
+    clusterExport(cl,c("data", "covariates"), envir=environment())
     #Loop across every phenotype- iterate in parallel
     result <-parLapplyLB(cl, full_list, association_method, additive.genotypes, confint.level=MASS.confint.level, min.records,return.models)
     stopCluster(cl)
