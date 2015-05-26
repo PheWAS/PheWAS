@@ -12,8 +12,8 @@ This package provides the tools necessary to perform a PheWAS analysis.
 \tabular{ll}{
 Package: \tab PheWAS\cr
 Type: \tab Package\cr
-Version: \tab 0.9.6-2\cr
-Date: \tab 2015-04-24\cr
+Version: \tab 0.10\cr
+Date: \tab 2015-05-26\cr
 License: \tab GPL3\cr
 }
 With the package installed, the command \code{vignette("PheWAS-package")} will display the vignette
@@ -22,9 +22,9 @@ With the package installed, the command \code{vignette("PheWAS-package")} will d
 \item \code{\link[PheWAS:addPhewasDescription]{addPhewasDescription}} allows users to add the description for PheWAS codes.
 \item \code{\link[PheWAS:createPhewasTable]{createPhewasTable}} takes ICD9 count data produces output suitable for PheWAS anaylsis.
 \item \code{\link[PheWAS:phewas]{phewas}} allows users to perform a PheWAS analysis with genetics, ICD9 codes, PheWAS codes, etc.
-\item \code{\link[PheWAS:phewasManhattan]{phewasManhattan}} is a high level plot function that will generate a ggplot2 of PheWAS results.
-\item \code{\link[PheWAS:phenotypeManhattan]{phenotypeManhattan}} provides a more general interface for plotting phenotype based Manhattan plots.
-\item \code{\link[PheWAS:phenotypePlot]{phenotypePlot}} provides a complex interface for plotting many types of phenotype data.
+\item \code{\link[PheWAS:PheWAS_Plotting]{phewasManhattan}} is a high level plot function that will generate a ggplot2 of PheWAS results.
+\item \code{\link[PheWAS:PheWAS_Plotting]{phenotypeManhattan}} provides a more general interface for plotting phenotype based Manhattan plots.
+\item \code{\link[PheWAS:PheWAS_Plotting]{phenotypePlot}} provides a complex interface for plotting many types of phenotype data.
 \item \code{\link[PheWAS:phewasMeta]{phewasMeta}} will perform a meta analysis of \code{phewas} results.
 \item \code{\link[PheWAS:generateExample]{generateExample}} creates data for example or testing purposes.
 }
@@ -46,18 +46,12 @@ The original PheWAS manuscript can be found here: http://www.ncbi.nlm.nih.gov/pu
 
 \code{\link[PheWAS:phewas]{phewas}}
 
-\code{\link[PheWAS:phewasManhattan]{phewasManhattan}}
-
-\code{\link[PheWAS:phenotypeManhattan]{phenotypeManhattan}}
-
-\code{\link[PheWAS:phenotypePlot]{phenotypePlot}}
+\link[PheWAS:PheWAS_Plotting]{PheWAS plotting methods}
 
 \code{\link[PheWAS:phewasMeta]{phewasMeta}}
 }
 \examples{
 \donttest{
-#Install the recommended packages, if necessary
-#install.packages(c("snowfall","shiny","MASS","meta"))
 #Load the PheWAS package
 library(PheWAS)
 #Set the random seed so it is replicable

@@ -1,6 +1,4 @@
 phewasMeta <- function(results, fixed=T, keep.both=T, ...) {
-  #Stop the function if the meta package cannot be loaded
-  if(!require(meta)) {stop("PheWAS meta functions require the 'meta' package.")}
   #Replace NA adjustment values with "NA"- necessary for by
   results$adjustment=ifelse(is.na(results$adjustment),"NA",results$adjustment)
   #Iterate across all phenotype, snp, adjustment combinations.

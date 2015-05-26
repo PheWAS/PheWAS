@@ -9,10 +9,6 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
     if(!missing(predictors)) genotypes=predictors
     else stop("Either genotypes or predictors must be passed in.")
   }
-  if(!is.na(MASS.confint.level)) {
-    if(!require(MASS)) {stop("Producing confidence intervals using the MASS::confint method requires MASS to be installed. 
-                             Please install MASS or use the quick confidence intervals")}
-  }
   association_method=phe_as
   if(unadjusted) {
     association_method=phe_as_unadjusted
@@ -49,15 +45,13 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   #Create the list of combinations to iterate over
   full_list=data.frame(t(expand.grid(phenotypes,genotypes,adjustments,stringsAsFactors=F)),stringsAsFactors=F)
   message("Finding associations...")
-  #If parallel, run the snowfall version.
+  #If parallel, run the parallel version.
   if(para) {
-    if(!require(snowfall)) {stop("The package 'snowfall' is required for multicore processing")}
-    sfInit(parallel=para, cpus=cores)
-    if(!is.na(MASS.confint.level)) {sfLibrary(MASS)}
-    sfExport("data", "covariates")
+    cl = makeCluster(cores)
+    clusterExport(cl,c("data", "covariates"), envir=environment())
     #Loop across every phenotype- iterate in parallel
-    result <- sfClusterApplyLB(full_list, association_method, additive.genotypes, confint.level=MASS.confint.level, min.records,return.models)
-    sfStop()
+    result <-parLapplyLB(cl, full_list, association_method, additive.genotypes, confint.level=MASS.confint.level, min.records,return.models)
+    stopCluster(cl)
   } else {
     #Otherwise, just use lapply.
     result=lapply(full_list,FUN=association_method, additive.genotypes, min.records,return.models, confint.level=MASS.confint.level, data, covariates)
