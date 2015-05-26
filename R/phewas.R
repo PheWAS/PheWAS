@@ -45,14 +45,13 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   #Create the list of combinations to iterate over
   full_list=data.frame(t(expand.grid(phenotypes,genotypes,adjustments,stringsAsFactors=F)),stringsAsFactors=F)
   message("Finding associations...")
-  #If parallel, run the snowfall version.
+  #If parallel, run the parallel version.
   if(para) {
-    if(!(requireNamespace("snow", quietly = TRUE)&requireNamespace("snowfall", quietly = TRUE))) {stop("The packages 'snowfall' and 'snow' are required for multicore processing")}
-    snowfall::sfInit(parallel=para, cpus=cores)
-    snowfall::sfExport("data", "covariates")
+    cl = makeCluster(cores)
+    clusterExport(cl,c("data", "covariates"))
     #Loop across every phenotype- iterate in parallel
-    result <- snowfall::sfClusterApplyLB(full_list, association_method, additive.genotypes, confint.level=MASS.confint.level, min.records,return.models)
-    snowfall::sfStop()
+    result <-parLapplyLB(cl, full_list, association_method, additive.genotypes, confint.level=MASS.confint.level, min.records,return.models)
+    stopCluster(cl)
   } else {
     #Otherwise, just use lapply.
     result=lapply(full_list,FUN=association_method, additive.genotypes, min.records,return.models, confint.level=MASS.confint.level, data, covariates)

@@ -52,8 +52,6 @@ The original PheWAS manuscript can be found here: http://www.ncbi.nlm.nih.gov/pu
 }
 \examples{
 \donttest{
-#Install the recommended packages, if necessary
-#install.packages(c("snowfall","MASS","meta"))
 #Load the PheWAS package
 library(PheWAS)
 #Set the random seed so it is replicable

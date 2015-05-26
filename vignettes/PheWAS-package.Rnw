@@ -79,7 +79,7 @@ The \code{phewas} function performs the PheWAS itself. Using the examples from a
 \begin{example}
 > results=phewas(phenotypes=phenotypes,genotypes=genotypes)
 \end{example}
-If one wishes to speed up the analysis, a multi-threaded approach is available using \pkg{snowfall}.
+If one wishes to speed up the analysis, a multi-threaded approach is available using the base package \pkg{parallel}.
 \begin{example}
 > results=phewas(phenotypes=phenotypes,genotypes=genotypes,cores=4)
 \end{example}

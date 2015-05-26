@@ -5,7 +5,7 @@
 Function to perform a PheWAS analysis
 }
 \description{
-This function will perform a PheWAS analysis, optionally adjusting for other variables. It is parallelized using snowfall.
+This function will perform a PheWAS analysis, optionally adjusting for other variables. It is parallelized using the base package parallel.
 }
 \usage{
 phewas(phenotypes, genotypes, data, covariates = c(NA), adjustments = list(NA), 
@@ -36,7 +36,7 @@ An alternate to \code{phenotypes}. It will be ignored if \code{phenotypes} exist
 An alternate to \code{genotypes}. It will be ignored if \code{genotypes} exists.
 }
   \item{cores}{
-The number of cores to use in the snowfall implementation. If \code{cores=1},  \code{lapply} will be used instead.
+The number of cores to use in the parallel socket cluster implementation. If \code{cores=1},  \code{lapply} will be used instead.
 }
   \item{additive.genotypes}{
 Are additive genotypes being supplied? If so, it will attempt to calculate allele frequencies and HWE values. Default is TRUE.
