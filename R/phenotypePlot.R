@@ -127,49 +127,96 @@ phenotypePlot <-
     if(missing(max.y)) max.y=ceiling(max(d$value))
     
 
-    #Generate the inital plot
-    plot=ggplot(d,ylab=y.axis.label,xlab=x.axis.label)
-
-    #Include lines for significance thresholds
-    if (!missing(suggestive.line)&&!is.na(suggestive.line)) plot=plot+geom_hline(yintercept=suggestive.line,colour="blue", alpha=I(1/3),size=1)
-    if (!missing(significant.line)&&!is.na(significant.line)) plot=plot+geom_hline(yintercept=significant.line,colour="red",alpha=I(1/3),size=1)
-
-    plot=plot+aes(seq,value,size=size,colour=color)
-    if(!sizes) plot=plot+scale_size(range=c(point.size,point.size),guide="none")
-    #Add points
-    plot=plot+geom_point() 
-    
-    if(missing(color.palette)) {
-      color.palette = unique(d[order(d$seq),]$color)
-      names(color.palette)=color.palette
-    } else {
-      names(color.palette) = unique(d[order(d$seq),]$color)
-    }
-    
-    #Color as defined 
-    plot = plot + scale_colour_manual(values= color.palette, guide="none") 
-
-    #TODO: X phenotype labels
-    #If label the X axis with the groups if requested
-    if (x.group.labels) {
-      plot=plot+scale_x_continuous(name=x.axis.label, limits=c(1,max.x), breaks=ticks, labels=(unique(d$group)), expand=c(.01,0))
+    #Check if we are using switch.axis
+    if(!switch.axis) {
+      #Generate the inital plot
+      plot=ggplot(d,ylab=y.axis.label,xlab=x.axis.label)
       
+      #Include lines for significance thresholds
+      if (!missing(suggestive.line)&!is.na(suggestive.line)) plot=plot+geom_hline(yintercept=suggestive.line,colour="blue", alpha=I(1/3),size=1)
+      if (!missing(significant.line)&!is.na(significant.line)) plot=plot+geom_hline(yintercept=significant.line,colour="red",alpha=I(1/3),size=1)
+      
+      plot=plot+aes(seq,value,size=size,colour=color)
+      if(!sizes) plot=plot+scale_size(range=c(point.size,point.size),guide="none")
+      #Add points
+      plot=plot+geom_point() 
+      
+      if(missing(color.palette)) {
+        color.palette = unique(d[order(d$seq),]$color)
+        names(color.palette)=color.palette
+      } else {
+        names(color.palette) = unique(d[order(d$seq),]$color)
+      }
+      
+      #Color as defined 
+      plot = plot + scale_colour_manual(values= color.palette, guide="none") 
+      
+      #TODO: X phenotype labels
+      #If label the X axis with the groups if requested
+      if (x.group.labels) {
+        plot=plot+scale_x_continuous(name=x.axis.label, limits=c(1,max.x), breaks=ticks, labels=(unique(d$group)), expand=c(.01,0))
+        
+      } else {
+        plot=plot+scale_x_continuous(name=x.axis.label, limits=c(1,max.x), breaks=c(-100), labels=c(""), expand=c(.015,0))
+      }
+      
+      #Set the Y scale and labels
+      plot=plot+scale_y_continuous(y.axis.label, limits=c(0,max.y), breaks=seq(0,max.y,y.axis.interval), expand=c(0,.2))
+      
+      #Set the default theme
+      plot=plot+theme(
+        panel.background=element_blank(), 
+        panel.grid.minor=element_blank(),
+        axis.text.x=element_text(size=size.x.labels, colour="black", angle=-40, hjust=0, vjust=1), 
+        axis.text.y=element_text(size=size.y.labels, colour="black"), 
+        axis.line =element_line(colour="black"),
+        axis.ticks=element_line(colour="black")
+      ) 
     } else {
-      plot=plot+scale_x_continuous(name=x.axis.label, limits=c(1,max.x), breaks=c(-100), labels=c(""), expand=c(.015,0))
+      #Generate plot with switch.axis
+      #Generate the inital plot
+      plot=ggplot(d,xlab=y.axis.label,ylab=x.axis.label)
+      
+      #Include lines for significance thresholds
+      if (!missing(suggestive.line)&!is.na(suggestive.line)) plot=plot+geom_vline(xintercept=suggestive.line,colour="blue", alpha=I(1/3),size=1)
+      if (!missing(significant.line)&!is.na(significant.line)) plot=plot+geom_vline(xintercept=significant.line,colour="red",alpha=I(1/3),size=1)
+      
+      plot=plot+aes(value,seq,size=size,colour=color)
+      if(!sizes) plot=plot+scale_size(range=c(point.size,point.size),guide="none")
+      #Add points
+      plot=plot+geom_point() 
+      
+      if(missing(color.palette)) {
+        color.palette = unique(d[order(d$seq),]$color)
+        names(color.palette)=color.palette
+      } else {
+        names(color.palette) = unique(d[order(d$seq),]$color)
+      }
+      
+      #Color as defined 
+      plot = plot + scale_colour_manual(values= color.palette, guide="none") 
+      
+      #If label the Y axis with the groups if requested
+      if (x.group.labels) {
+        plot=plot+scale_y_continuous(name=x.axis.label, limits=c(1,max.x), breaks=ticks, labels=(unique(d$group)), expand=c(.01,0))
+        
+      } else {
+        plot=plot+scale_y_continuous(name=x.axis.label, limits=c(1,max.x), breaks=c(-100), labels=c(""), expand=c(.015,0))
+      }
+      
+      #Set the Y scale and labels
+      plot=plot+scale_x_continuous(y.axis.label, limits=c(0,max.y), breaks=seq(0,max.y,y.axis.interval), expand=c(0,.2))
+      
+      #Set the default theme
+      plot=plot+theme(
+        panel.background=element_blank(), 
+        panel.grid.minor=element_blank(),
+        axis.text.y=element_text(size=size.x.labels, colour="black", hjust=0, vjust=1), 
+        axis.text.x=element_text(size=size.y.labels, colour="black"), 
+        axis.line =element_line(colour="black"),
+        axis.ticks=element_line(colour="black")
+      ) 
     }
-    
-    #Set the Y scale and labels
-    plot=plot+scale_y_continuous(y.axis.label, limits=c(0,max.y), breaks=seq(0,max.y,y.axis.interval), expand=c(0,.2))
-    
-    #Set the default theme
-    plot=plot+theme(
-      panel.background=element_blank(), 
-      panel.grid.minor=element_blank(),
-      axis.text.x=element_text(size=size.x.labels, colour="black", angle=-40, hjust=0, vjust=1), 
-      axis.text.y=element_text(size=size.y.labels, colour="black"), 
-      axis.line =element_line(colour="black"),
-      axis.ticks=element_line(colour="black")
-    ) 
  
     #Hide the legend by default
     plot = plot+theme(legend.position = "none")
@@ -220,7 +267,7 @@ phenotypePlot <-
     } 
     
     #Add the title
-    plot=plot+labs(title=title) + theme(title=element_text(size=8))
+    plot=plot+labs(title=title) + theme(title=element_text(size=12))
     
     plot
   }
