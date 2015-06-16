@@ -111,7 +111,14 @@ phenotypePlot <-
       #TODO: What about non-numeric phenotypes? Need this to sort 008 etc.
       phenotypes=phenotypes[order(phenotypes$phenotype),]
     }
-    phenotypes$seq = 1:nrow(phenotypes)
+    
+    #Swap ordering if using switch.axis.
+    if(switch.axis) {
+      phenotypes$seq = nrow(phenotypes):1
+    } else {
+      phenotypes$seq = 1:nrow(phenotypes)      
+    }
+
     
     #Limit to phenotype and seq, as they are the only relevant columns
     #Include value as min.value for annotation purposes
