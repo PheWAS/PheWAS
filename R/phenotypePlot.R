@@ -112,12 +112,7 @@ phenotypePlot <-
       phenotypes=phenotypes[order(phenotypes$phenotype),]
     }
     
-    #Swap ordering if using switch.axis.
-    if(switch.axis) {
-      phenotypes$seq = nrow(phenotypes):1
-    } else {
-      phenotypes$seq = 1:nrow(phenotypes)      
-    }
+    phenotypes$seq = 1:nrow(phenotypes)      
 
     
     #Limit to phenotype and seq, as they are the only relevant columns
@@ -128,8 +123,6 @@ phenotypePlot <-
     #Add sequence information
     d=merge(d,phenotypes,by="phenotype")
     
-    #If labeling the phenotype groups
-    if (x.group.labels) ticks=sort(aggregate(seq ~ groupnum, d, mean)$seq)
     #Define the max y axis value if not provided
     if(missing(max.y)) max.y=ceiling(max(d$value))
     
@@ -161,6 +154,8 @@ phenotypePlot <-
       #TODO: X phenotype labels
       #If label the X axis with the groups if requested
       if (x.group.labels) {
+        ticks=sort(aggregate(seq ~ groupnum, d, mean)$seq)
+        
         plot=plot+scale_x_continuous(name=x.axis.label, limits=c(1,max.x), breaks=ticks, labels=(unique(d$group)), expand=c(.01,0))
         
       } else {
@@ -180,7 +175,12 @@ phenotypePlot <-
         axis.ticks=element_line(colour="black")
       ) 
     } else {
-      #Generate plot with switch.axis
+      ####Generate plot with switch.axis
+      #Swap ordering
+      d=d[nrow(d):1,]
+      d$groupnum=max(d$groupnum)-d$groupnum+1
+      d$seq=max(d$seq)-d$seq+1
+      
       #Generate the inital plot
       plot=ggplot(d,xlab=y.axis.label,ylab=x.axis.label)
       
@@ -205,10 +205,11 @@ phenotypePlot <-
       
       #If label the Y axis with the groups if requested
       if (x.group.labels) {
-        plot=plot+scale_y_continuous(name=x.axis.label, limits=c(1,max.x), breaks=ticks, labels=(unique(d$group)), expand=c(.01,0))
+        ticks=sort(aggregate(seq ~ groupnum, d, function(x){mean(unique(x))})$seq)
+        plot=plot+scale_y_continuous(name=x.axis.label, limits=c(1,max.x), breaks=ticks, labels=(unique(d$group)), expand=c(.015,.02)) 
         
       } else {
-        plot=plot+scale_y_continuous(name=x.axis.label, limits=c(1,max.x), breaks=c(-100), labels=c(""), expand=c(.015,0))
+        plot=plot+scale_y_continuous(name=x.axis.label, limits=c(0,max.x), breaks=c(-100), labels=c(""), expand=c(.015,0))
       }
       
       #Set the Y scale and labels
@@ -218,8 +219,8 @@ phenotypePlot <-
       plot=plot+theme(
         panel.background=element_blank(), 
         panel.grid.minor=element_blank(),
-        axis.text.y=element_text(size=size.x.labels, colour="black", hjust=0, vjust=1), 
-        axis.text.x=element_text(size=size.y.labels, colour="black"), 
+        axis.text.y=element_text(size=size.x.labels, colour="black", hjust=1, vjust=.5), 
+        axis.text.x=element_text(size=size.y.labels, colour="black", hjust=.5, vjust=0), 
         axis.line =element_line(colour="black"),
         axis.ticks=element_line(colour="black")
       ) 
