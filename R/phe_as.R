@@ -37,14 +37,14 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
   model=NA
   if(n_total<min.records) {
     note=paste(note,"[Error: <",min.records," complete records]")
-  } else if(length(unique(na.omit(d[,phe])))<=1 | length(unique(na.omit(d[,gen]))) <=1) {
+  } else if(length(unique(na.omit(d[[phe]])))<=1 | length(unique(na.omit(d[[gen]]))) <=1) {
     note=paste(note,"[Error: non-varying phenotype or genotype]")
   } else {
     if(additive.genotypes) {
-      if(class(d[,gen]) %in% c("numeric","integer")){
+      if(class(d[[gen]]) %in% c("numeric","integer")){
         allele_freq=sum(d[,gen])/(2*n_total)
       }
-      if(class(d[,gen]) %in% c("numeric","integer") & sum(!(na.omit(d[,gen]) %in% 0:2))==0) {
+      if(class(d[[gen]]) %in% c("numeric","integer") & sum(!(na.omit(d[[gen]]) %in% 0:2))==0) {
         P=allele_freq
         Q=1-allele_freq
         AA=sum(d[,gen]==2)
