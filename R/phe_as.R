@@ -58,7 +58,7 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
     } 
     #Check if genotype was available
     #Check if phenotype is logical (boolean)
-    if(class(d[,phe]) %in% c("logical")) {
+    if(class(d[[phe]]) %in% c("logical")) {
       type = "logistic"
       #Create the logistic model
       n_cases=sum(d[,phe])
