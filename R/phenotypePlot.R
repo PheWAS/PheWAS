@@ -51,7 +51,10 @@ phenotypePlot <-
     if(!use.color & !missing(color.palette)) stop("You requested no color, but provided a color palette.")
     #Check for color
     if(use.color) {
-      if(missing(color.palette)&!("color" %in% names(d))) stop("You requested color, but did not provide a color attribute in d or color.palette")
+      if(missing(color.palette)) {
+        if(!("color" %in% names(d))) stop("You requested color, but did not provide a color attribute in d or color.palette")
+        else if(class(d$color)=="factor") warning("The color attribute is a factor and no color palette is provided: R default color scheme will be used. Convert color to character if it contains color names or codes")
+      }
       #Set up color if using a palette
       if(!missing(color.palette)&!length(d$color)) {
         if(length(d$groupnum)) d$color=d$groupnum
@@ -96,7 +99,7 @@ phenotypePlot <-
     #Create the list of phenotypes, finding the best values for each phenotype
     phenotypes=aggregate(value ~ phenotype + groupnum, d,FUN=max)
     #Remove the least significant phenotypes; only has an effect if max.x was specified.
-    phenotypes=phenotypes[order(phenotypes$value, decreasing=T),][1:max.x,]
+    phenotypes=phenotypes[order(phenotypes$value, decreasing=T),][1:min(nrow(phenotypes),max.x),]
     
     #If the user requested sorting by values
     if (sort.by.value) {
@@ -121,10 +124,30 @@ phenotypePlot <-
     names(phenotypes)[3]="min.value"
     
     #Add sequence information
-    d=merge(d,phenotypes,by="phenotype")
+    d=inner_join(phenotypes,d,by="phenotype")
+    d=d[order(d$seq),]
     
     #Define the max y axis value if not provided
     if(missing(max.y)) max.y=ceiling(max(d$value))
+    
+    if(switch.axis) {
+      #Swap ordering
+      d=d[nrow(d):1,]
+      d$groupnum=max(d$groupnum)-d$groupnum+1
+      d$seq=max(d$seq)-d$seq+1
+    }
+    
+    if (x.group.labels) {
+      labels=rbind_all(by(d,d$groupnum,function(x){data.frame(tick=mean(unique(x$seq)),label=as.character(x$group[1]),stringsAsFactors=F)}))
+      labels=labels[order(labels$tick),]
+    }
+    
+    if(missing(color.palette)) {
+      color.palette = unique(d[order(d$seq),]$color)
+      names(color.palette)=color.palette
+    } else {
+      names(color.palette) = unique(d[order(d$seq),]$color)
+    }
     
 
     #Check if we are using switch.axis
@@ -141,22 +164,14 @@ phenotypePlot <-
       #Add points
       plot=plot+geom_point() 
       
-      if(missing(color.palette)) {
-        color.palette = unique(d[order(d$seq),]$color)
-        names(color.palette)=color.palette
-      } else {
-        names(color.palette) = unique(d[order(d$seq),]$color)
-      }
-      
       #Color as defined 
       plot = plot + scale_colour_manual(values= color.palette, guide="none") 
       
       #TODO: X phenotype labels
       #If label the X axis with the groups if requested
       if (x.group.labels) {
-        ticks=sort(aggregate(seq ~ groupnum, d, mean)$seq)
-        
-        plot=plot+scale_x_continuous(name=x.axis.label, limits=c(1,max.x), breaks=ticks, labels=(unique(d$group)), expand=c(.01,0))
+      
+        plot=plot+scale_x_continuous(name=x.axis.label, limits=c(1,max.x), breaks=labels$tick, labels=labels$label, expand=c(.01,0))
         
       } else {
         plot=plot+scale_x_continuous(name=x.axis.label, limits=c(1,max.x), breaks=c(-100), labels=c(""), expand=c(.015,0))
@@ -176,10 +191,6 @@ phenotypePlot <-
       ) 
     } else {
       ####Generate plot with switch.axis
-      #Swap ordering
-      d=d[nrow(d):1,]
-      d$groupnum=max(d$groupnum)-d$groupnum+1
-      d$seq=max(d$seq)-d$seq+1
       
       #Generate the inital plot
       plot=ggplot(d,xlab=y.axis.label,ylab=x.axis.label)
@@ -193,20 +204,13 @@ phenotypePlot <-
       #Add points
       plot=plot+geom_point() 
       
-      if(missing(color.palette)) {
-        color.palette = unique(d[order(d$seq),]$color)
-        names(color.palette)=color.palette
-      } else {
-        names(color.palette) = unique(d[order(d$seq),]$color)
-      }
       
       #Color as defined 
       plot = plot + scale_colour_manual(values= color.palette, guide="none") 
       
       #If label the Y axis with the groups if requested
       if (x.group.labels) {
-        ticks=sort(aggregate(seq ~ groupnum, d, function(x){mean(unique(x))})$seq)
-        plot=plot+scale_y_continuous(name=x.axis.label, limits=c(1,max.x), breaks=ticks, labels=(unique(d$group)), expand=c(.015,.02)) 
+        plot=plot+scale_y_continuous(name=x.axis.label, limits=c(1,max.x), breaks=labels$ticks, labels=labels$label, expand=c(.015,.02)) 
         
       } else {
         plot=plot+scale_y_continuous(name=x.axis.label, limits=c(0,max.x), breaks=c(-100), labels=c(""), expand=c(.015,0))
