@@ -19,8 +19,8 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
     names(d)[2]=phe
   }
   #Exclude the exclusions for the target phenotype
-  d=d[!is.na(d[,phe]),]
-  n_no_snp=sum(is.na(d[,gen]))
+  d=d[!is.na(d[[phe]]),]
+  n_no_snp=sum(is.na(d[[gen]]))
   #Exclude rows with missing data
   d=na.omit(d)
   n_total=nrow(d)
@@ -37,31 +37,31 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
   model=NA
   if(n_total<min.records) {
     note=paste(note,"[Error: <",min.records," complete records]")
-  } else if(length(unique(na.omit(d[,phe])))<=1 | length(unique(na.omit(d[,gen]))) <=1) {
+  } else if(length(unique(na.omit(d[[phe]])))<=1 | length(unique(na.omit(d[[gen]]))) <=1) {
     note=paste(note,"[Error: non-varying phenotype or genotype]")
   } else {
     if(additive.genotypes) {
-      if(class(d[,gen]) %in% c("numeric","integer")){
-        allele_freq=sum(d[,gen])/(2*n_total)
+      if(class(d[[gen]]) %in% c("numeric","integer")){
+        allele_freq=sum(d[[gen]])/(2*n_total)
       }
-      if(class(d[,gen]) %in% c("numeric","integer") & sum(!(na.omit(d[,gen]) %in% 0:2))==0) {
+      if(class(d[[gen]]) %in% c("numeric","integer") & sum(!(na.omit(d[[gen]]) %in% 0:2))==0) {
         P=allele_freq
         Q=1-allele_freq
-        AA=sum(d[,gen]==2)
+        AA=sum(d[[gen]]==2)
         xAA=P^2*n_total
-        Aa=sum(d[,gen]==1)
+        Aa=sum(d[[gen]]==1)
         xAa=2*P*Q*n_total
-        aa=sum(d[,gen]==0)
+        aa=sum(d[[gen]]==0)
         xaa=Q^2*n_total
         HWE_pval=pchisq((AA-xAA)^2/(xAA)+(Aa-xAa)^2/(xAa)+(aa-xaa)^2/(xaa),1)
       } else {note=paste(note,"[Warning: Genotype is not coded 0,1,2, but additive.genotypes was TRUE.]")}
     } 
     #Check if genotype was available
     #Check if phenotype is logical (boolean)
-    if(class(d[,phe]) %in% c("logical")) {
+    if(class(d[[phe]]) %in% c("logical")) {
       type = "logistic"
       #Create the logistic model
-      n_cases=sum(d[,phe])
+      n_cases=sum(d[[phe]])
       n_controls=n_total-n_cases
       if(n_cases<min.records|n_controls<min.records) {note=paste(note,"[Error: <",min.records," cases or controls]")}
       else {
