@@ -1,6 +1,5 @@
 phenotypeManhattan <-
-  function(d, suggestive.line=0.05, genomewide.line, 
-           sort.by.p=F, sort.by.category.p=F,
+  function(d, suggestive.line=0.05, significant.line, 
            OR.size=F,OR.direction=F,
            annotate.level,
            y.axis.interval=5,
@@ -9,15 +8,22 @@ phenotypeManhattan <-
            ...) {
     if(sum(c("phenotype","p") %in% names(d))<2 ) stop("Data input must contain columns phenotype and p.")
     if((OR.size|OR.direction)&!length(d$OR)) stop("OR size or direction requested, but d$OR not provided.")
+    #Check for size or direction parameter in addition to OR.size or OR.direction
+    if(OR.size & !is.null(list(...)$sizes)) stop("You cannot use OR.size=T for OR point sizes and use the second point sizing parameter 'sizes'.")
+    if(OR.direction & !is.null(list(...)$direction)) stop("You cannot use OR.direction=T for OR direction shapes and use the second point shape parameter 'direction'.")
+    #Check for renamed parameters
+    if(max(names(list(...)) %in% c("genomewide.line","sort.by.p","sort.by.category.p"))>0){
+      stop("'genomewide.line','sort.by.p', and 'sort.by.category.p' parameters have been replaced with 'significant.line','sort.by.value', and 'sort.by.category.value'")
+    }
     #Remove records with NA p values
     d=d[!is.na(d$p),]
     #Transform the significance thresholds
-    if(missing(genomewide.line)) genomewide.line=suggestive.line/nrow(d)
-    genomewide.line=-log10(genomewide.line)
+    if(missing(significant.line)) significant.line=suggestive.line/nrow(d)
+    significant.line=-log10(significant.line)
     suggestive.line=-log10(suggestive.line)
     if(missing(annotate.level)) {
-      if(is.na(genomewide.line)) {annotate.level=-log10(min(d$p,na.rm=T))}
-      else{annotate.level=genomewide.line}
+      if(is.na(significant.line)) {annotate.level=-log10(min(d$p,na.rm=T))}
+      else{annotate.level=significant.line}
     }
     else {annotate.level=-log10(annotate.level)}
     #Nudge all of the p=0 results to the smallest double
@@ -40,8 +46,7 @@ phenotypeManhattan <-
     
     #If the OR direction is requested, create it
     if(OR.direction) d$direction = d$OR>=1
-    plot=phenotypePlot(d,suggestive.line=suggestive.line,significant.line=genomewide.line,
-                        sort.by.value=sort.by.p, sort.by.category.value=sort.by.category.p,
+    plot=phenotypePlot(d,suggestive.line=suggestive.line,significant.line=significant.line,
                         sizes=OR.size,direction=OR.direction,
                         annotate.level=annotate.level,
                         y.axis.interval=y.axis.interval,
