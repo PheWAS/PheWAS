@@ -6,9 +6,9 @@ Date: 2015-07-20
 Author: Robert Carroll, Josh Denny, Lisa Bastarache, Laura Wiley
 Maintainer: Robert Carroll <Robert.J.Carroll@Vanderbilt.edu>
 URL: http://www.ncbi.nlm.nih.gov/pubmed/24733291
-Description: This package contains methods to perform Phenome Wide Association 
- Studies (PheWAS). These methods include the conversion of ICD9 codes to PheWAS
- codes, exclusion status, statistical analysis, and plotting.
+Description: Functions to perform Phenome Wide Association 
+ Studies (PheWAS). These functions include the conversion of ICD9 codes to PheWAS
+ codes, statistical analysis, and plotting.
 License: GPL-3
 Depends: dplyr, tidyr, ggplot2 (>= 0.9.3), parallel
 Imports: MASS, meta
