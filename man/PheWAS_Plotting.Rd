@@ -12,8 +12,8 @@ These functions permit the plotting of a variety of data types found when workin
 \usage{
 phewasManhattan(d, add.phewas.descriptions = T, ...)
 
-phenotypeManhattan(d, suggestive.line = 0.05, genomewide.line, sort.by.p = F, 
-  sort.by.category.p = F, OR.size = F, OR.direction = F, annotate.level, 
+phenotypeManhattan(d, suggestive.line = 0.05, significant.line,
+  OR.size = F, OR.direction = F, annotate.level, 
   y.axis.interval = 5, y.axis.label = expression(-log[10](italic(p))), max.y,
   ...)
   
@@ -43,18 +43,9 @@ Further parameters to be passed down to \code{phenotypeManhattan} and \code{phen
 For \code{phenotypeManhattan}, Draw a blue line at this p-value to show a suggestive significance threshold. Defaults to 0.05. A missing or NA value as applicable will result in no line.
 For \code{phenotypePlot}, Blue line drawn at \code{value} to emphasize interesting data points. Missing or an NA value will result in no line.
 }
-  \item{genomewide.line}{
-For \code{phenotypeManhattan}, Draw a red line at this p-value to show a genome wide significance threshold. Defaults to suggestive.line divided by the number of non-NA p-values. An NA value will result in no line.
-For \code{phenotypePlot}, see \code{significant.line}.
-}
   \item{significant.line}{
-Red line drawn at \code{value} to emphasize interesting data points. Missing or an NA value will result in no line.
-}
-  \item{sort.by.p}{
-Sort the plot by the p-value. Defaults to false.
-}
-  \item{sort.by.category.p}{
-Sort the plot by pvalue, within each phenotype group. Requires group attributes in \code{d}. Default is FALSE.
+For \code{phenotypeManhattan}, draw a red line at this p-value to show an adjusted significance threshold. Defaults to suggestive.line divided by the number of non-NA p-values. An NA value will result in no line.
+For \code{phenotypePlot}, the red line is drawn at the specified \code{value} to emphasize interesting data points. Missing or an NA value will result in no line.
 }
   \item{OR.size}{
 Adjust point size based on odds ratios? Requires d to contain the \code{OR} column. Default is FALSE.
@@ -92,10 +83,10 @@ The size of the y axis labels.
 Switch the X and Y axis? Currently non-functioning. Defaults to false.
 }
   \item{sort.by.value}{
-Sort the plot by highest to lowest \code{value}? Defaults to false.
+Sort the plot by highest to lowest \code{-log10(p)} or \code{value}? Defaults to false.
 }
   \item{sort.by.category.value}{
-Sort the plot by \code{value} within each phenotype group. Requires group attributes in \code{d}. Defaults to false.
+Sort the plot by \code{-log10(p)} or \code{value} within each phenotype group? Requires group attributes in \code{d}. Defaults to false.
 }
   \item{annotate.phenotype.description}{
 Contains either TRUE or a data frame that contains description annotations for each phenotype. Should contain columns "phenotype" and "description". Missing or FALSE yields no description annotation.
