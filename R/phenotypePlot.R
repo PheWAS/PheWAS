@@ -209,7 +209,7 @@ phenotypePlot <-
       
       #If label the Y axis with the groups if requested
       if (x.group.labels) {
-        plot=plot+scale_y_continuous(name=x.axis.label, limits=c(1,max.x), breaks=labels$ticks, labels=labels$label, expand=c(.015,.02)) 
+        plot=plot+scale_y_continuous(name=x.axis.label, limits=c(1,max.x), breaks=labels$tick, labels=labels$label, expand=c(.015,.02)) 
         
       } else {
         plot=plot+scale_y_continuous(name=x.axis.label, limits=c(0,max.x), breaks=c(-100), labels=c(""), expand=c(.015,0))
