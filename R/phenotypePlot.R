@@ -167,7 +167,6 @@ phenotypePlot <-
       #Color as defined 
       plot = plot + scale_colour_manual(values= color.palette, guide="none") 
       
-      #TODO: X phenotype labels
       #If label the X axis with the groups if requested
       if (x.group.labels) {
       
