@@ -12,10 +12,11 @@ This package provides the tools necessary to perform a PheWAS analysis.
 \tabular{ll}{
 Package: \tab PheWAS\cr
 Type: \tab Package\cr
-Version: \tab 0.10.1-1\cr
-Date: \tab 2015-07-23\cr
+Version: \tab 0.10.2\cr
+Date: \tab 2015-09-21\cr
 License: \tab GPL3\cr
 }
+This package contains the mappings and information for PheWAS codes version 1.2.
 With the package installed, the command \code{vignette("PheWAS-package")} will display the vignette
 \itemize{
 \item \code{\link[PheWAS:mapICD9toPheWAS]{mapICD9toPheWAS}} allows users to transform their ICD9 CM codes into PheWAS codes.
