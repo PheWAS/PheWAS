@@ -47,11 +47,19 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   message("Finding associations...")
   #If parallel, run the parallel version.
   if(para) {
-    cl = makeCluster(cores)
-    clusterExport(cl,c("data", "covariates"), envir=environment())
+    #Check to make sure there is no existing phewas cluster.
+    if(exists("phewas.cluster.handle")) {
+      #If there is, kill it and remove it
+      try(stopCluster(phewas.cluster.handle), silent=T)
+      rm(phewas.cluster.handle, envir=.GlobalEnv)
+    }
+    assign("phewas.cluster.handle", makeCluster(cores), envir = .GlobalEnv)
+    clusterExport(phewas.cluster.handle,c("data", "covariates"), envir=environment())
     #Loop across every phenotype- iterate in parallel
-    result <-parLapplyLB(cl, full_list, association_method, additive.genotypes, confint.level=MASS.confint.level, min.records,return.models)
-    stopCluster(cl)
+    result <-parLapplyLB(phewas.cluster.handle, full_list, association_method, additive.genotypes, confint.level=MASS.confint.level, min.records,return.models)
+    #Once we have succeeded, stop the cluster and remove it.
+    stopCluster(phewas.cluster.handle)
+    rm(phewas.cluster.handle, envir=.GlobalEnv)
   } else {
     #Otherwise, just use lapply.
     result=lapply(full_list,FUN=association_method, additive.genotypes, min.records,return.models, confint.level=MASS.confint.level, data, covariates)
