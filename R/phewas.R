@@ -50,9 +50,11 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
     #Check to make sure there is no existing phewas cluster.
     if(exists("phewas.cluster.handle")) {
       #If there is, kill it and remove it
+      message("Old cluster detected (phewas.cluster.handle), removing...")
       try(stopCluster(phewas.cluster.handle), silent=T)
       rm(phewas.cluster.handle, envir=.GlobalEnv)
     }
+    message("Starting cluster...")
     assign("phewas.cluster.handle", makeCluster(cores), envir = .GlobalEnv)
     message("Cluster created, finding associations...")
     clusterExport(phewas.cluster.handle,c("data", "covariates"), envir=environment())
@@ -75,7 +77,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   n.tests=length(successful.phenotypes)
   successful.phenotypes=unique(successful.phenotypes)
   successful.genotypes=unique(na.omit(sapply(result,function(x){attributes(x)$successful.genotype})))
-  sig=rbind_all(result)
+  sig=bind_rows(result)
   
   message("Cleaning up...")
   
