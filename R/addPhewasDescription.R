@@ -8,8 +8,8 @@ addPhewasDescription <- function(data, keep.unmatched.rows=F,for.plots=F) {
   } else {
     name=names[first_match]
   }
-  if(class(getElement(data,name))!="character") {
-    if(class(getElement(data,name))=="factor") {
+  if (class(data[[name]]) != "character") {
+    if (class(data[[name]]) == "factor") {
       warning("Factor phenotype input mapped to characters")
       data[,name]=as.character(data[,name])
     } else {
