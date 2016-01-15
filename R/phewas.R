@@ -66,6 +66,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
     message("Finding associations...")
     result=lapply(full_list,FUN=association_method, additive.genotypes, min.records,return.models, confint.level=MASS.confint.level, data, covariates)
   }
+  message("Compiling results...")
   if(return.models) {
     models=lapply(result,function(x){attributes(x)$model})
     names(models)=sapply(models,function(x){paste0(as.character(terms(x))[c(2,1,3)],collapse=" ")})
@@ -76,6 +77,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   successful.genotypes=unique(na.omit(sapply(result,function(x){attributes(x)$successful.genotype})))
   sig=rbind_all(result)
   
+  message("Cleaning up...")
   
   #Add significance thresholds
   attributes(sig)$alpha=alpha
