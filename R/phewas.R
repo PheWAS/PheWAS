@@ -44,7 +44,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   para=(cores>1)
   #Create the list of combinations to iterate over
   full_list=data.frame(t(expand.grid(phenotypes,genotypes,adjustments,stringsAsFactors=F)),stringsAsFactors=F)
-  message("Finding associations...")
+
   #If parallel, run the parallel version.
   if(para) {
     #Check to make sure there is no existing phewas cluster.
@@ -54,6 +54,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
       rm(phewas.cluster.handle, envir=.GlobalEnv)
     }
     assign("phewas.cluster.handle", makeCluster(cores), envir = .GlobalEnv)
+    message("Cluster created, finding associations...")
     clusterExport(phewas.cluster.handle,c("data", "covariates"), envir=environment())
     #Loop across every phenotype- iterate in parallel
     result <-parLapplyLB(phewas.cluster.handle, full_list, association_method, additive.genotypes, confint.level=MASS.confint.level, min.records,return.models)
@@ -62,6 +63,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
     rm(phewas.cluster.handle, envir=.GlobalEnv)
   } else {
     #Otherwise, just use lapply.
+    message("Finding associations...")
     result=lapply(full_list,FUN=association_method, additive.genotypes, min.records,return.models, confint.level=MASS.confint.level, data, covariates)
   }
   if(return.models) {
