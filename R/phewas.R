@@ -68,11 +68,14 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
     message("Finding associations...")
     result=lapply(full_list,FUN=association_method, additive.genotypes, min.records,return.models, confint.level=MASS.confint.level, data, covariates)
   }
-  message("Compiling results...")
+
   if(return.models) {
+    message("Collecting models...")
     models=lapply(result,function(x){attributes(x)$model})
     names(models)=sapply(models,function(x){paste0(as.character(terms(x))[c(2,1,3)],collapse=" ")})
   }
+  
+  message("Compiling results...")
   successful.phenotypes=na.omit(sapply(result,function(x){attributes(x)$successful.phenotype}))
   n.tests=length(successful.phenotypes)
   successful.phenotypes=unique(successful.phenotypes)
