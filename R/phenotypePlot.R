@@ -112,7 +112,7 @@ phenotypePlot <-
     } else {
       #Restore the phenotype sorting order if no other sorting was requested
       #TODO: What about non-numeric phenotypes? Need this to sort 008 etc.
-      phenotypes=phenotypes[order(phenotypes$phenotype),]
+      phenotypes=phenotypes[order(phenotypes$groupnum,phenotypes$phenotype),]
     }
     
     phenotypes$seq = 1:nrow(phenotypes)      
