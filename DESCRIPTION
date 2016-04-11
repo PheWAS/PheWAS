@@ -11,5 +11,5 @@ Description: Functions to perform Phenome Wide Association
  codes (v1.2), statistical analysis, and plotting.
 License: GPL-3
 Depends: dplyr, tidyr, ggplot2 (>= 0.9.3), parallel
-Imports: MASS, meta
+Imports: MASS, meta, ggrepel
 LazyData: yes
