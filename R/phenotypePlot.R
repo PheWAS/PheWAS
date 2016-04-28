@@ -2,6 +2,7 @@ phenotypePlot <-
   function(d, max.y,max.x, suggestive.line, significant.line, 
            size.x.labels=9, size.y.labels=9, switch.axis=F, sort.by.value=F, sort.by.category.value=F,
            #annotation
+           base.labels=F,
            annotate.phenotype.description,
            annotate.angle=30, annotate.size=5, annotate.level,
            annotate.phenotype=F, 
@@ -11,7 +12,7 @@ phenotypePlot <-
            #labels
            lc.labels=F,
            x.group.labels=T, x.phenotype.labels=F,
-           sizes=F, direction=F, point.size=3, 
+           sizes=F, direction=F, point.size=3,
            #plot characteristics
            use.color=T,
            color.palette,
@@ -271,9 +272,15 @@ phenotypePlot <-
         warning("Annotation requested, but no points met criteria")
       } else {
         #Add annotations
-        if(annotate.phenotype.description|annotate.phenotype|annotate.snp.w.phenotype) plot = plot + ggrepel::geom_text_repel(aes(label=description),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.angle)
+        if(annotate.phenotype.description|annotate.phenotype|annotate.snp.w.phenotype) {
+          plot = plot + ifelse(!base.labels, ggrepel::geom_text_repel(aes(label=description),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.angle)
+                               geom_text(aes(label=description),colour="black",data=d[d$annotate,],hjust=0,size=annotate.size,angle=annotate.angle))
+        }
         #Add SNP annotations
-        if(annotate.snp) plot = plot + ggrepel::geom_text_repel(aes(label=snp),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.snp.angle)
+        if(annotate.snp) {
+          plot = plot + ifelse(!base.labels, ggrepel::geom_text_repel(aes(label=snp),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.snp.angle),
+                               geom_text(aes(label=snp),colour="black",data=d[d$annotate,],hjust=0,size=annotate.size,angle=annotate.snp.angle))
+        }
       }
     } 
     

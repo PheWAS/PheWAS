@@ -20,6 +20,7 @@ phenotypeManhattan(d, suggestive.line = 0.05, significant.line,
 phenotypePlot(d, max.y, max.x, suggestive.line, significant.line,
   size.x.labels = 9, size.y.labels = 9, switch.axis = F, sort.by.value = F,
   sort.by.category.value = F, annotate.phenotype.description, 
+  base.labels = F,
   annotate.angle = 30, annotate.size = 5, annotate.level, 
   annotate.phenotype = F, annotate.snp.w.phenotype = F, annotate.snp = F,
   annotate.snp.angle = 0, annotate.list, annotate.only.largest = T,
@@ -87,6 +88,9 @@ Sort the plot by highest to lowest \code{-log10(p)} or \code{value}? Defaults to
 }
   \item{sort.by.category.value}{
 Sort the plot by \code{-log10(p)} or \code{value} within each phenotype group? Requires group attributes in \code{d}. Defaults to false.
+}
+  \item{base.labels}{
+Use base ggplot2 labels? Defaults to FALSE, which uses ggrepel.
 }
   \item{annotate.phenotype.description}{
 Contains either TRUE or a data frame that contains description annotations for each phenotype. Should contain columns "phenotype" and "description". Missing or FALSE yields no description annotation.
