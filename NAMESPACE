@@ -2,3 +2,4 @@ export(phewas, mapICD9toPheWAS, mapPheWAStoExclusions, createPhewasTable, phenot
 import(dplyr,tidyr, ggplot2, parallel)
 importFrom(MASS,mvrnorm)
 importFrom(meta,metagen)
+importFrom(ggrepel,geom_text_repel)

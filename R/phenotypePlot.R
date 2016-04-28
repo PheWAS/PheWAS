@@ -271,9 +271,9 @@ phenotypePlot <-
         warning("Annotation requested, but no points met criteria")
       } else {
         #Add annotations
-        if(annotate.phenotype.description|annotate.phenotype|annotate.snp.w.phenotype) plot = plot + geom_text(aes(label=description),colour="black",data=d[d$annotate,],hjust=0,size=annotate.size,angle=annotate.angle)
+        if(annotate.phenotype.description|annotate.phenotype|annotate.snp.w.phenotype) plot = plot + ggrepel::geom_text_repel(aes(label=description),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.angle)
         #Add SNP annotations
-        if(annotate.snp) plot = plot + geom_text(aes(label=snp),colour="black",data=d[d$annotate,],hjust=0,size=annotate.size,angle=annotate.snp.angle)
+        if(annotate.snp) plot = plot + ggrepel::geom_text_repel(aes(label=snp),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.snp.angle)
       }
     } 
     
