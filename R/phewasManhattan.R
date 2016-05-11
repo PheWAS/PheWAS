@@ -1,5 +1,5 @@
 phewasManhattan <-
-  function(d, add.phewas.descriptions=T, ...) {
+  function(d, add.phecode.descriptions=T, ...) {
     if(sum(c("phenotype","p") %in% names(d))<2 ) stop("Data input must contain columns phenotype and p.")
     if(class(d$phenotype)!="character") {
       if(class(d$phenotype)=="factor") {
@@ -11,14 +11,8 @@ phewasManhattan <-
     }
     #Check to see if it looks 0-padded
     if(min(nchar(d$phenotype))<3) warning("Phenotypes with length <3 observed, ensure they are are 0-padded (e.g., \"008\")")
-    #Add the groups
-    d=addPhewasGroups(d)
-    
-    #Call phenotype plot as normal.
-    if(add.phewas.descriptions) {
-      d=addPhewasDescription(d,for.plots=T)
-      phenotypeManhattan(d, annotate.phenotype.description=T,...)
-    } else {
-      phenotypeManhattan(d,...)
-    }
+    #Add the groups and phecode descriptions as requested
+    d=addPhewasGroups(d,descriptions=add.phecode.descriptions)
+
+    phenotypeManhattan(d, annotate.phenotype.description=add.phecode.descriptions,...)
   }
