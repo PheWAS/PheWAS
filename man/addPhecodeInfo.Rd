@@ -33,9 +33,10 @@ If a character (or factor) variable or vector is passed in, it will return code 
 }
 \value{
 Data frame with added columns: 
-\item{phecode_description}{The description of the phecode.}
-\item{phecode_group}{The name of the phecode group.}
-\item{phecode_groupnum}{The assigned number of the phecode group.}
+\item{description}{The description of the phecode.}
+\item{group}{The name of the phecode group.}
+\item{groupnum}{The assigned number of the phecode group.}
+\item{color}{The default plotting color of the phecode group.}
 }
 
 \keyword{ utilities }

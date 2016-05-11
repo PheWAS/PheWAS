@@ -1,4 +1,4 @@
-addPhecodeInfo <- function(data, descriptions=T, groups=T, groupnums=F) {
+addPhecodeInfo <- function(data, descriptions=T, groups=T, groupnums=F, groupcolors=F) {
   #Convert a vector of phecodes to a data frame
   if(class(data)[1] %in% c("character", "factor")) {data=data.frame(phenotype=data,stringsAsFactors=F)}
   names=names(data)
@@ -23,9 +23,10 @@ addPhecodeInfo <- function(data, descriptions=T, groups=T, groupnums=F) {
 
   data=inner_join(pheinfo,data,by = c("phecode" = name ))
   
-  if(!descriptions) data = data %>% select(-phecode_description)
-  if(!groups) data = data %>% select(-phecode_group)
-  if(!groupnums) data = data %>% select(-phecode_groupnum)
+  if(!descriptions) data = data %>% select(-description)
+  if(!groups) data = data %>% select(-group)
+  if(!groupnums) data = data %>% select(-groupnum)
+  if(!groupcolors) data = data %>% select(-color)
   
   data
 }
