@@ -10,7 +10,7 @@ Plotting methods for PheWAS results, phenotype association studies, or generic p
 These functions permit the plotting of a variety of data types found when working with phenotypes. The functions are sequentially nested calls as outlined below. Supplying lower level parameters will permit tweaks to the higher level functions as well.
 }
 \usage{
-phewasManhattan(d, add.phecode.descriptions = T, ...)
+phewasManhattan(d, ...)
 
 phenotypeManhattan(d, suggestive.line = 0.05, significant.line,
   OR.size = F, OR.direction = F, annotate.level, 
@@ -33,9 +33,6 @@ phenotypePlot(d, max.y, max.x, suggestive.line, significant.line,
 \arguments{
   \item{d}{
 Data frame containing \code{phenotype} and \code{p}, or in the case of \code{phenotypePlot}, \code{phenotype} and \code{value}.
-}
-  \item{add.phewas.descriptions}{
-Annotate with PheWAS code descriptions? Default is TRUE.
 }
   \item{\dots}{
 Further parameters to be passed down to \code{phenotypeManhattan} and \code{phenotypePlot}.
