@@ -12,7 +12,7 @@ phewasManhattan <-
     #Check to see if it looks 0-padded
     if(min(nchar(d$phenotype))<3) warning("Phenotypes with length <3 observed, ensure they are are 0-padded (e.g., \"008\")")
     #Add the groups and phecode descriptions as requested
-    d=addPhecodeInfo(d,descriptions=add.phecode.descriptions)
+    d=addPhecodeInfo(d,descriptions=add.phecode.descriptions) %>% rename(phenotype=phecode)
 
     phenotypeManhattan(d, annotate.phenotype.description=add.phecode.descriptions,...)
   }
