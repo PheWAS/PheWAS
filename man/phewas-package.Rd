@@ -72,7 +72,7 @@ results=phewas(phenotypes,genotypes,cores=1,
 phewasManhattan(results, annotate.angle=0,
   title="My Example PheWAS Manhattan Plot")
 #Add PheWAS descriptions
-results_d=addPhewasDescription(results)
+results_d=addPhecodeInfo(results)
 #List the significant results
 results_d[results_d$bonferroni&!is.na(results_d$p),]
 #List the top 10 results
