@@ -2,10 +2,10 @@
 \alias{phemap}
 \docType{data}
 \title{
-Dataframe containing phewas code mappings.
+Dataframe containing phecode mappings.
 }
 \description{
-This data frame maps every ICD9 CM code to its phewas code.
+This data frame maps every ICD9 CM code to its phecode.
 This mapping is many to many.
 }
 \usage{data(phemap)}
@@ -13,7 +13,7 @@ This mapping is many to many.
   A data frame with 20809 observations on the following 2 variables.
   \describe{
     \item{\code{icd9}}{a character vector}
-    \item{\code{phewas_code}}{a character vector}
+    \item{\code{phecode}}{a character vector}
   }
 }
 

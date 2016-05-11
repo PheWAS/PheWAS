@@ -1,7 +1,7 @@
 \name{createPhewasTable}
 \alias{createPhewasTable}
 \title{
-Creates a phenotype table from id, ICD-9 (or phewas) code, count data.
+Creates a phenotype table from id, ICD-9 (or phecode, etc), count data.
 }
 \description{
 This function takes a data frame with three columns: id, icd9 codes, and counts. It returns a wide table with ICD-9 codes translated into phewas codes. It can optionally use the PheWAS exclusion criteria. Results can be formatted as true/false for a specified threshold or as summed continuous counts.
@@ -19,16 +19,16 @@ Data frame with three columns: id, ICD-9 character string, and count.
 The minimum code count to be considered a case. NA results in a continuous output.
 }
   \item{add.exclusions}{
-Apply PheWAS exclusions to the phewas codes.
+Apply PheWAS exclusions to phecodes.
 }
   \item{translate}{
-Should the input ICD-9 codes be translated to phewas codes?
+Should the input be translated to phecodes? This requires ICD-9 code input.
 }
   \item{aggregate.fun}{
-Aggregate function for duplicated ICD9 or phewas codes in an individual.
+Aggregate function for duplicated phenotypes (phecodes, etc) in an individual.
 }
   \item{id.gender}{
-If supplied, restrict the phenotypes by gender. This should be a data frame with the first column being the id and the second the gender, "M" or "F", of the individual. Individuals with any other specification will have all gender specific phenotypes set to NA.
+If supplied, restrict the phecodes by gender. This should be a data frame with the first column being the id and the second the gender, "M" or "F", of the individual. Individuals with any other specification will have all gender specific phenotypes set to NA.
 }
 }
 \details{
@@ -53,7 +53,7 @@ createPhewasTable(id_icd9_count)
 ex=generateExample(n=500,hit="335")
 #Extract the icd9 data
 id.icd9.count=ex$id.icd9.count
-#Create the PheWAS code table
+#Create the phecode table for a PheWAS
 phenotypes=createPhewasTable(id.icd9.count)
 phenotypes[1:10,1:10]
 }
