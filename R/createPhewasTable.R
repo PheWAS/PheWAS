@@ -11,7 +11,7 @@ createPhewasTable <-
       if(class(id.icd9.count[,2]) %in% c("integer","numeric")) {stop("Numeric ICD-9 codes passed in, so an accurate mapping is not possible. E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
       names(id.icd9.count)=c("id","icd9","count")
       message("Mapping ICD-9 codes to phecodes...")
-      phemapped=mapICD9toPhecodes(id.icd9.count)
+      phemapped=mapICD9ToPhecodes(id.icd9.count)
       phemapped=phemapped %>% transmute(id,phe=phecode,count) 
     }
     
@@ -22,7 +22,7 @@ createPhewasTable <-
     #Check exclusions, and add them to the list
     if(add.exclusions) {
       message("Mapping exclusions...")
-      exclusions=mapPhecodetoExclusions(phecode$phe,phecode$id)
+      exclusions=mapPhecodesToExclusions(phecode$phe,phecode$id)
       exclusions$count=-1
       phecode=rbind(phecode,exclusions %>% transmute(id,phe=exclusion,count))
     }
