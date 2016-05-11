@@ -12,17 +12,17 @@ This package provides the tools necessary to perform a PheWAS analysis.
 \tabular{ll}{
 Package: \tab PheWAS\cr
 Type: \tab Package\cr
-Version: \tab 0.10.3\cr
+Version: \tab 0.11\cr
 Date: \tab 2016-04-28\cr
 License: \tab GPL3\cr
 }
-This package contains the mappings and information for PheWAS codes version 1.2.
+This package contains the mappings and information for phecodes version 1.2.
 With the package installed, the command \code{vignette("PheWAS-package")} will display the vignette
 \itemize{
-\item \code{\link[PheWAS:mapICD9toPheWAS]{mapICD9toPheWAS}} allows users to transform their ICD9 CM codes into PheWAS codes.
-\item \code{\link[PheWAS:addPhewasDescription]{addPhewasDescription}} allows users to add the description for PheWAS codes.
+\item \code{\link[PheWAS:mapICD9toPheWAS]{mapICD9toPheWAS}} allows users to transform their ICD9 CM codes into phecodes.
+\item \code{\link[PheWAS:addPhewasDescription]{addPhewasDescription}} allows users to add the description for phecodes.
 \item \code{\link[PheWAS:createPhewasTable]{createPhewasTable}} takes ICD9 count data produces output suitable for PheWAS anaylsis.
-\item \code{\link[PheWAS:phewas]{phewas}} allows users to perform a PheWAS analysis with genetics, ICD9 codes, PheWAS codes, etc.
+\item \code{\link[PheWAS:phewas]{phewas}} allows users to perform a PheWAS analysis with genetics, ICD9 codes, phecodes, etc.
 \item \code{\link[PheWAS:PheWAS_Plotting]{phewasManhattan}} is a high level plot function that will generate a ggplot2 of PheWAS results.
 \item \code{\link[PheWAS:PheWAS_Plotting]{phenotypeManhattan}} provides a more general interface for plotting phenotype based Manhattan plots.
 \item \code{\link[PheWAS:PheWAS_Plotting]{phenotypePlot}} provides a complex interface for plotting many types of phenotype data.
@@ -62,7 +62,7 @@ ex=generateExample()
 #Extract the two parts from the returned list
 id.icd9.count=ex$id.icd9.count
 genotypes=ex$genotypes
-#Create the PheWAS code table- translates the icd9s, adds 
+#Create the phecode table- translates the icd9s, adds 
 #exclusions, and reshapes to a wide format
 phenotypes=createPhewasTable(id.icd9.count)
 #Run the PheWAS
