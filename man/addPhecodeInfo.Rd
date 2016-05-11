@@ -9,7 +9,7 @@ Add phecode descriptions and group information to existing data.
 \code{addPhewasDescription} adds the phecode description and group information, found in the data frame \code{pheinfo}. Requires the full three digit phecodes in character format. This function replaces addPhewasDescription and addPhewasGroups.
 }
 \usage{
-addPhecodeInfo(data, descriptions=T, groups=T, groupnums=F)
+addPhecodeInfo(data, descriptions=T, groups=T, groupnums=F, groupcolors=F)
 }
 \arguments{
   \item{data}{
@@ -23,6 +23,9 @@ Add the phecode group names? Default is TRUE (yes).
 }
   \item{groupnums}{
 Add the phecode group numbers? Default is FALSE (no). Used in plotting
+}
+  \item{groupcolors}{
+Add the phecode group colors? Default is FALSE (no). Used in plotting
 }
 }
 \details{
