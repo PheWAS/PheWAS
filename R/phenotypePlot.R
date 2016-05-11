@@ -273,13 +273,13 @@ phenotypePlot <-
       } else {
         #Add annotations
         if(annotate.phenotype.description|annotate.phenotype|annotate.snp.w.phenotype) {
-          plot = plot + ifelse(!base.labels, ggrepel::geom_text_repel(aes(label=description),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.angle)
-                               geom_text(aes(label=description),colour="black",data=d[d$annotate,],hjust=0,size=annotate.size,angle=annotate.angle))
+          plot = plot + if(!base.labels) { ggrepel::geom_text_repel(aes(label=description),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.angle)
+                          } else {geom_text(aes(label=description),colour="black",data=d[d$annotate,],hjust=0,size=annotate.size,angle=annotate.angle)}
         }
         #Add SNP annotations
         if(annotate.snp) {
-          plot = plot + ifelse(!base.labels, ggrepel::geom_text_repel(aes(label=snp),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.snp.angle),
-                               geom_text(aes(label=snp),colour="black",data=d[d$annotate,],hjust=0,size=annotate.size,angle=annotate.snp.angle))
+          plot = plot + if(!base.labels) {ggrepel::geom_text_repel(aes(label=snp),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.snp.angle)
+                          } else {geom_text(aes(label=snp),colour="black",data=d[d$annotate,],hjust=0,size=annotate.size,angle=annotate.snp.angle)}
         }
       }
     } 
