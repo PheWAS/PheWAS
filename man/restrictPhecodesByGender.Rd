@@ -1,13 +1,13 @@
-\name{restrictPhewasByGender}
-\alias{restrictPhewasByGender}
+\name{restrictPhecodesByGender}
+\alias{restrictPhecodesByGender}
 \title{
 Add PheWAS code descriptions to existing data.
 }
 \description{
-\code{restrictPhewasByGender} alters a PheWAS table, as from \code{\link[PheWAS:createPhewasTable]{createPhewasTable}}, to exclude individuals with non-applicable genders from certain phenotypes.
+\code{restrictPhecodesByGender} alters a table for PheWAS with phecodes, as from \code{\link[PheWAS:createPhewasTable]{createPhewasTable}}, to exclude individuals with non-applicable genders from certain phenotypes.
 }
 \usage{
-restrictPhewasByGender(phenotypes,id.gender)
+restrictPhecodesByGender(phenotypes,id.gender)
 }
 \arguments{
   \item{phenotypes}{
