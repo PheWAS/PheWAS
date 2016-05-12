@@ -1,7 +1,7 @@
 createPhewasTable <-
   function(id.icd9.count, min.code.count=2, add.exclusions=T, translate=T, aggregate.fun=sum, id.gender)
   {
-    id.icd9.count<-id.icd9.count
+    ids <- unique(id.icd9.count[,1])
     if(!translate) {
       #Warn about exclusions if input is not translated.
       if(add.exclusions){warning("Codes are not translated, but exclusions are to be applied. Ensure that the icd9 column is phewas codes or disable add.exclusions for accurate results.")}
@@ -51,6 +51,15 @@ createPhewasTable <-
     
     #Set exclusions to NA
     phens[phens==-1]=NA
+    
+    #Add in inds present in input, but without mapped phecodes
+    missing_ids=setdiff(ids,phens[,1])
+    if(length(missing_ids)>0) {
+      empty_record=phens[1,-1]
+      empty_record[]=0
+      phens=rbind(phens,data.frame(id=missing_ids,empty_record))
+    }
+    
     #Change to logical if there is a min code count
     if(!is.na(min.code.count)) {phens[,-1]=phens[,-1]>0}
 
