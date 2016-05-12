@@ -53,11 +53,11 @@ createPhewasTable <-
     phens[phens==-1]=NA
     
     #Add in inds present in input, but without mapped phecodes
-    missing_ids=setdiff(ids,phens[,1])
+    missing_ids=setdiff(ids,phens[["id"]])
     if(length(missing_ids)>0) {
       empty_record=phens[1,-1]
       empty_record[]=0
-      phens=rbind(phens,data.frame(id=missing_ids,empty_record))
+      phens=rbind(phens,data.frame(id=missing_ids,empty_record,check.names=F))
     }
     
     #Change to logical if there is a min code count
