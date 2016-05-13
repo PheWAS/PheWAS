@@ -3,7 +3,7 @@ restrictPhecodesByGender <- function(phenotypes,id.gender) {
   #Get the column of the gender
   g=dim(data)[2]
   #Get the restrictions found in the phenotypes data frame
-  current_gender_restriction=gender_restriction[gender_restriction$phewas_code %in% names(phenotypes)[-1],]
+  current_gender_restriction=gender_restriction[gender_restriction$phecode %in% names(phenotypes)[-1],]
   #Get male and female-only phenotypes
   male_only=current_gender_restriction[current_gender_restriction$male_only,"phecode"]
   female_only=current_gender_restriction[current_gender_restriction$female_only,"phecode"]
