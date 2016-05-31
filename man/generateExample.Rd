@@ -17,11 +17,11 @@ The number of individuals in the study.
 The base number of phenotypes per individual.
 }
   \item{hit}{
-The PheWAS code for which an artificial hit will be generated.
+The phecode for which an artificial hit will be generated.
 }
 }
 \details{
-The output from this function will be random results with a significant association found between the genotype data and the selected PheWAS code. It does not represent actual treatment data, though some highly connected phenotypes can also have strong associations due to the data creation methods.
+The output from this function will be random results with a significant association found between the genotype data and the selected phecode. It does not represent actual treatment data, though some highly connected phenotypes can also have strong associations due to the data creation methods.
 }
 \value{
 List with two named items:

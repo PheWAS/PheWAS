@@ -1,4 +1,4 @@
-mapICD9toPheWAS <-
+mapICD9ToPhecodes <-
 function(..., icd9s, add.info=F, keep.icd9=F) {
   if(!missing(icd9s)) {
     if(missing(...)){
@@ -17,7 +17,7 @@ function(..., icd9s, add.info=F, keep.icd9=F) {
   #merge the tables
   output = inner_join(input,phemap,by="icd9")
   if(add.info){
-    output=inner_join(output,pheinfo,by="phewas_code")
+    output=addPhecodeInfo(output)
   }
   if(!keep.icd9) {
     output=output %>% select(-icd9)
