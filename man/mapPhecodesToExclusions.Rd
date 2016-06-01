@@ -1,10 +1,11 @@
 \name{mapPhecodesToExclusions}
 \alias{mapPhecodesToExclusions}
+\alias{mapPheWAStoExclusions}
 \title{
 Map phecodes to their exclusions
 }
 \description{
-This function maps phecodes (optionally with ids for individuals) to a set of phecode exclusions.
+This function maps phecodes (optionally with ids for individuals) to a set of phecode exclusions. It has replaced \code{mapPheWAStoExclusions}.
 }
 \usage{
 mapPhecodesToExclusions(phecodes, ids)

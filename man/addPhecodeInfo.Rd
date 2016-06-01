@@ -6,7 +6,7 @@
 Add phecode descriptions and group information to existing data.
 }
 \description{
-\code{addPhewasDescription} adds the phecode description and group information, found in the data frame \code{pheinfo}. Requires the full three digit phecodes in character format. This function replaces addPhewasDescription and addPhewasGroups.
+\code{addPhecodeInfo} adds the phecode description and group information, found in the data frame \code{pheinfo}. Requires the full three digit phecodes in character format. This function replaces addPhewasDescription and addPhewasGroups.
 }
 \usage{
 addPhecodeInfo(data, descriptions=T, groups=T, groupnums=F, groupcolors=F)

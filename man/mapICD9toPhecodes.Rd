@@ -1,5 +1,6 @@
 \name{mapICD9ToPhecodes}
 \alias{mapICD9ToPhecodes}
+\alias{mapICD9toPheWAS}
 \title{
 Map ICD9 codes to phecodes
 }

@@ -12,15 +12,15 @@ This package provides the tools necessary to perform a PheWAS analysis.
 \tabular{ll}{
 Package: \tab PheWAS\cr
 Type: \tab Package\cr
-Version: \tab 0.11\cr
-Date: \tab 2016-04-28\cr
+Version: \tab 0.11.1\cr
+Date: \tab 2016-06-01\cr
 License: \tab GPL3\cr
 }
 This package contains the mappings and information for phecodes version 1.2.
 With the package installed, the command \code{vignette("PheWAS-package")} will display the vignette
 \itemize{
-\item \code{\link[PheWAS:mapICD9toPheWAS]{mapICD9toPheWAS}} allows users to transform their ICD9 CM codes into phecodes.
-\item \code{\link[PheWAS:addPhewasDescription]{addPhewasDescription}} allows users to add the description for phecodes.
+\item \code{\link[PheWAS:mapICD9toPhecodes]{mapICD9toPhecodes}} allows users to transform their ICD9 CM codes into phecodes.
+\item \code{\link[PheWAS:addPhecodeInfo]{addPhecodeInfo}} allows users to add the description for phecodes.
 \item \code{\link[PheWAS:createPhewasTable]{createPhewasTable}} takes ICD9 count data produces output suitable for PheWAS anaylsis.
 \item \code{\link[PheWAS:phewas]{phewas}} allows users to perform a PheWAS analysis with genetics, ICD9 codes, phecodes, etc.
 \item \code{\link[PheWAS:PheWAS_Plotting]{phewasManhattan}} is a high level plot function that will generate a ggplot2 of PheWAS results.
@@ -39,9 +39,9 @@ The original PheWAS manuscript can be found here: http://www.ncbi.nlm.nih.gov/pu
 \keyword{ package}
 \keyword{ utilities }
 \seealso{
-\code{\link[PheWAS:mapICD9toPheWAS]{mapICD9toPheWAS}}
+\code{\link[PheWAS:mapICD9toPhecodes]{mapICD9toPhecodes}}
 
-\code{\link[PheWAS:addPhewasDescription]{addPhewasDescription}}
+\code{\link[PheWAS:addPhecodeInfo]{addPhecodeInfo}}
 
 \code{\link[PheWAS:createPhewasTable]{createPhewasTable}}
 
