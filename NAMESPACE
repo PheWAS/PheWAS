@@ -1,4 +1,4 @@
-export(phewas, mapICD9ToPhecodes, mapPhecodesToExclusions, createPhewasTable, phenotypePlot, phewasManhattan, phenotypeManhattan, generateExample, phewasMeta, phewasMetaModels, restrictPhecodesByGender, addPhecodeInfo, addPhewasDescription, addPhewasGroups, )
+export(phewas, mapICD9ToPhecodes, mapPhecodesToExclusions, createPhewasTable, phenotypePlot, phewasManhattan, phenotypeManhattan, generateExample, phewasMeta, phewasMetaModels, restrictPhecodesByGender, addPhecodeInfo, addPhewasDescription, addPhewasGroups, mapPheWAStoExclusions, mapICD9toPheWAS)
 import(dplyr,tidyr, ggplot2, parallel)
 importFrom(MASS,mvrnorm)
 importFrom(meta,metagen)
