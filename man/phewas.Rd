@@ -71,7 +71,7 @@ The complete data frame can be passed in using the \code{data} parameter with na
 These results can be directly plotted using the \code{\link[PheWAS:PheWAS_Plotting]{phewasManhattan}} function, assuming that models are not returned. If they are, the \code{results} item of the returned list needs to be used.
 }
 \value{
-The following are the default rows included in the returned data frame. The attributes of the returned data frame contain additional information about the anaylsis.
+The following are the default rows included in the returned data frame. The attributes of the returned data frame contain additional information about the anaylsis. If a model did not have sufficient cases or controls for analysis or failed to converge, NAs will be reported and a note will be added in the note field.
 \item{phenotype}{The outcome under study}
 \item{snp}{The predictor under study}
 \item{adjustment}{The one off adjustment used}
