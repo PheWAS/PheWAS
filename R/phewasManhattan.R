@@ -6,7 +6,7 @@ phewasManhattan <-
           warning("Factor phenotype input mapped to characters")
           d$phenotype=as.character(d$phenotype)
         } else {
-          stop("Non-character or non-factor phenotypes passed in, so an accurate phewas code mapping is not possible.")
+          stop("Non-character or non-factor phenotypes passed in, so an accurate phecode mapping is not possible.")
         }
     }
     #Check to see if it looks 0-padded

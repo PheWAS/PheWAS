@@ -37,7 +37,7 @@ By default, this function returns a wide format data frame with boolean phenotyp
 The default exclusions can be skipped with \code{add.exclusions=F}. In conjuntion with \code{translate=F} (and optionally adjusting \code{min.code.count} and \code{aggregate.fun}), one can use this function as a simple reshaping wrapper.
 }
 \value{
-A data frame. The first column, named "id", contains the supplied id for each individual. The following columns are all present phewas codes. They contain T/F/NA for case/control/exclude or continuous/NA if min.code.count was NA.
+A data frame. The first column contains the supplied id for each individual (preserving the name of the original column). The following columns are all present phewas codes. They contain T/F/NA for case/control/exclude or continuous/NA if min.code.count was NA.
 }
 \author{
 Robert Carroll

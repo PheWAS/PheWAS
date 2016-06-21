@@ -65,16 +65,20 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
       n_controls=n_total-n_cases
       if(n_cases<min.records|n_controls<min.records) {note=paste(note,"[Error: <",min.records," cases or controls]")}
       else {
-  
         model = glm(as.formula(paste(phe," ~ .")), data=d, family=binomial)
         modsum= summary(model)
-        #Find the rows with results that gets merged across all loops
-        gen_list=grep(gen,row.names(modsum$coef))
-        gens=row.names(modsum$coef)[gen_list]
-        or=exp(modsum$coef[gen_list,1])
-        beta=modsum$coef[gen_list,1]
-        se=modsum$coef[gen_list,2]
-        p=modsum$coef[gen_list,4]      
+        #If the models did not converge, report NA values instead.
+        if(model$converged) {
+          #Find the rows with results that gets merged across all loops
+          gen_list=grep(gen,row.names(modsum$coef))
+          gens=row.names(modsum$coef)[gen_list]
+          or=exp(modsum$coef[gen_list,1])
+          beta=modsum$coef[gen_list,1]
+          se=modsum$coef[gen_list,2]
+          p=modsum$coef[gen_list,4]
+        } else {
+          note=paste(note,"[Error: The model did not converge]")
+        }
       }
     } else {
       type = "linear"
@@ -84,16 +88,21 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
         model = lm(as.formula(paste(phe," ~ .", sep="", collapse="")), data=d)
   
         modsum= summary(model)
-        #Find the rows with results that gets merged across all loops
-        gen_list=grep(gen,row.names(modsum$coef))
-        gens=row.names(modsum$coef)[gen_list]
-        beta=modsum$coef[gen_list,1]
-        se=modsum$coef[gen_list,2]
-        p=modsum$coef[gen_list,4]
+        #If the models did not converge, report NA values instead.
+        if(model$converged) {
+          #Find the rows with results that gets merged across all loops
+          gen_list=grep(gen,row.names(modsum$coef))
+          gens=row.names(modsum$coef)[gen_list]
+          beta=modsum$coef[gen_list,1]
+          se=modsum$coef[gen_list,2]
+          p=modsum$coef[gen_list,4]
+        } else {
+          note=paste(note,"[Error: The model did not converge]")
+        }
       }
     }
   }
-
+  
   #Check to see there were numbers (ie phewas codes) as the predictor, and clean up.
   if(suppressWarnings(!is.na(as.numeric(gen)))){
     gens=substring(gens,2)

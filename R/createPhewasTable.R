@@ -1,6 +1,7 @@
 createPhewasTable <-
   function(id.icd9.count, min.code.count=2, add.exclusions=T, translate=T, aggregate.fun=sum, id.gender)
   {
+    id.name=names(id.icd9.count)[1]
     ids <- unique(id.icd9.count[,1])
     if(!translate) {
       #Warn about exclusions if input is not translated.
@@ -68,5 +69,9 @@ createPhewasTable <-
     if(!missing(id.gender)) {
       phens=restrictPhecodesByGender(phens,id.gender)
     }
+    
+    #Rename the ID column to the input ID column name
+    names(phens)[1]=id.name
+      
     phens
   }

@@ -82,6 +82,11 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   successful.genotypes=unique(na.omit(sapply(result,function(x){attributes(x)$successful.genotype})))
   sig=bind_rows(result)
   
+  #Report warning if any convergence errors
+  if(max(grepl(pattern = "[Error: The model did not converge]", sig$note, fixed=TRUE))){
+    warning("Not all models converged, check the notes column for details.")
+  }
+  
   message("Cleaning up...")
   
   #Add significance thresholds
