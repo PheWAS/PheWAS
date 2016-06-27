@@ -1,9 +1,11 @@
 plinkPhewasExport <- function(phenotypes, file="plink.pheno", translateIDs=TRUE) {
   if(translateIDs) {
-    #Create the new ID columns and remove the old one (whatever it was called)
+    name_id=names(phenotypes)[1]
+    #Create the new ID columns
     phenotypes$FID=phenotypes[[1]]
     phenotypes$IID=phenotypes[[1]]
-    phenotypes=phenotypes[,-1]
+    #Remove the old id column as long as it wasn't one we need
+    if(!(name_id %in% c("FID","IID"))) phenotypes=phenotypes[,-1]
   }
   #Make sure the IDs are in the proper order
   pheno.out=phenotypes %>% select(FID, IID, everything())
