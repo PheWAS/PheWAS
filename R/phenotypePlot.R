@@ -139,7 +139,7 @@ phenotypePlot <-
     }
     
     if (x.group.labels) {
-      labels=rbind_all(by(d,d$groupnum,function(x){data.frame(tick=mean(unique(x$seq)),label=as.character(x$group[1]),stringsAsFactors=F)}))
+      labels=bind_rows(by(d,d$groupnum,function(x){data.frame(tick=mean(unique(x$seq)),label=as.character(x$group[1]),stringsAsFactors=F)}))
       labels=labels[order(labels$tick),]
     }
     

@@ -97,5 +97,5 @@ phewasMeta <- function(results, fixed=T, keep.both=T, ...) {
            }
            c
          })
-  rbind_all(out)
+  bind_rows(out)
 }
