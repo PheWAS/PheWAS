@@ -40,20 +40,29 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
     note=paste(note,"[Error: non-varying phenotype or genotype]")
   } else {
     if(additive.genotypes) {
-      if(class(d[[gen]]) %in% c("numeric","integer")){
-        allele_freq=sum(d[[gen]])/(2*n_total)
-      }
-      if(class(d[[gen]]) %in% c("numeric","integer") & sum(!(na.omit(d[[gen]]) %in% 0:2))==0) {
-        P=allele_freq
-        Q=1-allele_freq
-        AA=sum(d[[gen]]==2)
-        xAA=P^2*n_total
-        Aa=sum(d[[gen]]==1)
-        xAa=2*P*Q*n_total
-        aa=sum(d[[gen]]==0)
-        xaa=Q^2*n_total
-        HWE_pval=pchisq((AA-xAA)^2/(xAA)+(Aa-xAa)^2/(xAa)+(aa-xaa)^2/(xaa),1)
-      } else {note=paste(note,"[Warning: Genotype is not coded 0,1,2, but additive.genotypes was TRUE.]")}
+      allele_freq=sapply(d %>% select(one_of(gen))),
+                    FUN=function(x){
+                      if(class(x) %in% c("numeric","integer")){
+                        sum(x)/(2*n_total)
+                      } else {NA_real_}
+                    })
+      HWE_pval=sapply(d %>% select(one_of(gen))),
+            FUN=function(x){
+              if(class(x) %in% c("numeric","integer") & sum(!(na.omit(x) %in% 0:2))==0) {
+                P=allele_freq
+                Q=1-allele_freq
+                AA=sum(x==2)
+                xAA=P^2*n_total
+                Aa=sum(x==1)
+                xAa=2*P*Q*n_total
+                aa=sum(x==0)
+                xaa=Q^2*n_total
+                pchisq((AA-xAA)^2/(xAA)+(Aa-xAa)^2/(xAa)+(aa-xaa)^2/(xaa),1)
+              } else {NA_real_}
+            }
+      )
+      #Report a warning as needed.
+      if() {note=paste(note,"[Warning: At least one genotype was not coded 0,1,2, but additive.genotypes was TRUE.]")}
     } 
     #Check if genotype was available
     #Check if phenotype is logical (boolean)
