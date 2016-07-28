@@ -58,7 +58,7 @@ function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, cores
   } else {
     #Otherwise, just use lapply.
     message("Finding associations...")
-    result=lapply(full_list,FUN=association_method, additive.genotypes, min.records,return.models, confint.level=MASS.confint.level, data, covariates)
+    result=lapply(full_list,FUN=association_method, additive.genotypes, min.records,return.models, confint.level=MASS.confint.level, my.data=data)
   }
 
   if(return.models) {
@@ -81,68 +81,6 @@ function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, cores
   
   message("Cleaning up...")
   
-  #Add significance thresholds
-  attributes(sig)$alpha=alpha
-  attributes(sig)$n.tests=n.tests
-  if(!missing(significance.threshold)) {
-    message("Finding significance thresholds...")
-    thresh=match(c("p-value","bonferroni","fdr","simplem-genotype","simplem-phenotype","simplem-product"),significance.threshold)
-    sm.g=1
-    sm.p=1
-    #p.value
-    if(!is.na(thresh[1])) {
-      sig$p.value=sig$p<=alpha
-    }
-    #bonferroni
-    if(!is.na(thresh[2])) {
-      sig$bonferroni=sig$p<=alpha/n.tests
-      attributes(sig)$bonferroni=alpha/n.tests
-    }
-    #fdr
-    if(!is.na(thresh[3])) {
-      sig$fdr=p.adjust(sig$p,method="fdr")<=alpha
-    }
-    #simplem-genotype
-    if(!is.na(thresh[4])|!is.na(thresh[6])) {
-      if(length(successful.genotypes)>1){
-        eigs=eigen(cor(data[,genotypes],use="pairwise.complete.obs",method="spearman"))[[1]]
-        max.eig=sum(eigs)
-        sm.g=which.max(cumsum(eigs)>.995*max.eig)
-      } else {
-        sm.g=1
-      }
-      sig$simplem.genotype=sig$p<=alpha/sm.g
-      attributes(sig)$simplem.genotype=alpha/sm.g
-      attributes(sig)$simplem.genotype.meff=sm.g
-    }
-    #simplem-phenotype
-    if(!is.na(thresh[5])|!is.na(thresh[6])) {
-      if(length(successful.phenotypes>1)) {
-        eigs=try(cor(data[,successful.phenotypes],use="pairwise.complete.obs",method="spearman"),silent=T)
-        if(class(eigs)!="try-error"){
-          eigs[is.na(eigs)]=0
-          eigs=eigen(eigs)[[1]]
-          max.eig=sum(eigs)
-          sm.p=which.max(cumsum(eigs)>.995*max.eig)
-        } else {
-          warning("Phentoype correlation generation failed; this is typically due to sparse phenotypes.")
-          sm.p=NA
-        }
-      } else {
-        sm.p=1
-      }
-      sig$simplem.phenotype=sig$p<=alpha/sm.p
-      attributes(sig)$simplem.phenotype=alpha/sm.p    
-      attributes(sig)$simplem.phenotype.meff=sm.p
-    }
-    #simplem-product
-    if(!is.na(thresh[6])) {
-      sm=sm.g*sm.p
-      sig$simplem.product=sig$p<=alpha/sm
-      attributes(sig)$simplem.product=alpha/sm
-      attributes(sig)$simplem.product.meff=sm
-    }
-  }
   if(!missing(outcomes)) names(sig)[names(sig)=="phenotype"]="outcome"
   if(!missing(predictors)) names(sig)[names(sig)=="snp"]="predictor"
   if(return.models){sig=list(results=sig,models=models)}
