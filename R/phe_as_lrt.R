@@ -1,5 +1,5 @@
 phe_as_lrt <-
-  function(phenotype, min.records=20,return.models=T, my.data, my.covariates) {
+  function(phenotype, min.records=20,return.models=T, my.data, my.covariates, ...) {
     if(!missing(my.data)) data=my.data
     if(!missing(my.covariates)) covariates=my.covariates
     

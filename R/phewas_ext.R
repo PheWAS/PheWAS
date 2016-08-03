@@ -1,6 +1,6 @@
 phewas_ext <-
 function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, cores=1, additive.genotypes=T,
-         method="glm", strata,
+         method="glm", strata=NA, factor.contrasts=contr.phewas,
          return.models=F, min.records=20, MASS.confint.level=NA, quick.confint.level) {
   #Require an input data frame
   if(missing(data)) {
@@ -24,7 +24,7 @@ function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, cores
   } else if (method=="clogit") {
     association_method=phe_as_clogit
     #Check for a strata parameter
-    if(missing(strata)) { stop("clogit requires groups- please provide the column name in the 'strata' parameter.")}
+    if(is.na(strata)) { stop("clogit requires groups- please provide the column name in the 'strata' parameter.")}
   } else if (method=="lrt") {
     association_method=phe_as_lrt
     #Setup the genotypes as a single complete list if not done already
@@ -51,14 +51,18 @@ function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, cores
     message("Cluster created, finding associations...")
     clusterExport(phewas.cluster.handle,c("data"), envir=environment())
     #Loop across every phenotype- iterate in parallel
-    result <-parLapplyLB(phewas.cluster.handle, full_list, association_method, additive.genotypes, confint.level=MASS.confint.level, min.records,return.models)
+    result <-parLapplyLB(phewas.cluster.handle, full_list, association_method, additive.genotypes=additive.genotypes, 
+                         confint.level=MASS.confint.level, min.records=min.records,
+                         return.models=return.models,factor.contrasts=factor.contrasts,strata=strata)
     #Once we have succeeded, stop the cluster and remove it.
     stopCluster(phewas.cluster.handle)
     rm(phewas.cluster.handle, envir=.GlobalEnv)
   } else {
     #Otherwise, just use lapply.
     message("Finding associations...")
-    result=lapply(full_list,FUN=association_method, additive.genotypes, min.records,return.models, confint.level=MASS.confint.level, my.data=data)
+    result=lapply(full_list,FUN=association_method, additive.genotypes=additive.genotypes, 
+                  confint.level=MASS.confint.level, my.data=data, min.records=min.records,
+                  return.models=return.models,factor.contrasts=factor.contrasts,strata=strata)
   }
 
   if(return.models) {
