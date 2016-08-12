@@ -79,7 +79,7 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
         x}),check.names=F)
     }
     #Create the formula:
-    formula.string=paste0("`",phe,"` ~ `",paste(c(gen,cov),collapse = "` + `"),'`')
+    formula.string=paste0("`",phe,"` ~ `",paste(na.omit(c(gen,cov)),collapse = "` + `"),'`')
     my.formula = as.formula(formula.string)
     
     #Check if phenotype is logical (boolean)
