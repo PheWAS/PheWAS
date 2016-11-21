@@ -147,9 +147,9 @@ Title for the plot. Defaults to "Phenotype Plot" with the date and time.
 \details{
 These functions are nested: \code{phewasManhattan} calls \code{phenotypeManhattan} which calls \code{phenotypePlot}.
 
-\code{phewasManhattan} generates a PheWAS Manhattan plot and can be used with a result data frame from \code{phewas}. This function only adds PheWAS code groupings and descriptions as applicable before calling \code{phenotypeManhattan}.
+\code{phewasManhattan} generates a PheWAS Manhattan plot and can be used with a result data frame from \code{phewas} using phecodes. This function only adds PheWAS code groupings and descriptions as applicable before calling \code{phenotypeManhattan}.
 
-\code{phenotypeManhattan} performs the transformations to the data and paramters for a -log10 scale.
+\code{phenotypeManhattan} performs the transformations to the data and paramters for a -log10 scale. It is useful in cases of \code{phewas} results using other phenotypes besides phecodes.
 
 \code{phenotypePlot} does the actual plotting and can be used to visualize non-p-value data. 
 }
