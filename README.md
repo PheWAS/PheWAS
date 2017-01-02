@@ -7,10 +7,10 @@ For installation help, see below.
 The PheWAS package can be installed using the devtools package. The following code when executed in R will get you started:
 ```
 install.packages("devtools")
-library(devtools)
-install_github("PheWAS/PheWAS")
+devtools::install_github("PheWAS/PheWAS")
 library(PheWAS)
 ```
+Note that some versions of devtools do not install all dependencies, so one may need to install those using install.packages() first if there is an error.
 
 You can additionally view the package help or vignette in R:
 - `?PheWAS`
