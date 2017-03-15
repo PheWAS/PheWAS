@@ -7,6 +7,8 @@ For installation help, see below.
 The PheWAS package can be installed using the devtools package. The following code when executed in R will get you started:
 ```
 install.packages("devtools")
+#It may be necessary to install DBI as not all package dependencies are installed below:
+install.packages("DBI")
 devtools::install_github("PheWAS/PheWAS")
 library(PheWAS)
 ```
