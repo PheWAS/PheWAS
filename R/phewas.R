@@ -27,6 +27,8 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
     phenotypes=phenotypes[!(phenotypes %in% id)]
     genotypes=names(genotypes)
     genotypes=genotypes[!(genotypes %in% id)]
+    if(length(phenotypes)<1 || length(genotypes)<1) 
+      {stop("Either phenotypes or genotypes contained no non-shared columns, yielding no variables for analysis after the merge.")}
     data=merge(phe,gen,by=id)
     if(!is.null(names(covariates)[-1])) {
       covariates=names(covariates)
@@ -42,6 +44,10 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
     }
   }
   para=(cores>1)
+  
+  #Check to make sure that there were >=1 phenotypes and genotypes
+  if(length(phenotypes)<1 || length(genotypes)<1) {stop("You must provide at least one genotype/predictor and one phenotype/outcome for analysis.")}
+  
   #Create the list of combinations to iterate over
   full_list=data.frame(t(expand.grid(phenotypes,genotypes,adjustments,stringsAsFactors=F)),stringsAsFactors=F)
 

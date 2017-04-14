@@ -21,7 +21,7 @@ phenotypePlot(d, max.y, max.x, suggestive.line, significant.line,
   size.x.labels = 9, size.y.labels = 9, switch.axis = F, sort.by.value = F,
   sort.by.category.value = F, annotate.phenotype.description, 
   base.labels = F,
-  annotate.angle = 30, annotate.size = 5, annotate.level, 
+  annotate.angle = 0, annotate.size = 5, annotate.level, 
   annotate.phenotype = F, annotate.snp.w.phenotype = F, annotate.snp = F,
   annotate.snp.angle = 0, annotate.list, annotate.only.largest = T,
   lc.labels = F, x.group.labels = T, x.phenotype.labels = F, sizes = F,
@@ -147,9 +147,9 @@ Title for the plot. Defaults to "Phenotype Plot" with the date and time.
 \details{
 These functions are nested: \code{phewasManhattan} calls \code{phenotypeManhattan} which calls \code{phenotypePlot}.
 
-\code{phewasManhattan} generates a PheWAS Manhattan plot and can be used with a result data frame from \code{phewas}. This function only adds PheWAS code groupings and descriptions as applicable before calling \code{phenotypeManhattan}.
+\code{phewasManhattan} generates a PheWAS Manhattan plot and can be used with a result data frame from \code{phewas} using phecodes. This function only adds PheWAS code groupings and descriptions as applicable before calling \code{phenotypeManhattan}.
 
-\code{phenotypeManhattan} performs the transformations to the data and paramters for a -log10 scale.
+\code{phenotypeManhattan} performs the transformations to the data and paramters for a -log10 scale. It is useful in cases of \code{phewas} results using other phenotypes besides phecodes.
 
 \code{phenotypePlot} does the actual plotting and can be used to visualize non-p-value data. 
 }

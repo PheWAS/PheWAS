@@ -4,7 +4,7 @@ phenotypePlot <-
            #annotation
            base.labels=F,
            annotate.phenotype.description,
-           annotate.angle=30, annotate.size=5, annotate.level,
+           annotate.angle=0, annotate.size=5, annotate.level,
            annotate.phenotype=F, 
            annotate.snp.w.phenotype=F,
            annotate.snp=F, annotate.snp.angle=0,
@@ -286,10 +286,6 @@ phenotypePlot <-
     
     #Add the title
     plot=plot+labs(title=title) + theme(title=element_text(size=12))
-    
-    ####Temporary fix for the ggplot2 problems with theme_classic()
-    plot=plot + theme(axis.line.x = element_line(colour = 'black', size=0.5, linetype='solid'),
-                      axis.line.y = element_line(colour = 'black', size=0.5, linetype='solid'))
     
     plot
   }

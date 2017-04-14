@@ -1,5 +1,5 @@
 restrictPhecodesByGender <- function(phenotypes,id.gender) {
-  data=merge(phenotypes,id.gender,by=names(id.gender)[1],all.x=T)
+  data=merge(phenotypes,id.gender,by=1,all.x=T)
   #Get the column of the gender
   g=dim(data)[2]
   #Get the restrictions found in the phenotypes data frame
