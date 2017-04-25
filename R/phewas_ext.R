@@ -29,8 +29,12 @@ function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, cores
     association_method=phe_as_lrt
     #Setup the genotypes as a single complete list if not done already
     if(class(genotypes)!="list") {genotypes=list(genotypes)}
+  } else if (method == "logistf") {
+    association_method=phe_as_logistf
+  } else if (method == "logistf_multips") {
+    association_method=phe_as_logistf_multips
   } else {
-    stop("Method must be one of: 'glm', 'clogit', or 'lrt'.")
+    stop("Method must be one of: 'glm', 'clogit', 'lrt', or 'logistf'.")
   }
   
   para=(cores>1)
@@ -50,6 +54,7 @@ function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, cores
     assign("phewas.cluster.handle", makeCluster(cores), envir = .GlobalEnv)
     message("Cluster created, finding associations...")
     clusterExport(phewas.cluster.handle,c("data"), envir=environment())
+    clusterCall(phewas.cluster.handle,library,package="dplyr",character.only=T)
     #Loop across every phenotype- iterate in parallel
     result <-parLapplyLB(phewas.cluster.handle, full_list, association_method, additive.genotypes=additive.genotypes, 
                          confint.level=MASS.confint.level, min.records=min.records,
