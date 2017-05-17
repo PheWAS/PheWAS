@@ -30,6 +30,7 @@ phe_as_clogit <-
     type=NA_character_
     note=""
     model=NA
+    formula.string=NA_character_
     expanded_formula=NA_character_
     gen_expansion=1:length(gen)
     if(n_total<min.records) {
