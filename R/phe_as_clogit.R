@@ -92,7 +92,7 @@ phe_as_clogit <-
         if(n_cases<min.records|n_controls<min.records) {note=paste(note,"[Error: <",min.records," cases or controls]")}
         else {
           
-          model = tryCatch(clogit(my.formula, data=d), warning = function(w) {w$message})
+          model = tryCatch(survival::clogit(my.formula, data=d), warning = function(w) {w$message})
           #If the models did not converge, report NA values instead.
           if(class(model)[1]!="character") {
             #Find the observed genotype columns
