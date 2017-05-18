@@ -80,7 +80,7 @@ phe_as_clogit <-
           x}),check.names=F)
       }
       #Create the formula:
-      formula.string=paste0("`",phe,"` ~ `",paste(c(gen,cov),collapse = "` + `"),'`'," + survival::strata(`",strata,"`)")
+      formula.string=paste0("`",phe,"` ~ `",paste(c(gen,cov),collapse = "` + `"),'`'," + strata(`",strata,"`)")
       my.formula = as.formula(formula.string)
       
       #Check if phenotype is logical (boolean)
@@ -92,7 +92,7 @@ phe_as_clogit <-
         if(n_cases<min.records|n_controls<min.records) {note=paste(note,"[Error: <",min.records," cases or controls]")}
         else {
           
-          model = tryCatch(survival::clogit(my.formula, data=d), warning = function(w) {w$message})
+          model = tryCatch(clogit(my.formula, data=d), warning = function(w) {w$message})
           #If the models did not converge, report NA values instead.
           if(class(model)[1]!="character") {
             #Find the observed genotype columns

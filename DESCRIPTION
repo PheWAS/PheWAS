@@ -4,12 +4,12 @@ Title: Phenome Wide Association Studies (PheWAS)
 Version: 0.11.3
 Date: 2016-07-25
 Author: Robert Carroll, Josh Denny, Lisa Bastarache, Laura Wiley
-Maintainer: Robert Carroll <Robert.J.Carroll@Vanderbilt.edu>
+Maintainer: Robert Carroll <Robert.Carroll@Vanderbilt.edu>
 URL: http://www.ncbi.nlm.nih.gov/pubmed/24733291
 Description: Functions to perform Phenome Wide Association 
  Studies (PheWAS). These functions include the conversion of ICD9 codes to PheWAS
  codes (v1.2), statistical analysis, and plotting.
 License: GPL-3
 Depends: dplyr, tidyr, ggplot2 (>= 2.2.0), parallel
-Imports: MASS, meta, ggrepel, DT
+Imports: MASS, meta, ggrepel, DT, survival
 LazyData: yes
