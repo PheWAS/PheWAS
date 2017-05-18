@@ -80,7 +80,7 @@ phe_as_clogit <-
           x}),check.names=F)
       }
       #Create the formula:
-      formula.string=paste0("`",phe,"` ~ `",paste(c(gen,cov),collapse = "` + `"),'`'," + strata(`",strata,"`)")
+      formula.string=paste0("`",phe,"` ~ `",paste(c(gen,cov),collapse = "` + `"),'`'," + survival::strata(`",strata,"`)")
       my.formula = as.formula(formula.string)
       
       #Check if phenotype is logical (boolean)
