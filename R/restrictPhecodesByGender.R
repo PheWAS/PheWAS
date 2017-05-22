@@ -8,9 +8,9 @@ restrictPhecodesByGender <- function(phenotypes,id.gender) {
   male_only=current_gender_restriction[current_gender_restriction$male_only,"phecode"]
   female_only=current_gender_restriction[current_gender_restriction$female_only,"phecode"]
   #Set row column matches to NA where inds of a gender meet restricted phenotypes
-  data[data[,g]=="M",female_only]=NA
-  data[data[,g]=="F",male_only]=NA
-
+  data[!is.na(data[,g])&data[,g]!="F",female_only]=NA
+  data[!is.na(data[,g])&data[,g]!="M",male_only]=NA
+  
   #Return everything, sans gender
   data[,-g]
 }
