@@ -4,6 +4,7 @@ phe_as_clogit <-
     #Retrieve the targets for this loop
     phe=phe.gen[[1]]
     gen=phe.gen[[2]]
+    print(gen)
     gens=gen
     cov=phe.gen[[3]]
     #Subset the data
