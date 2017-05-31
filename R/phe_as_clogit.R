@@ -110,7 +110,7 @@ phe_as_clogit <-
             p=modsum$coefficients[gen_list,5]
             expanded_formula=paste0(c(names(model$coefficients),paste0("strata(`","strata","`)")),collapse=" + ")
           } else {
-            if(model=="NA/NaN/Inf in foreign function call (arg 5)") {model=paste("Potential fitting problem (try changing covariates).",model)}
+            if(model=="NA/NaN/Inf in foreign function call (arg 5)") {model=paste0("Potential fitting problem (try changing covariates). clogit error: ",model)}
             note=paste0(note,"[Error: ",model,"]")
             model=NA
           }
