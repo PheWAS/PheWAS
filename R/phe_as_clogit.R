@@ -4,7 +4,6 @@ phe_as_clogit <-
     #Retrieve the targets for this loop
     phe=phe.gen[[1]]
     gen=phe.gen[[2]]
-    print(phe)
     gens=gen
     cov=phe.gen[[3]]
     #Subset the data
@@ -86,14 +85,14 @@ phe_as_clogit <-
       
       #Check if phenotype is logical (boolean)
       if(class(d[[phe]]) %in% c("logical")) {
-        type = "logistic"
+        type = "conditional logistic"
         #Create the logistic model
         n_cases=sum(d[[phe]])
         n_controls=n_total-n_cases
         if(n_cases<min.records|n_controls<min.records) {note=paste(note,"[Error: <",min.records," cases or controls]")}
         else {
           
-          model = tryCatch(clogit(my.formula, data=d), warning = function(w) {w$message})
+          model = tryCatch(clogit(my.formula, data=d), warning = function(w) {w$message}, error = function(e) {e$message})
           #If the models did not converge, report NA values instead.
           if(class(model)[1]!="character") {
             #Find the observed genotype columns
@@ -111,7 +110,8 @@ phe_as_clogit <-
             p=modsum$coefficients[gen_list,5]
             expanded_formula=paste0(c(names(model$coefficients),paste0("strata(`","strata","`)")),collapse=" + ")
           } else {
-            note=paste(note,"[Error: ",model,"]")
+            if(model=="NA/NaN/Inf in foreign function call (arg 5)") {model=paste("Potential fitting problem (try changing covariates).",model)}
+            note=paste0(note,"[Error: ",model,"]")
             model=NA
           }
         }
