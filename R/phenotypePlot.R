@@ -25,17 +25,23 @@ phenotypePlot <-
     
     #Check for annotation information
     if (!missing(annotate.phenotype.description)) {
-      if(class(annotate.phenotype.description)=="data.frame" & sum(c("phenotype","description") %in% names(annotate.phenotype.description))==2) {
+      #If it is a data frame with appropriate fields, set it up
+      if(is.data.frame(annotate.phenotype.description) & sum(c("phenotype","description") %in% names(annotate.phenotype.description))==2) {
         #Add annotation
         d=merge(d,annotate.phenotype.description)
         annotate.phenotype.description=T
-      } else if(annotate.phenotype.description==T & length(d$description)) {
-        #Do nothing, as it is ready.
+      } else if(is.logical(annotate.phenotype.description)) {
+        #If there is a logical, check to see if it meets criteria
+        if(annotate.phenotype.description==T & !length(d$description)) {
+          stop("Annotate.phenotype.description must contain columns phenotype and description, or be TRUE with provided d$description.")
+        }
+        #Else do nothing, as it is ready.
       } else {
-        annotate.phenotype.description=F
-        stop("Annotate.phenotype must contain columns phenotype and description, or be TRUE with provided d$description.")
+        #If it wasn't appropriate input, throw an error
+        stop("Annotate.phenotype.description must contain columns phenotype and description, or be TRUE with provided d$description.")
       }
     } else {
+      #If no description annotation was mentioned, set it to FALSE
       annotate.phenotype.description=F
     }
     if ((annotate.snp|annotate.snp.w.phenotype) & !("snp" %in% names(d))) stop("You requested SNP annotation but d$snp is not defined.")
