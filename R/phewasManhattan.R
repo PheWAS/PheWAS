@@ -1,5 +1,5 @@
 phewasManhattan <-
-  function(d, ...) {
+  function(d, annotate.phenotype.description=T, ...) {
     if(sum(c("phenotype","p") %in% names(d))<2 ) stop("Data input must contain columns phenotype and p.")
     if(class(d$phenotype)!="character") {
       if(class(d$phenotype)=="factor") {
@@ -15,5 +15,5 @@ phewasManhattan <-
     #Add the groups and phecode descriptions as requested
     d=addPhecodeInfo(d,groupnums =T, groupcolors = T) %>% rename(phenotype=phecode)
 
-    phenotypeManhattan(d, annotate.phenotype.description=T, ...)
+    phenotypeManhattan(d, annotate.phenotype.description=annotate.phenotype.description, ...)
   }
