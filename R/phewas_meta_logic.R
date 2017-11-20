@@ -1,4 +1,4 @@
-phewas_meta_logic = function(a, ...){
+phewas_meta_logic = function(a, fixed=T, ...){
   #Get information about the current step
   phenotype=a$phenotype[1]
   snp=a$snp[1]
