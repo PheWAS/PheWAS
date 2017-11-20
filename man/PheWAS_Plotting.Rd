@@ -10,7 +10,7 @@ Plotting methods for PheWAS results, phenotype association studies, or generic p
 These functions permit the plotting of a variety of data types found when working with phenotypes. The functions are sequentially nested calls as outlined below. Supplying lower level parameters will permit tweaks to the higher level functions as well.
 }
 \usage{
-phewasManhattan(d, ...)
+phewasManhattan(d, annotate.phenotype.description=T, ...)
 
 phenotypeManhattan(d, suggestive.line = 0.05, significant.line,
   OR.size = F, OR.direction = F, annotate.level, 
