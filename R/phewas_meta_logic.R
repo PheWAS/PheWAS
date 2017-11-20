@@ -18,7 +18,7 @@ phewas_meta_logic = function(a, fixed=T, keep.both=T, ...){
                  n_no_snp=NA_integer_,k_studies=0,tau2=NA_real_,I2.percent=NA_real_,
                  Q=NA_real_,Q.df=NA_real_,Q.p=NA_real_,beta.fixed=NA_real_,OR.fixed=NA_real_,
                  SE.fixed=NA_real_,p.fixed=NA_real_,beta.random=NA_real_,
-                 OR.random=NA_real_,SE.random=NA_real_,p.random=NA_real_)
+                 OR.random=NA_real_,SE.random=NA_real_,p.random=NA_real_, stringsAsFactors=F)
   } else {#If there was at least one good analysis, calculate the meta-analysis
     #Define the Odds Ratio summary measure if appropriate
     sm=""
@@ -65,7 +65,7 @@ phewas_meta_logic = function(a, fixed=T, keep.both=T, ...){
                  beta.random=b$TE.random,
                  OR.random=exp(b$TE.random),
                  SE.random=b$seTE.random,
-                 p.random=b$pval.random
+                 p.random=b$pval.random, stringsAsFactors=F
     )
     
     #Set OR measures to NA if the summary measure is not Odds Ratio
