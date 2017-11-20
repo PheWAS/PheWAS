@@ -1,8 +1,9 @@
 phewas_meta_logic = function(a, fixed=T, keep.both=T, ...){
   #Get information about the current step
-  phenotype=a$phenotype[1]
-  snp=a$snp[1]
-  adjustment=a$adjustment[1]
+  phenotype=as.character(a$phenotype[1])
+  snp=as.character(a$snp[1])
+  adjustment=as.character(a$adjustment[1])
+  type=as.character(a$type[1])
   #Remove NA results from the input
   a=a[!is.na(a$p),]
   #If there are no records left, return an NA row (so one still knows it was there)
@@ -21,7 +22,6 @@ phewas_meta_logic = function(a, fixed=T, keep.both=T, ...){
   } else {#If there was at least one good analysis, calculate the meta-analysis
     #Define the Odds Ratio summary measure if appropriate
     sm=""
-    type=a$type[1]
     if(type=="logistic") {
       sm="OR"
     } 
