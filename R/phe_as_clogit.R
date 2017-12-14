@@ -43,6 +43,7 @@ phe_as_clogit <-
       cov.exclude=names(cov.counts)[cov.counts<=1]
       note=paste(note,"[Warning: non-varying covariate: ",cov.exclude,"]")
       cov=names(cov.counts)[cov.counts>1]
+      d= d %>% select(-one_of(cov.exclude))
     }
     
     #Turn covariates into a string, if not NA
@@ -141,7 +142,7 @@ phe_as_clogit <-
                       beta=beta, SE=se,
                       OR=or,
                       p=p, type=type,
-                      n_total=n_total, n_cases=n_cases, n_controls=n_controls,
+                      n_total=n_total, n_cases=n_cases, n_controls=n_controls,n_strata=n_strata,
                       HWE_p=HWE_pval[gen_expansion],allele_freq=allele_freq[gen_expansion],n_no_snp=n_no_snp[gen_expansion], 
                       formula=formula.string,
                       expanded_formula = expanded_formula,
