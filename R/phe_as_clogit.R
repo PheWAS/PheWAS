@@ -155,7 +155,7 @@ phe_as_clogit <-
       
       output=output[,c("phenotype","snp","beta","SE",
                        "lower","upper","OR","p","type",
-                       "n_total","n_cases","n_controls",
+                       "n_total","n_cases","n_controls","n_strata",
                        "HWE_p","allele_freq","n_no_snp","formula","expanded_formula","note")]
     }
     
