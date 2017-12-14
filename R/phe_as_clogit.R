@@ -11,9 +11,6 @@ phe_as_clogit <-
     
     #Exclude the exclusions for the target phenotype
     d=d[!is.na(d[[phe]]),]
-    ####Exclude 
-    
-    
     n_no_snp=sapply(d %>% select(one_of(gen)),
                     FUN=function(x){sum(is.na(x))})
     #Exclude rows with missing data
