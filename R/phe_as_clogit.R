@@ -14,13 +14,22 @@ phe_as_clogit <-
     
     #Exclude the exclusions for the target phenotype
     d=d[!is.na(d[[phe]]),]
+    ####Exclude 
+    
+    
     n_no_snp=sapply(d %>% select(one_of(gen)),
                     FUN=function(x){sum(is.na(x))})
     #Exclude rows with missing data
     d=na.omit(d)
+    #Exclude strata with only one predictor class (or value) represented
+    strata.keep=d %>% group_by_at(.vars=strata) %>% summarize_at(.funs="n_distinct",na.rm=TRUE,.vars=gen) %>% 
+      filter_at(.vars=gen,.vars_predicate=all_vars(.>1)) %>% select(one_of(strata))
+    d = inner_join(d,strata.keep)
+    
     n_total=nrow(d)
     n_cases=NA_integer_
     n_controls=NA_integer_
+    n_strata=NA_integer_
     allele_freq=NA_real_
     HWE_pval=NA_real_
     or=NA_real_
@@ -89,6 +98,7 @@ phe_as_clogit <-
         #Create the logistic model
         n_cases=sum(d[[phe]])
         n_controls=n_total-n_cases
+        n_strata=n_distinct(d[[strata]])
         if(n_cases<min.records|n_controls<min.records) {note=paste(note,"[Error: <",min.records," cases or controls]")}
         else {
           
