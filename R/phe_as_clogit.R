@@ -8,9 +8,6 @@ phe_as_clogit <-
     cov=phe.gen[[3]]
     #Subset the data
     d=data %>% select(one_of(na.omit(unlist(c(phe,gen,cov,strata)))))
-    #Turn covariates into a string, if not NA
-    if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}
-    else {covariates=NA_character_} #Make sure it is a character NA for aggregation
     
     #Exclude the exclusions for the target phenotype
     d=d[!is.na(d[[phe]]),]
@@ -24,7 +21,7 @@ phe_as_clogit <-
     #Exclude strata with only one predictor class (or value) represented
     strata.keep=d %>% group_by_at(.vars=strata) %>% summarize_at(.funs="n_distinct",na.rm=TRUE,.vars=gen) %>% 
       filter_at(.vars=gen,.vars_predicate=all_vars(.>1)) %>% select(one_of(strata))
-    d = inner_join(d,strata.keep)
+    d = inner_join(d,strata.keep,by=strata)
     
     n_total=nrow(d)
     n_cases=NA_integer_
@@ -42,6 +39,19 @@ phe_as_clogit <-
     formula.string=NA_character_
     expanded_formula=NA_character_
     gen_expansion=1:length(gen)
+    
+    #Check for non-varying covariates
+    cov.counts=sapply(d %>% select(one_of(cov)),FUN=function(x){n_distinct(x)})
+    if(min(cov.counts)<=1) {
+      cov.exclude=names(cov.counts)[cov.counts<=1]
+      note=paste(note,"[Warning: non-varying covariate: ",cov.exclude,"]")
+      cov=names(cov.counts)[cov.counts>1]
+    }
+    
+    #Turn covariates into a string, if not NA
+    if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}
+    else {covariates=NA_character_} #Make sure it is a character NA for aggregation
+    
     if(n_total<min.records) {
       note=paste(note,"[Error: <",min.records," complete records]")
     } else if(min(sapply(d %>% select(one_of(c(phe,gen))),FUN=function(x){length(unique(x))}))<=1) {
