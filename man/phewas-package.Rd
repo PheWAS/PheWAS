@@ -34,12 +34,12 @@ With the package installed, the command \code{vignette("PheWAS-package")} will d
 Robert Carroll <robert.j.carroll@vanderbilt.edu>
 }
 \references{
-The original PheWAS manuscript can be found here: http://www.ncbi.nlm.nih.gov/pubmed/20335276
+The original PheWAS manuscript can be found here: \url{http://www.ncbi.nlm.nih.gov/pubmed/20335276}
 }
 \keyword{ package}
 \keyword{ utilities }
 \seealso{
-\code{\link[PheWAS:mapICD9toPhecodes]{mapICD9toPhecodes}}
+\code{\link[PheWAS:mapICD9ToPhecodes]{mapICD9ToPhecodes}}
 
 \code{\link[PheWAS:addPhecodeInfo]{addPhecodeInfo}}
 

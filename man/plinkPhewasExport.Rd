@@ -22,7 +22,7 @@ If true, the function will duplicate the first column (presumably the unique id)
 }
 }
 \details{
-\link[https://www.cog-genomics.org/plink2]{Plink} is a commonly used genetics analysis tool heavily optimized for handling GWAS. This function will export a phenotype file as expected by plink which can be helpful for analysis. 
+Plink \url{https://www.cog-genomics.org/plink2} is a commonly used genetics analysis tool heavily optimized for handling GWAS. This function will export a phenotype file as expected by plink which can be helpful for analysis. 
 
 The \code{translateIDs} options allows users to supply their own FID/IID pairs in case they are not identical (common in sets with no family information).
 }

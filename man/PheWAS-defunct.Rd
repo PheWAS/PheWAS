@@ -20,6 +20,6 @@ Several changes have been made to promote consistency with the newer language ar
 
 \seealso{
 \code{\link[PheWAS:addPhecodeInfo]{addPhecodeInfo}}
-\code{\link[PheWAS:mapICD9toPhecodes]{mapICD9toPhecodes}}
+\code{\link[PheWAS:mapICD9ToPhecodes]{mapICD9ToPhecodes}}
 \code{\link[PheWAS:mapPhecodesToExclusions]{mapPhecodesToExclusions}}
 }
