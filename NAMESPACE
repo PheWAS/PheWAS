@@ -8,3 +8,9 @@ importFrom(meta,metagen)
 importFrom(ggrepel,geom_text_repel)
 importFrom(DT,datatable)
 importFrom(survival,clogit,strata,coxph,Surv)
+importFrom(logistf,logistf)
+importFrom("stats", "aggregate", "as.formula", "binomial",
+             "chisq.test", "confint", "contrasts", "contrasts<-", "cor",
+             "glm", "lm", "model.matrix", "na.omit", "p.adjust",
+             "pchisq", "qnorm", "rpois", "t.test", "terms")
+importFrom("utils", "data", "write.table")

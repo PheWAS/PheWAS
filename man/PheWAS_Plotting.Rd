@@ -17,17 +17,21 @@ phenotypeManhattan(d, suggestive.line = 0.05, significant.line,
   y.axis.interval = 5, y.axis.label = expression(-log[10](italic(p))), max.y,
   ...)
   
-phenotypePlot(d, max.y, max.x, suggestive.line, significant.line,
-  size.x.labels = 9, size.y.labels = 9, switch.axis = F, sort.by.value = F,
-  sort.by.category.value = F, annotate.phenotype.description, 
-  base.labels = F,
-  annotate.angle = 0, annotate.size = 5, annotate.level, 
-  annotate.phenotype = F, annotate.snp.w.phenotype = F, annotate.snp = F,
-  annotate.snp.angle = 0, annotate.list, annotate.only.largest = T,
-  lc.labels = F, x.group.labels = T, x.phenotype.labels = F, sizes = F,
-  direction = F, point.size = 3, use.color = T, color.palette, 
-  title = paste0("Phenotype Plot ", date()), x.axis.label = "Phenotypes", 
-  y.axis.label = "Values", y.axis.interval = 5)
+phenotypePlot(d, max.y,max.x, suggestive.line, significant.line, 
+           size.x.labels=9, size.y.labels=9, switch.axis=F, 
+           sort.by.value=F, sort.by.category.value=F,
+           base.labels=F, annotate.phenotype.description,
+           annotate.angle=0, annotate.size=5, annotate.level,
+           annotate.phenotype=F, annotate.snp.w.phenotype=F,
+           annotate.snp=F, annotate.snp.angle=0,
+           annotate.list, annotate.only.largest=T,
+           lc.labels=F, x.group.labels=T, x.phenotype.labels=F,
+           sizes=F, direction=F, point.size=3,
+           use.color=T, color.palette,
+           title= paste0("Phenotype Plot ", date()),
+           x.axis.label="Phenotypes",
+           y.axis.label="Values",
+           y.axis.interval=5)
 }
 
 \arguments{

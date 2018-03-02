@@ -1,10 +1,15 @@
 phe_as_lrt <-
-  function(phenotype, min.records=20,return.models=T, my.data, my.covariates, ...) {
+  function(phe.gen, min.records=20,return.models=T, my.data, my.covariates, ...) {
     if(!missing(my.data)) data=my.data
     if(!missing(my.covariates)) covariates=my.covariates
     
+    #Retrieve the targets for this loop
+    phenotype=phe.gen[[1]]
+    gen=phe.gen[[2]]
+    gens=paste0(gen,collapse = ", ")
+    
     #Subset the data
-    d=data[,c(phenotype,covariates)]
+    d=data[,c(phenotype,gen,covariates)]
     d=na.omit(d)
     #Exclude rows with missing data
     n_total=nrow(d)
@@ -22,14 +27,14 @@ phe_as_lrt <-
       
       #Check if phenotype is logical (boolean)
       if(class(d[,phenotype]) %in% c("logical")) {
-        type = "logistic"
+        type = "logistic - LRT"
         #Create the logistic model
         n_cases=sum(d[,phenotype])
         n_controls=n_total-n_cases
         if(n_cases<min.records|n_controls<min.records) {note=paste(note,"[Error: <",min.records," cases or controls]")}
         else {
           model = glm(as.formula(paste("`",phenotype,"`"," ~ .", sep="", collapse="")), data=d, family=binomial)
-          model.base = glm(as.formula(paste("`",phenotype,"`"," ~ .", sep="", collapse="")), data=d %>% select(-starts_with("rs")), family=binomial)
+          model.base = glm(as.formula(paste("`",phenotype,"`"," ~ .", sep="", collapse="")), data=d %>% select(-one_of(gen)), family=binomial)
           lrt=lrtest(model, model.base)
           p=lrt$Pr[2]
         }
@@ -39,13 +44,13 @@ phe_as_lrt <-
           note=paste(note,"[Error: <",min.records," records with phenotype and genotype]")
         } else {
           model = lm(as.formula(paste(phenotype," ~ .", sep="", collapse="")), data=d)
-          model.base = lm(as.formula(paste(phenotype," ~ .", sep="", collapse="")), data=d %>% select(-starts_with("rs")))
+          model.base = lm(as.formula(paste(phenotype," ~ .", sep="", collapse="")), data=d %>% select(-one_of(gen)))
           lrt=lrtest(model, model.base)
           p=lrt$Pr[2]
         }
       }
     }
-    output=data.frame(phenotype=phenotype,p=p,type=type,
+    output=data.frame(phenotype=phenotype,genotype=gens,p=p,type=type,
                       n_total=n_total, n_cases=n_cases, n_controls=n_controls,
                       note=note, stringsAsFactors=F)
     

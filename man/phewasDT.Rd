@@ -23,6 +23,9 @@ Digits after the decimal place for the odds ratio (passed as the digits paramete
   \item{p.digits}{
 Digits after the decimal place for the p-value (passed as the digits parameter to \code{round}). Default is 3.
 }
+  \item{\dots}{
+  Parameters to pass to \code{\link[DT:datatable]{datatable}}
+}
 }
 \details{
 This function is a short wrapper to create an easily browsable datatable using the package DT. It has few options, but this function serves as an instructive example as the interior calls of the function can be easily adapted to suit other purposes.
