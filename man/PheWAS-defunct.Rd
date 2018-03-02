@@ -12,7 +12,7 @@ Several changes have been made to promote consistency with the newer language ar
 \itemize{
 \item \code{addPhewasDescription} and 
 \item \code{addPhewasGroups} have been replaced by \code{\link[PheWAS:addPhecodeInfo]{addPhecodeInfo}}. 
-\item \code{mapICD9stoPheWAS} has been replaced with \code{\link[PheWAS:mapICD9toPhecodes]{mapICD9toPhecodes}}.
+\item \code{mapICD9stoPheWAS} has been replaced with \code{\link[PheWAS:mapICD9ToPhecodes]{mapICD9ToPhecodes}}.
 \item \code{mapPheWAStoExclusions} has been replaced with \code{\link[PheWAS:mapPhecodesToExclusions]{mapPhecodesToExclusions}}.
 }
 
@@ -20,6 +20,6 @@ Several changes have been made to promote consistency with the newer language ar
 
 \seealso{
 \code{\link[PheWAS:addPhecodeInfo]{addPhecodeInfo}}
-\code{\link[PheWAS:mapICD9toPhecodes]{mapICD9toPhecodes}}
+\code{\link[PheWAS:mapICD9ToPhecodes]{mapICD9ToPhecodes}}
 \code{\link[PheWAS:mapPhecodesToExclusions]{mapPhecodesToExclusions}}
 }

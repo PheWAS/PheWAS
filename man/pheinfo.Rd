@@ -9,12 +9,13 @@ This data frame contains the description and group information for every mappabl
 }
 \usage{data(pheinfo)}
 \format{
-  A data frame with 1814 observations on the following 4 variables.
+  A data frame with 1814 observations on the following 5 variables.
   \describe{
     \item{\code{phecode}}{a character vector}
-    \item{\code{phecode_description}}{a character vector}
-    \item{\code{phecode_groupnum}}{an integer vector}
-    \item{\code{phecode_group}}{a character vector}
+    \item{\code{description}}{a character vector}
+    \item{\code{groupnum}}{an integer vector}
+    \item{\code{group}}{a character vector}
+    \item{\code{color}}{a character vector}
   }
 }
 \source{

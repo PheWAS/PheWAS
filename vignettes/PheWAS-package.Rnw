@@ -140,7 +140,7 @@ results=phewas(phenotypes,genotypes,cores=1,
 #Plot the results
 phewasManhattan(results, annotate.angle=0,
   title="My Example PheWAS Manhattan Plot")
-#Add Phecode descriptions
+#Add PheWAS descriptions
 results_d=addPhecodeInfo(results)
 #List the significant results
 results_d[results_d$bonferroni&!is.na(results_d$p),]

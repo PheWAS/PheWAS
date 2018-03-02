@@ -3,9 +3,10 @@ phewas_meta_logic = function(a, fixed=T, keep.both=T, ...){
   phenotype=as.character(a$phenotype[1])
   snp=as.character(a$snp[1])
   adjustment=as.character(a$adjustment[1])
-  type=as.character(a$type[1])
   #Remove NA results from the input
   a=a[!is.na(a$p),]
+  #Get type (may have been NA for one row)
+  type=as.character(a$type[1])
   #If there are no records left, return an NA row (so one still knows it was there)
   if(nrow(a)==0) {
     #create an NA row to return.
