@@ -11,6 +11,6 @@ Description: Functions to perform Phenome Wide Association
  codes (v1.2), statistical analysis, and plotting.
 License: GPL-3
 Depends: dplyr, tidyr, ggplot2 (>= 2.2.0), parallel
-Imports: MASS, meta, ggrepel, DT, survival, logistf
+Imports: MASS, meta, ggrepel, DT, survival, logistf, lmtest
 LazyData: yes
 RoxygenNote: 6.0.1

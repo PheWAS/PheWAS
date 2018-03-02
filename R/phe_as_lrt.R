@@ -1,15 +1,18 @@
 phe_as_lrt <-
-  function(phe.gen, min.records=20,return.models=T, my.data, my.covariates, ...) {
+  function(phe.gen, min.records=20,return.models=T, my.data, ...) {
     if(!missing(my.data)) data=my.data
-    if(!missing(my.covariates)) covariates=my.covariates
-    
+
     #Retrieve the targets for this loop
     phenotype=phe.gen[[1]]
     gen=phe.gen[[2]]
     gens=paste0(gen,collapse = ", ")
+    cov=phe.gen[[3]]
+    #Turn covariates into a string, if not NA
+    if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}
+    else {covariates=NA_character_} #Make sure it is a character NA for aggregation
     
     #Subset the data
-    d=data[,c(phenotype,gen,covariates)]
+    d=data[,na.omit(unlist(c(phenotype,gen,cov)))]
     d=na.omit(d)
     #Exclude rows with missing data
     n_total=nrow(d)
@@ -50,7 +53,7 @@ phe_as_lrt <-
         }
       }
     }
-    output=data.frame(phenotype=phenotype,genotype=gens,p=p,type=type,
+    output=data.frame(phenotype=phenotype,genotype=gens,covariates=covariates,p=p,type=type,
                       n_total=n_total, n_cases=n_cases, n_controls=n_controls,
                       note=note, stringsAsFactors=F)
     

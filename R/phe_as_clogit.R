@@ -6,6 +6,10 @@ phe_as_clogit <-
     gen=phe.gen[[2]]
     gens=gen
     cov=phe.gen[[3]]
+    #Turn covariates into a string, if not NA
+    if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}
+    else {covariates=NA_character_} #Make sure it is a character NA for aggregation
+    
     #Subset the data
     d=data %>% select(one_of(na.omit(unlist(c(phe,gen,cov,strata)))))
     
@@ -139,6 +143,7 @@ phe_as_clogit <-
     }
     
     output=data.frame(phenotype=phe,snp=gens,
+                      covariates=covariates,
                       beta=beta, SE=se,
                       OR=or,
                       p=p, type=type,
@@ -161,7 +166,7 @@ phe_as_clogit <-
       output$lower=lower
       output$upper=upper
       
-      output=output[,c("phenotype","snp","beta","SE",
+      output=output[,c("phenotype","snp", "covariates","beta","SE",
                        "lower","upper","OR","p","type",
                        "n_total","n_cases","n_controls","n_strata",
                        "HWE_p","allele_freq","n_no_snp","formula","expanded_formula","note")]

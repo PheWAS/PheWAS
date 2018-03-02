@@ -6,6 +6,7 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
   gen=phe.gen[[2]]
   gens=gen
   cov=phe.gen[[3]]
+  
   #Subset the data
   d=data %>% select(one_of(na.omit(unlist(c(phe,gen,cov)))))
   #Turn covariates into a string, if not NA
@@ -140,6 +141,7 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
   }
   
   output=data.frame(phenotype=phe,snp=gens,
+                    covariates=covariates,
                     beta=beta, SE=se,
                     OR=or,
                     p=p, type=type,
