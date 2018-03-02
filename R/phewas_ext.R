@@ -31,8 +31,6 @@ function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, cores
     if(class(genotypes)!="list") {genotypes=list(genotypes)}
   } else if (method == "logistf") {
     association_method=phe_as_logistf
-  } else if (method == "logistf_multips") {
-    association_method=phe_as_logistf_multips
   } else {
     stop("Method must be one of: 'glm', 'clogit', 'lrt', or 'logistf'.")
   }
