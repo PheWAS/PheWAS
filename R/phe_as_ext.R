@@ -23,7 +23,7 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
   
   #Drop columns with no variability
   drop.cols = names(d)[sapply(d, function(col) length(unique(col)))<=1]
-  if(length(drop.covs>0)) {
+  if(length(drop.cols>0)) {
     note=paste(note,"[Note: Column(s) dropped due to lack of variability: ",paste0(drop.cols,collapse=", "),"]")
     d=select(d, -one_of(drop.cols))
   }
