@@ -41,6 +41,8 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
   if(length(drop.cols>0)) {
     note=paste(note,"[Note: Column(s) dropped due to lack of variability: ",paste0(drop.cols,collapse=", "),"]")
     d=select(d, -one_of(drop.cols))
+    #Remove dropped columns from covs- sticks around in the listed "covariates"
+    cov=setdiff(cov,drop.cols)
   }
   
   if(n_total<min.records) {
