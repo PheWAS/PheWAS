@@ -41,22 +41,22 @@ phe_as_clogit <-
     expanded_formula=NA_character_
     gen_expansion=1:length(gen)
     
-    #Check for non-varying covariates
-    cov.counts=sapply(d %>% select(one_of(cov)),FUN=function(x){n_distinct(x)})
-    if(min(cov.counts)<=1) {
-      cov.exclude=names(cov.counts)[cov.counts<=1]
-      note=paste(note,"[Warning: non-varying covariate: ",cov.exclude,"]")
-      cov=names(cov.counts)[cov.counts>1]
-      d= d %>% select(-one_of(cov.exclude))
+    #Drop columns with no variability
+    drop.cols = names(d)[sapply(d, function(col) length(unique(col)))<=1]
+    if(length(drop.cols>0)) {
+      note=paste(note,"[Note: Column(s) dropped due to lack of variability: ",paste0(drop.cols,collapse=", "),"]")
+      d=select(d, -one_of(drop.cols))
+      #Remove dropped columns from covs- sticks around in the listed "covariates"
+      cov=setdiff(cov,drop.cols)
     }
-    
+
     #Turn covariates into a string, if not NA
     if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}
     else {covariates=NA_character_} #Make sure it is a character NA for aggregation
     
     if(n_total<min.records) {
       note=paste(note,"[Error: <",min.records," complete records]")
-    } else if(min(sapply(d %>% select(one_of(c(phe,gen))),FUN=function(x){length(unique(x))}))<=1) {
+    } else if(sum(c(phe,gen) %in% names(d))!=length(c(phe,gen))) {
       note=paste(note,"[Error: non-varying phenotype or genotype]")
     } else {
       if(additive.genotypes) {
