@@ -128,7 +128,7 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
       if(n_total<min.records) {
         note=paste(note,"[Error: <",min.records," records with phenotype and genotype]")
       } else {
-        model = lm(my.formula, data=d)
+        model = glm(my.formula, data=d)
   
         modsum= summary(model)
         #If the models did not converge, report NA values instead.
