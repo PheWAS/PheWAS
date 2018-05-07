@@ -22,9 +22,19 @@ phe_as_lrt <-
     note=""
     lrt=NA
     p=NA
+    
+    #Drop columns with no variability
+    drop.cols = names(d)[sapply(d, function(col) length(unique(col)))<=1]
+    if(length(drop.cols>0)) {
+      note=paste(note,"[Note: Column(s) dropped due to lack of variability: ",paste0(drop.cols,collapse=", "),"]")
+      d=select(d, -one_of(drop.cols))
+      #Remove dropped columns from covs- sticks around in the listed "covariates"
+      cov=setdiff(cov,drop.cols)
+    }
+    
     if(n_total<min.records) {
       note=paste(note,"[Error: <",min.records," complete records]")
-    } else if(length(unique(na.omit(d[,phenotype])))<=1 ) {
+    } else if(!(phenotype %in% names(d))) {
       note=paste(note,"[Error: non-varying phenotype]")
     } else {
       

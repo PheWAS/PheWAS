@@ -20,6 +20,7 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
   #Exclude rows with missing data
   d=na.omit(d)
   n_total=nrow(d)
+  
   n_cases=NA_integer_
   n_controls=NA_integer_
   allele_freq=NA_real_
@@ -34,9 +35,19 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
   formula.string=NA_character_
   expanded_formula=NA_character_
   gen_expansion=1:length(gen)
+  
+  #Drop columns with no variability
+  drop.cols = names(d)[sapply(d, function(col) length(unique(col)))<=1]
+  if(length(drop.cols>0)) {
+    note=paste(note,"[Note: Column(s) dropped due to lack of variability: ",paste0(drop.cols,collapse=", "),"]")
+    d=select(d, -one_of(drop.cols))
+    #Remove dropped columns from covs- sticks around in the listed "covariates"
+    cov=setdiff(cov,drop.cols)
+  }
+  
   if(n_total<min.records) {
     note=paste(note,"[Error: <",min.records," complete records]")
-  } else if(min(sapply(d %>% select(one_of(c(phe,gen))),FUN=function(x){length(unique(x))}))<=1) {
+  } else if(sum(c(phe,gen) %in% names(d))!=length(c(phe,gen))) {
     note=paste(note,"[Error: non-varying phenotype or genotype]")
   } else {
     if(additive.genotypes) {
@@ -117,7 +128,7 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
       if(n_total<min.records) {
         note=paste(note,"[Error: <",min.records," records with phenotype and genotype]")
       } else {
-        model = lm(my.formula, data=d)
+        model = glm(my.formula, data=d)
   
         modsum= summary(model)
         #If the models did not converge, report NA values instead.
