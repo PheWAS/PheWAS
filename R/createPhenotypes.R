@@ -18,7 +18,7 @@ createPhenotypes <-
       if(!class(id.vocab.code.index[,3]) %in% c("character","factor")) {stop("Please ensure character or factor code representation. Some vocabularies, eg ICD9CM, require strings to be represented accurately: E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
       names(id.vocab.code.index)=c("id","vocabulary_id","code","count")
       message("Mapping codes to phecodes...")
-      phemapped=mapCodesToPhecodes(id.vocab.code.index, vocabulary.map=vocabulary.map) %>% select(id, code, index)
+      phemapped=mapCodesToPhecodes(id.vocab.code.index, vocabulary.map=vocabulary.map, rollup.map=rollup.map) %>% select(id, code, index)
     }
     
     message("Aggregating codes...")
