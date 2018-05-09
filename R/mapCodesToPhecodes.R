@@ -10,11 +10,11 @@ mapCodesToPhecodes <-
     #Perform the direct map
     output = inner_join(input,vocabulary.map,by=c("vocabulary_id","code"))
     #Remove old columns
-    output = output %>% mutate(vocabulary_id="phecode") %>% select(code=phecode)
+    output = output %>% mutate(vocabulary_id="phecode") %>% select(-code) %>% rename(code=phecode)
     #Make distinct
     if(make.distinct) {output = distinct(output)}
     #Perform the rollup
-    output = inner_join(output,phecode_rollup_map,by="code") %>% select(code=phecode_unrolled)
+    output = inner_join(output,phecode_rollup_map,by="code") %>% select(-code) %>% rename(code=phecode_unrolled)
     #Make distinct
     if(make.distinct) {output = distinct(output)}
     
