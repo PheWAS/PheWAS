@@ -10,7 +10,7 @@ createPhenotypes <-
     
     if(!translate) {
       #Warn about exclusions if input is not translated and not phecodes. Same with id.sex
-      if(add.exclusions & sum(tolower(id.vocab.code.index[,2])=='phecode')==nrow(id.vocab.code.index)){stop("Codes are not translated and vocab is not 'phecode' for every row, but exclusions are to be applied. Ensure that the code column has only phecodes or disable add.exclusions for accurate results.")}
+      if(add.phecode.exclusions & sum(tolower(id.vocab.code.index[,2])=='phecode')==nrow(id.vocab.code.index)){stop("Codes are not translated and vocab is not 'phecode' for every row, but exclusions are to be applied. Ensure that the code column has only phecodes or disable add.phecode.exclusions for accurate results.")}
       if(!missing(id.sex) & sum(tolower(id.vocab.code.index[,2])=='phecode')==nrow(id.vocab.code.index)){stop("Codes are not translated and vocab is not 'phecode' for every row, but id.sex is supplied for sex-based exclusions. Ensure that the code column has only phecodes or omit id.sex for accurate results.")}
       phemapped=tbl_df(data.frame(id=id.vocab.code.index[,1],code=id.vocab.code.index[,3],index=id.vocab.code.index[,4]))
     } else {
@@ -26,7 +26,7 @@ createPhenotypes <-
     phecode=phecode[phecode$count>0,]
     
     #Check exclusions, and add them to the list
-    if(add.exclusions) {
+    if(add.phecode.exclusions) {
       message("Mapping exclusions...")
       exclusions = inner_join(phecode %>% rename(exclusion_criteria=code), phecode_exclude, by = "exclusion_criteria")
       exclusions = exclusions %>%  transmute(id, code, count=-1) %>% distinct()
@@ -38,7 +38,7 @@ createPhenotypes <-
       phecode[!is.na(phecode$count)&phecode$count<min.code.count,]$count=-1
     } 
     
-    if(!is.na(min.code.count)|add.exclusions) {
+    if(!is.na(min.code.count)|add.phecode.exclusions) {
       message("Coalescing exclusions and min.code.count as applicable...")
       phecode=ungroup(summarize(group_by(phecode,id,code),count=max(count)))
       #Set exclusions to NA
