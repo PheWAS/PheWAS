@@ -42,7 +42,7 @@ createPhenotypes <-
       message("Coalescing exclusions and min.code.count as applicable...")
       phecode=ungroup(summarize(group_by(phecode,id,code),count=max(count)))
       #Set exclusions to NA
-      phecode[phecode$count==-1]=NA
+      phecode[phecode$count==-1,]$count=NA
     }
 
     #For min.code.count, use logical fill
