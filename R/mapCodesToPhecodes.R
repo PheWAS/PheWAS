@@ -6,7 +6,7 @@ mapCodesToPhecodes <-
     if(sum(names(input) %in% c("vocabulary_id","code"))!=2) {
       stop("Must supply a data frame with 'vocabulary_id' and 'code' columns")
     }
-    if(!class(input[,"code"]) %in% c("character","factor")) {stop("Please ensure character or factor code representation. Some vocabularies, eg ICD9CM, require strings to be represented accurately: E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
+    if(!class(input[["code"]) %in% c("character","factor")) {stop("Please ensure character or factor code representation. Some vocabularies, eg ICD9CM, require strings to be represented accurately: E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
     #Perform the direct map
     output = inner_join(input,vocabulary.map,by=c("vocabulary_id","code"))
     #Remove old columns
