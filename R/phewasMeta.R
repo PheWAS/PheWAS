@@ -8,7 +8,7 @@ phewasMeta <- function(results, fixed=T, keep.both=T, cores=1, ...) {
     #Prep the cluster
     cluster=create_cluster(cores)
     #Iterate across all phenotype, snp, adjustment combinations.
-    out = results %>% partition(phenotype,snp,adjustment,cluster=cluster) %>% do(phewas_meta_logic(., fixed=fixed, ...)) %>% collect()
+    out = results %>% partition(phenotype,snp,adjustment,cluster=cluster) %>% do(PheWAS:::phewas_meta_logic(., fixed=fixed, ...)) %>% collect()
   } else {
     #Otherwise, just use do.
     #Iterate across all phenotype, snp, adjustment combinations.
