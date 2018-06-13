@@ -6,7 +6,7 @@ phewasMeta <- function(results, fixed=T, keep.both=T, cores=1, ...) {
   if(cores>1) {
     if(!require(multidplyr)) {stop("Package 'multidplyr' required for parallelization. Please see https://github.com/hadley/multidplyr for details.")}
     #Prep the cluster
-    cluster=parallel::makePSOCKcluster(cores)
+    cluster=create_cluster(cores)
     #Iterate across all phenotype, snp, adjustment combinations.
     out = results %>% partition(phenotype,snp,adjustment,cluster=cluster) %>% do(PheWAS:::phewas_meta_logic(., fixed=fixed, ...)) %>% collect()
   } else {
