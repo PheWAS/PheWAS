@@ -12,8 +12,8 @@ This package provides the tools necessary to perform a PheWAS analysis.
 \tabular{ll}{
 Package: \tab PheWAS\cr
 Type: \tab Package\cr
-Version: \tab 0.12.1\cr
-Date: \tab 2018-05-04\cr
+Version: \tab 0.99.1\cr
+Date: \tab 2018-10-26\cr
 License: \tab GPL3\cr
 }
 This package contains the mappings and information for phecodes version 1.2.
