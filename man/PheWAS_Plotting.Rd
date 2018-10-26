@@ -13,7 +13,7 @@ These functions permit the plotting of a variety of data types found when workin
 phewasManhattan(d, annotate.phenotype.description=T, ...)
 
 phenotypeManhattan(d, suggestive.line = 0.05, significant.line,
-  OR.size = F, OR.direction = F, annotate.level, 
+  OR.size = F, OR.direction = F, sizes, annotate.level, 
   y.axis.interval = 5, y.axis.label = expression(-log[10](italic(p))), max.y,
   ...)
   
@@ -50,7 +50,7 @@ For \code{phenotypeManhattan}, draw a red line at this p-value to show an adjust
 For \code{phenotypePlot}, the red line is drawn at the specified \code{value} to emphasize interesting data points. Missing or an NA value will result in no line.
 }
   \item{OR.size}{
-Adjust point size based on odds ratios? Requires d to contain the \code{OR} column. Default is FALSE.
+Adjust point size based on odds ratios? Requires d to contain the \code{OR} column. Default is FALSE. Mutually exclusive with \code{sizes}. 
 }
   \item{OR.direction}{
 Adjust point shape based on odds ratio direction? Requires d to contain the \code{OR} column. Default is FALSE.
@@ -130,7 +130,7 @@ Label the phenotype groups? Requires group attributes in \code{d}. Default is TR
 Label every phenotype? Default is no, cannot be used in conjunction with \code{x.group.labels}.
 }
   \item{sizes}{
-Adjust point size based on \code{size} in \code{d}? Default is FALSE.
+Adjust point size based on \code{size} in \code{d}? Default is FALSE. Mutually exclusive with \code{OR.size} available in the Manhattan plots. 
 }
   \item{direction}{
 Adjust point shape based on \code{direction} in \code{d}? Default is FALSE.
@@ -156,6 +156,8 @@ These functions are nested: \code{phewasManhattan} calls \code{phenotypeManhatta
 \code{phenotypeManhattan} performs the transformations to the data and paramters for a -log10 scale. It is useful in cases of \code{phewas} results using other phenotypes besides phecodes.
 
 \code{phenotypePlot} does the actual plotting and can be used to visualize non-p-value data. 
+
+All of these functions return \code{\link[ggplot2:ggplot2-package]{ggplot2}} objects. Aspects of the plots can be modified post hoc, for instance to adjust the point size scale one can use \code{plot + scale_size(<parameters>)}
 }
 \value{
 A \code{ggplot2} plot. It contains PheWAS codes against their -log10 transformed p-values for \code{phewasManhattan}, generic phenotypes versus -log10 transformed p-values for \code{phenotypeManhattan}, and generic phenotypes versus generic values for \code{phenotypePlot}.
