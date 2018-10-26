@@ -43,7 +43,7 @@ phenotypeManhattan <-
       if(sizes==T){
         #If sizes is provided and true, check OR.size and d$size to ensure validity
         if(OR.size) { stop("Both sizes and OR.size are TRUE. Only one size can be used at a time. Please ensure only one parameter is TRUE.") }
-        if(!length(d$size)) { stop("sizes were requested, but no d$size was not provided. Please put the point size scaling variable in d$size") }
+        if(!length(d$size)) { stop("sizes were requested, but no d$size was not provided. Please provide the point size scaling variable in d$size") }
         sizing=TRUE
       }
     }
@@ -63,6 +63,6 @@ phenotypeManhattan <-
                         y.axis.interval=y.axis.interval,
                         y.axis.label=y.axis.label, max.y=max.y,
                         ...)
-    if(OR.size) plot=suppressWarnings(plot+scale_size("Odds Ratio", range = c(2, 4), breaks=c(1, 1.2, 1.6)))
+    if(OR.size) plot=suppressMessages(plot+scale_size("Odds Ratio", range = c(2, 4), breaks=c(1, 1.2, 1.6)))
     plot
   }
