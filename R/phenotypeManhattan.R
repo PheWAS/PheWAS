@@ -1,6 +1,6 @@
 phenotypeManhattan <-
   function(d, suggestive.line=0.05, significant.line, 
-           OR.size=F,OR.direction=F,
+           OR.size=F,OR.direction=F, sizes,
            annotate.level,
            y.axis.interval=5,
            y.axis.label=expression(-log[10](italic(p))),
@@ -36,22 +36,33 @@ phenotypeManhattan <-
     
     max.y=ifelse(missing(max.y),max(ceiling(max(d$value)),4.4),max.y)
     
+    #Set default of sizing to FALSE
+    sizing=FALSE
+    #Check sizing parameters
+    if(!missing(sizes)) {
+      if(sizes==T){
+        #If sizes is provided and true, check OR.size and d$size to ensure validity
+        if(OR.size) { stop("Both sizes and OR.size are TRUE. Only one size can be used at a time. Please ensure only one parameter is TRUE.") }
+        if(!length(d$size)) { stop("sizes were requested, but no d$size was not provided. Please provide the point size scaling variable in d$size") }
+        sizing=TRUE
+      }
+    }
+    
     #If OR sizes are requested, normalize them to magnitude only
-    #Commented: restrict to those reaching the annotation significance level
     if(OR.size){
+      sizing=TRUE
       d$size = d$OR
       d[d$size<1,]$size = 1/d[d$size<1,]$size
-      #d[d$value>=annotate.level,]$new.OR = 1
     }
     
     #If the OR direction is requested, create it
     if(OR.direction) d$direction = d$OR>=1
     plot=phenotypePlot(d,suggestive.line=suggestive.line,significant.line=significant.line,
-                        sizes=OR.size,direction=OR.direction,
+                        sizes=sizing,direction=OR.direction,
                         annotate.level=annotate.level,
                         y.axis.interval=y.axis.interval,
                         y.axis.label=y.axis.label, max.y=max.y,
                         ...)
-    if(OR.size) plot=suppressWarnings(plot+scale_size("Odds Ratio", range = c(2, 4), breaks=c(1, 1.2, 1.6)))
+    if(OR.size) plot=suppressMessages(plot+scale_size("Odds Ratio", range = c(2, 4), breaks=c(1, 1.2, 1.6)))
     plot
   }
