@@ -1,7 +1,7 @@
 mapCodesToPhecodes <-
   function(input, 
            vocabulary.map=PheWAS::phecode_map,
-           rollup.map=PheWAS:::phecode_rollup_map,
+           rollup.map=PheWAS::phecode_rollup_map,
            make.distinct=TRUE) {
     if(sum(names(input) %in% c("vocabulary_id","code"))!=2) {
       stop("Must supply a data frame with 'vocabulary_id' and 'code' columns")
@@ -12,18 +12,24 @@ mapCodesToPhecodes <-
       #Perform the direct map
       output = inner_join(input,vocabulary.map,by=c("vocabulary_id","code"))
       #Remove old columns
-      output = output %>% mutate(vocabulary_id="phecode") %>% select(-code) %>% rename(code=phecode)
+      output = output %>% select(-code,-vocabulary_id) %>% rename(code=phecode) 
     } else {
+      #Warn if the vocabulary IDs are not phecodes
+      if(sum(input$vocabulary_id!="phecode")!=0) {warning("Phecode mapping was not requested, but the vocabulary_id of all codes is not 'phecode'")}
       #Prepare for just the phecode expansion
-      output=input
+      output=input %>% filter(vocabulary_id=="phecode") %>% select(-vocabulary_id)
     }
     #Make distinct
     if(make.distinct) {output = distinct(output)}
     #Perform the rollup
     if(!is.null(rollup.map)) {
-      output = inner_join(output,phecode_rollup_map,by="code") %>% select(-code) %>% rename(code=phecode_unrolled)
+      output = inner_join(output ,rollup.map,by="code") %>% select(-code) %>% rename(phecode=phecode_unrolled)
       #Make distinct
       if(make.distinct) {output = distinct(output)}
+    }
+    else{
+      #Rename output column to phecode
+      output = rename(phecode=code)
     }
     
     #Return the output

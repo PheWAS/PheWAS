@@ -30,7 +30,7 @@ Boolean value. Should duplicate rows be removed during mapping? Default is \code
 
 }
 \value{
-A data frame containing the columns in \code{input}. The origial \code{code}s and \code{vocabulary_id} will now contain the phecode strings and "phecode", respectively. 
+A data frame containing the columns in \code{input}, except the origial \code{code} and \code{vocabulary_id} columns have been replaced with \code{phecode} now containing the phecode as character. 
 }
 \author{
 Robert Carroll
@@ -38,7 +38,7 @@ Laura Wiley
 }
 
 \examples{
-diabetes_billing=data.frame(id=1:3,vocabulary_id=c("ICD9CM","ICD9CM","ICD10CM"),c("250.00","250.01","E11.00"))
+diabetes_billing=data.frame(id=1:3,vocabulary_id=c("ICD9CM","ICD9CM","ICD10CM"),code=c("250.00","250.01","E11.00"))
 phecodes=mapCodesToPhecodes(diabetes_billing)
 phecodes
 addPhecodeInfo(phecodes)
