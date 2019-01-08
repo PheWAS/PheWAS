@@ -41,20 +41,15 @@ createPhenotypes <-
     if(!is.na(min.code.count)|add.phecode.exclusions) {
       message("Coalescing exclusions and min.code.count as applicable...")
       phecode=ungroup(summarize(group_by(phecode,id,code),count=max(count)))
-      #Set exclusions to NA
-      phecode$count=ifelse(phecode$count==-1,NA,phecode$count)
     }
 
-    #For min.code.count, use logical fill
-    if(!is.na(min.code.count)) { 
-      fill=FALSE
-    } else {
-      #Fill for no min.code.count
-      fill=0
-    }
-    
     message("Reshaping data...")
-    phens=spread(phecode,code,count,fill=fill)
+    phens=spread(phecode,code,count,fill=0)
+    
+    #Set exclusions to NA, preserving IDs just in case one is -1
+    tmp_id=phens[,1]
+    phens[phens==-1]=NA
+    phens[,1]=tmp_id
     
     #Add in inds present in input or the full population list, but without mapped phecodes
     missing_ids=setdiff(full.population.ids,phens[["id"]])
