@@ -10,7 +10,8 @@ mapCodesToPhecodes <-
     
     if(!is.null(vocabulary.map)){
       #Perform the direct map
-      output = inner_join(input,vocabulary.map,by=c("vocabulary_id","code"))
+      withCallingHandlers(output <- inner_join(input,vocabulary.map,by=c("vocabulary_id","code")), 
+                          warning = function(w) { if (grepl("coercing into character vector", w$message)) {invokeRestart("muffleWarning")}})
       #Remove old columns
       output = output %>% select(-code,-vocabulary_id) %>% rename(code=phecode) 
     } else {
@@ -23,7 +24,9 @@ mapCodesToPhecodes <-
     if(make.distinct) {output = distinct(output)}
     #Perform the rollup
     if(!is.null(rollup.map)) {
-      output = inner_join(output ,rollup.map,by="code") %>% select(-code) %>% rename(phecode=phecode_unrolled)
+      withCallingHandlers(output <- inner_join(output ,rollup.map,by="code"),
+                          warning = function(w) { if (grepl("coercing into character vector", w$message)) {invokeRestart("muffleWarning")}}
+                          ) %>% select(-code) %>% rename(phecode=phecode_unrolled)
       #Make distinct
       if(make.distinct) {output = distinct(output)}
     }
