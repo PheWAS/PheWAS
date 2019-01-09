@@ -25,8 +25,8 @@ mapCodesToPhecodes <-
     #Perform the rollup
     if(!is.null(rollup.map)) {
       withCallingHandlers(output <- inner_join(output ,rollup.map,by="code"),
-                          warning = function(w) { if (grepl("coercing into character vector", w$message)) {invokeRestart("muffleWarning")}}
-                          ) %>% select(-code) %>% rename(phecode=phecode_unrolled)
+                          warning = function(w) { if (grepl("coercing into character vector", w$message)) {invokeRestart("muffleWarning")}}) 
+      output = output %>% select(-code) %>% rename(phecode=phecode_unrolled)
       #Make distinct
       if(make.distinct) {output = distinct(output)}
     }
