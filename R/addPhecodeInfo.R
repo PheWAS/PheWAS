@@ -21,7 +21,7 @@ addPhecodeInfo <- function(data, descriptions=T, groups=T, groupnums=F, groupcol
     }
   }
 
-  data=inner_join(data,pheinfo,by = c("phecode" = name ))
+  data=inner_join(data,pheinfo,by = c(name = "phecode"))
   
   if(!descriptions) data = data %>% select(-description)
   if(!groups) data = data %>% select(-group)
