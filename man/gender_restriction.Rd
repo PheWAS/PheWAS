@@ -9,7 +9,7 @@ Some phewas codes are only typical for one gender or the other; this data frame 
 }
 \usage{data(pheinfo)}
 \format{
-  A data frame with 1814 observations on the following 3 variables.
+  A data frame with 1817 observations on the following 3 variables.
   \describe{
     \item{\code{phecode}}{The PheWAS code}
     \item{\code{male_only}}{Logical value for a male-only analysis}
