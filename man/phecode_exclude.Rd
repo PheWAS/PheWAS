@@ -10,7 +10,7 @@ This mapping is many to many.
 }
 \usage{data(phecode_exclude)}
 \format{
-  A data frame with 30033 observations on the following 2 variables.
+  A data frame with 30028 observations on the following 2 variables.
   \describe{
     \item{\code{code}}{A character vector of PheWAS codes.}
     \item{\code{exclusion_criteria}}{A character vector of phecodes; an individual having this code would exclude one from an analysis of the phecode \code{code}.}
