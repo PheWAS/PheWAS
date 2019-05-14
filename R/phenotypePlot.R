@@ -263,10 +263,10 @@ phenotypePlot <-
         d$description=""
       }     
       #If requested the phenotype annotation, add it
-      if(annotate.phenotype) d$description = d$phenotype %+% ifelse(d$description=="","",":" %+% d$description )
+      if(annotate.phenotype) d$description = paste(d$phenotype, ifelse(d$description=="","",paste(":",d$description)),sep="")
       
       #Add snp annotation to the phenotype label
-      if (annotate.snp.w.phenotype) d$description = d$snp %+% ifelse(d$description=="","",":" %+% d$description )
+      if (annotate.snp.w.phenotype) d$description = paste(d$snp, ifelse(d$description=="","",paste(":",d$description)),sep="")
       
       #Cap annotation length
       d$description = substr(d$description,1,60)
