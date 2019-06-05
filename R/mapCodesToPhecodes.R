@@ -29,10 +29,9 @@ mapCodesToPhecodes <-
       output = output %>% select(-code) %>% rename(phecode=phecode_unrolled)
       #Make distinct
       if(make.distinct) {output = distinct(output)}
-    }
-    else{
+    } else {
       #Rename output column to phecode
-      output = rename(phecode=code)
+      output = output %>% rename(phecode=code)
     }
     
     #Return the output
