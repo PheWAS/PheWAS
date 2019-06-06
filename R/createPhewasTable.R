@@ -1,6 +1,7 @@
 createPhewasTable <-
   function(id.icd9.count, min.code.count=2, add.exclusions=T, translate=T, aggregate.fun=sum, id.gender)
   {
+    .Deprecated("createPhenotypes", package="PheWAS", msg="Please see PheWAS::createPhenotypes() for more features. This function will be removed in the future.")
     id.name=names(id.icd9.count)[1]
     ids <- unique(id.icd9.count[,1])
     if(!translate) {

@@ -8,6 +8,9 @@ createPhenotypes <-
   {
     id.name=names(id.vocab.code.index)[1]
     
+    #Warn if id.sex information is not provided.
+    if(missing(id.sex)) { warning("It is recommended to provide id.sex information to help address spurious sex-specific associations.") }
+    
     if(!translate) {
       #Warn about exclusions if input is not translated and not phecodes. Same with id.sex
       if(add.phecode.exclusions & sum(tolower(id.vocab.code.index[,2])=='phecode')==nrow(id.vocab.code.index)){stop("Codes are not translated and vocab is not 'phecode' for every row, but exclusions are to be applied. Ensure that the code column has only phecodes or disable add.phecode.exclusions for accurate results.")}

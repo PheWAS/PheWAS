@@ -1,5 +1,5 @@
 generateExample <- function(n=5000,phenotypes.per=10,hit="335") {
-    phecode=unique(pheinfo$phecode)
+    phecode=unique(PheWAS::pheinfo$phecode)
     #Exclude the code to add
     phecode=phecode[phecode!=hit]
     #Assign individuals random phenotypes
@@ -16,9 +16,16 @@ generateExample <- function(n=5000,phenotypes.per=10,hit="335") {
     signal$count=0
     signal$phecode=hit
     random=rbind(random,signal[signal$phenotype,c("id","phecode","count")])
-    random=merge(random,phemap)
+    #Map to ICD9/10CM codes and pick one per phecode
+    random=inner_join(random,PheWAS::phecode_rollup_map, by=c("phecode"="code")) %>% 
+        inner_join(PheWAS::phecode_map,by=c("phecode_unrolled"="phecode")) %>% 
+        group_by(id, phecode_unrolled) %>% sample_n(1) %>% ungroup() 
     random$count= rpois(nrow(random),4)
     random[random$phecode==hit,]$count=random[random$phecode==hit,]$count+2
-    random=random[random$count>0,]
-    return(list(id.icd9.count=random[,c("id","icd9","count")],genotypes=signal[,c("id","rsEXAMPLE")]))
+    random=random %>% filter(count>0) %>% select(id,vocabulary_id,code,count) %>% unique()
+    return(list(id.vocab.code.count=random,
+                genotypes=signal[,c("id","rsEXAMPLE")],
+                id.sex=data.frame(id=signal$id,sex=sample(c("F","M"), nrow(signal), replace=TRUE))
+                ))
 }
+
