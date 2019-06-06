@@ -12,10 +12,11 @@ This package provides the tools necessary to perform a PheWAS analysis.
 \tabular{ll}{
 Package: \tab PheWAS\cr
 Type: \tab Package\cr
-Version: \tab 0.12.2-2\cr
-Date: \tab 2019-03-08\cr
+Version: \tab 0.12.3\cr
+Date: \tab 2019-06-09\cr
 License: \tab GPL3\cr
 }
+This is the legacy version of R PheWAS, which is no longer being maintained. The new version contains updates- including support for ICD10CM codes. More information can be found online at https://github.com/PheWAS/PheWAS .
 This package contains the mappings and information for phecodes version 1.2.
 With the package installed, the command \code{vignette("PheWAS-package")} will display the vignette
 \itemize{
