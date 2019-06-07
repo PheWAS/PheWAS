@@ -10,7 +10,7 @@ This function takes a data frame with four columns: id, vocabulary_id, code, and
 createPhewasTable(id.vocab.code.index, min.code.count=2, 
            add.phecode.exclusions=T, translate=T, id.sex, 
            full.population.ids=unique(id.vocab.code.index[[1]]),
-           aggregate.fun=PheWAS:::num_distinct_dates, 
+           aggregate.fun=PheWAS:::default_code_agg, 
            vocabulary.map=PheWAS::phecode_map,
            rollup.map=PheWAS::phecode_rollup_map,
            exclusion.map=PheWAS::phecode_exclude)
@@ -30,7 +30,7 @@ Apply PheWAS exclusions to phecodes.
 Should the input be translated to phecodes? Defaults to TRUE. Generally recommended, though can be skipped if phecodes are provided.
 }
   \item{aggregate.fun}{
-Aggregate function for duplicated phenotypes (phecodes, etc) in an individual. The default supports a naive "distinct date" approach. Use \code{sum} to support count data.
+Aggregate function for duplicated phenotypes (phecodes, etc) in an individual. The default supports will use \code{sum} for numeric values, otherwise it will count the distinct values, eg, for dates.
 }
   \item{id.sex}{
 If supplied, restrict the phecodes by sex. This should be a data frame with the first column being the id and the second the sex, "M" or "F", of the individual. Individuals with any other specification will have all sex specific phenotypes set to NA.

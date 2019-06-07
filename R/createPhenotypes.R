@@ -1,7 +1,7 @@
 createPhenotypes <-
   function(id.vocab.code.index, min.code.count=2, add.phecode.exclusions=T, translate=T, id.sex, 
            full.population.ids=unique(id.vocab.code.index[[1]]),
-           aggregate.fun=PheWAS:::num_distinct_dates, 
+           aggregate.fun=PheWAS:::default_code_agg, 
            vocabulary.map=PheWAS::phecode_map,
            rollup.map=PheWAS::phecode_rollup_map,
            exclusion.map=PheWAS::phecode_exclude)
