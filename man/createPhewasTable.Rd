@@ -4,6 +4,7 @@
 Creates a phenotype table from id, ICD-9 (or phecode, etc), count data.
 }
 \description{
+Deprecated, please see \code{\link[PheWAS:createPhenotypes]{createPhenotypes}}.
 This function takes a data frame with three columns: id, icd9 codes, and counts. It returns a wide table with ICD-9 codes translated into phewas codes. It can optionally use the PheWAS exclusion criteria. Results can be formatted as true/false for a specified threshold or as summed continuous counts.
 }
 \usage{

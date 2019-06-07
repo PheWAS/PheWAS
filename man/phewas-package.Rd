@@ -12,16 +12,17 @@ This package provides the tools necessary to perform a PheWAS analysis.
 \tabular{ll}{
 Package: \tab PheWAS\cr
 Type: \tab Package\cr
-Version: \tab 0.12.2-2\cr
-Date: \tab 2019-03-08\cr
+Version: \tab 0.99.4\cr
+Date: \tab 2019-06-09\cr
 License: \tab GPL3\cr
 }
-This package contains the mappings and information for phecodes version 1.2.
-With the package installed, the command \code{vignette("PheWAS-package")} will display the vignette
+This package contains the mappings and information for phecodes version 1.2 (ICD9CM) and the 2018 beta version of ICD10CM.
+With the package installed, the command \code{vignette("PheWAS-package")} will display the vignette.
+The examples on the PheWASExamples github repository provide some helpful guides, especially \link[https://github.com/PheWAS/PheWASExamples/tree/master/BMI FTO - v1.0]{the V1.0 walkthrough here}.
 \itemize{
-\item \code{\link[PheWAS:mapICD9ToPhecodes]{mapICD9ToPhecodes}} allows users to transform their ICD9 CM codes into phecodes.
+\item \code{\link[PheWAS:mapCodesToPhecodes]{mapCodesToPhecodes}} allows users to transform their ICD9CM and ICD10CM codes into phecodes.
 \item \code{\link[PheWAS:addPhecodeInfo]{addPhecodeInfo}} allows users to add the description for phecodes.
-\item \code{\link[PheWAS:createPhewasTable]{createPhewasTable}} takes ICD9 count data produces output suitable for PheWAS anaylsis.
+\item \code{\link[PheWAS:createPhenotypes]{createPhenotypes}} takes code count data produces output suitable for PheWAS anaylsis.
 \item \code{\link[PheWAS:phewas]{phewas}} allows users to perform a PheWAS analysis with genetics, ICD9 codes, phecodes, etc.
 \item \code{\link[PheWAS:PheWAS_Plotting]{phewasManhattan}} is a high level plot function that will generate a ggplot2 of PheWAS results.
 \item \code{\link[PheWAS:PheWAS_Plotting]{phenotypeManhattan}} provides a more general interface for plotting phenotype based Manhattan plots.
@@ -31,7 +32,7 @@ With the package installed, the command \code{vignette("PheWAS-package")} will d
 }
 }
 \author{
-Robert Carroll <robert.j.carroll@vanderbilt.edu>
+Robert Carroll <robert.carroll@vumc.org>
 }
 \references{
 The original PheWAS manuscript can be found here: \url{http://www.ncbi.nlm.nih.gov/pubmed/20335276}
@@ -59,24 +60,29 @@ library(PheWAS)
 set.seed(1)
 #Generate some example data
 ex=generateExample()
-#Extract the two parts from the returned list
-id.icd9.count=ex$id.icd9.count
+#Extract the three parts from the returned list
+id.vocab.code.count=ex$id.vocab.code.count
 genotypes=ex$genotypes
-#Create the phecode table- translates the icd9s, adds 
-#exclusions, and reshapes to a wide format
-phenotypes=createPhewasTable(id.icd9.count)
+id.sex=ex$id.sex
+#Create the phecode table- translates the codes, adds 
+#exclusions, and reshapes to a wide format.
+#Sum up the counts in the data where applicable.
+phenotypes=createPhenotypes(id.vocab.code.count, 
+  aggregate.fun=sum, id.sex=id.sex)
+#Combine the data
+data=inner_join(inner_join(phenotypes,genotypes),id.sex)
 #Run the PheWAS
-results=phewas(phenotypes,genotypes,cores=1,
-  significance.threshold=c("bonferroni"))
+results=phewas_ext(data,phenotypes=names(phenotypes)[-1],genotypes=c("rsEXAMPLE"),
+  covariates=c("sex"), cores=1)
 #Plot the results
-phewasManhattan(results, annotate.angle=0,
+phewasManhattan(results, 
   title="My Example PheWAS Manhattan Plot")
 #Add PheWAS descriptions
 results_d=addPhecodeInfo(results)
-#List the significant results
-results_d[results_d$bonferroni&!is.na(results_d$p),]
 #List the top 10 results
 results_d[order(results_d$p)[1:10],]
+#Create a nice interactive table (eg, in RStudio)
+phewasDT(results)
 }
 }
 

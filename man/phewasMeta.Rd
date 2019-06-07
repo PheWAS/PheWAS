@@ -7,7 +7,7 @@ Perform meta-analysis of PheWAS results
 This function wraps the meta package's \code{\link[meta]{metagen}} function to meta analyze \code{phewas} results.
 }
 \usage{
-phewasMeta(results, fixed=T, keep.both=T, ...)
+phewasMeta(results, fixed=T, keep.both=T, cores=1, ...)
 }
 \arguments{
   \item{results}{
@@ -18,6 +18,9 @@ Use the fixed effects model results in columns \code{p, OR, beta,} and \code{SE}
 }
   \item{keep.both}{
 If \code{FALSE}, remove the specified fixed effects and random effects results columns (e.g., \code{p.fixed} and \code{p.random}). Default is \code{TRUE}.
+}
+  \item{cores}{
+The number of cores to use in the parallel socket cluster implementation. If \code{cores=1},  \code{} will be used instead.
 }
   \item{\dots}{
 Additional parameters to be passed to \code{metagen}.
