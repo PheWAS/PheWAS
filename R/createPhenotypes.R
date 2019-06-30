@@ -13,8 +13,8 @@ createPhenotypes <-
     
     if(!translate) {
       #Warn about exclusions if input is not translated and not phecodes. Same with id.sex
-      if(add.phecode.exclusions & sum(tolower(id.vocab.code.index[,2])=='phecode')==nrow(id.vocab.code.index)){stop("Codes are not translated and vocab is not 'phecode' for every row, but exclusions are to be applied. Ensure that the code column has only phecodes or disable add.phecode.exclusions for accurate results.")}
-      if(!missing(id.sex) & sum(tolower(id.vocab.code.index[,2])=='phecode')==nrow(id.vocab.code.index)){stop("Codes are not translated and vocab is not 'phecode' for every row, but id.sex is supplied for sex-based exclusions. Ensure that the code column has only phecodes or omit id.sex for accurate results.")}
+      if(add.phecode.exclusions & sum(tolower(id.vocab.code.index[,2])=='phecode')!=nrow(id.vocab.code.index)){stop("Codes are not translated and vocab is not 'phecode' for every row, but exclusions are to be applied. Ensure that the code column has only phecodes or disable add.phecode.exclusions for accurate results.")}
+      if(!missing(id.sex) & sum(tolower(id.vocab.code.index[,2])=='phecode')!=nrow(id.vocab.code.index)){stop("Codes are not translated and vocab is not 'phecode' for every row, but id.sex is supplied for sex-based exclusions. Ensure that the code column has only phecodes or omit id.sex for accurate results.")}
       phemapped=tbl_df(data.frame(id=id.vocab.code.index[,1],code=id.vocab.code.index[,3],index=id.vocab.code.index[,4]))
     } else {
       #check to make sure numeric codes were not passed in
