@@ -19,6 +19,8 @@ createPhewasTable(id.vocab.code.index, min.code.count=2,
 \arguments{
   \item{id.vocab.code.index}{
 Data frame with four columns of information: id, vocabulary_id, code, and index. The id and index columns can have other names, but id must be consistent among input files. The vocabulary_id and code must match up with the vocabulary.map file. The default supports the vocabularies "ICD9CM" and "ICD10CM". Code contains the raw code value.
+
+Note the beta ICD10 map is provided in \code{\link[PheWAS:phecode_map_icd10]{PheWAS::phecode_map_icd10}}, which can be provided as a parameter to \code{vocabulary.map}.
 }
   \item{min.code.count}{
 The minimum code count to be considered a case. NA results in a continuous output.
@@ -42,7 +44,7 @@ List of IDs in the "complete" population. This allows for individuals with no ob
 Aggregate function for duplicated phenotypes (phecodes, etc) in an individual. The default supports a naive "distinct date" approach. Use \code{sum} to support count data.
 }
   \item{vocabulary.map}{
-Map between supplied vocabularies and phecodes. Allows for custom phecode maps. By default uses PheWAS::phecode_map, which supports ICD9CM (v1.2) and ICD10CM (beta-2018).
+Map between supplied vocabularies and phecodes. Allows for custom phecode maps. By default uses \code{\link[PheWAS:phecode_map]{PheWAS::phecode_map}}, which supports ICD9CM (v1.2) and ICD10CM (beta-2018). The package also includes the ICD10 beta map (\code{\link[PheWAS:phecode_map_icd10]{PheWAS::phecode_map_icd10}}), which can be used in this parameter.
 }
   \item{rollup.map}{
 Map between phecodes and all codes that they expand to, eg parent codes. By default uses the PheWAS::phecode_rollup_map.
