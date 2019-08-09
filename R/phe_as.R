@@ -103,14 +103,6 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
     }
   }
   
-  #Check to see there were numbers (ie phewas codes) as the predictor, and clean up.
-  if(suppressWarnings(!is.na(as.numeric(gen)))){
-    gens=substring(gens,2)
-    #Clean up if there was just one TRUE entry
-    if(length(gens)==1 & substring(gens,length(gens)-4)=="TRUE") {
-      gens=substring(gens,1,length(gens)-4)
-    }
-  }
   output=data.frame(phenotype=phe_o,snp=gens,
                     adjustment=adjustment,
                     beta=beta, SE=se,

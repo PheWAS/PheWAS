@@ -1,6 +1,7 @@
 phewas <-
 function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcomes, predictors, cores=1, additive.genotypes=T, 
-         significance.threshold, alpha=0.05, unadjusted=F, return.models=F, min.records=20, MASS.confint.level=NA,quick.confint.level) {
+         significance.threshold, alpha=0.05, unadjusted=F, return.models=F, min.records=20, MASS.confint.level=NA,quick.confint.level,
+         clean.phecode.predictors=F) {
   if(missing(phenotypes)) {
     if(!missing(outcomes)) phenotypes=outcomes
     else stop("Either phenotypes or outcomes must be passed in.")
@@ -78,7 +79,10 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   if(return.models) {
     message("Collecting models...")
     models=lapply(result,function(x){attributes(x)$model})
-    names(models)=sapply(models,function(x){paste0(as.character(terms(x))[c(2,1,3)],collapse=" ")})
+    names(models)=sapply(models,function(x){
+      if(length(x)==1&&is.na(x)){NA_character_}
+      else{paste0(as.character(terms(x))[c(2,1,3)],collapse=" ")}
+        })
   }
   
   message("Compiling results...")
@@ -157,6 +161,12 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
       attributes(sig)$simplem.product.meff=sm
     }
   }
+  
+  #Refine the names for phecode predictors if requested
+  if(clean.phecode.predictors) {
+    sig$snp=sub("`([0-9.]+)`.*","\\1",sig$snp)
+  }
+  
   if(!missing(outcomes)) names(sig)[names(sig)=="phenotype"]="outcome"
   if(!missing(predictors)) names(sig)[names(sig)=="snp"]="predictor"
   if(return.models){sig=list(results=sig,models=models)}
