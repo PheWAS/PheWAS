@@ -161,7 +161,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   
   #Refine the names for phecode predictors if requested
   if(clean.phecode.predictors) {
-    sig$snp=sub("`([0-9.]+)`.*","\\1",sig$snp)
+    sig$snp=sub("`([0-9.]+)`(TRUE)?","\\1",sig$snp)
   }
   
   if(!missing(outcomes)) names(sig)[names(sig)=="phenotype"]="outcome"

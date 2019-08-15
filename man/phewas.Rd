@@ -65,7 +65,7 @@ Uses the \code{MASS} package and the \code{confint} function to calculate a conf
 Calculate a confidence interval based on \code{beta + or - qnorm * SE}. Output is stored in the \code{lower.q} and \code{upper.q} columns. Logistic models will return have the exponentiated OR confidence intervals.
 }
   \item{clean.phecode.predictors}{
-If phecodes are used as predictors, this option will enable a result post-processing step that will alter the snp/predictor column to contain only the phecode. It defaults to \code{FALSE} as this provides the best clarity.
+If phecodes are used as predictors, this option will enable a result post-processing step that will alter the snp/predictor column to contain only the phecode. It defaults to \code{FALSE} as this provides the best clarity. Clean phecodes likely indicate either continuous input or a boolean TRUE. The actual code is: \code{sub("`([0-9.]+)`(TRUE)?","\\\\1",predictor)}
 }
 }
 \details{
