@@ -166,7 +166,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   
   if(!missing(outcomes)) names(sig)[names(sig)=="phenotype"]="outcome"
   if(!missing(predictors)) names(sig)[names(sig)=="snp"]="predictor"
-  if(return.models){sig=list(results=sig,models=models)}
+
   if(!missing(quick.confint.level)) {
     if(quick.confint.level>=1|quick.confint.level<=0) {warning("Quick confidence interval requested, but a value in the range (0,1) was not supplied")}
     else {
@@ -178,5 +178,8 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
       sig=sig[,c(sig.names[1:5],"lower.q","upper.q",sig.names[6:length(sig.names)])]
     }
   }
+  
+  if(return.models){sig=list(results=sig,models=models)}
+  
   return(sig)
 }
