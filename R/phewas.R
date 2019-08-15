@@ -79,10 +79,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   if(return.models) {
     message("Collecting models...")
     models=lapply(result,function(x){attributes(x)$model})
-    names(models)=sapply(models,function(x){
-      if(length(x)==1&&is.na(x)){NA_character_}
-      else{paste0(as.character(terms(x))[c(2,1,3)],collapse=" ")}
-        })
+    names(models)=sapply(models,function(x){attributes(x)$model_name})
   }
   
   message("Compiling results...")
