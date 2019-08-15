@@ -35,7 +35,7 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
   type=NA_character_
   note=""
   model=NA
-  model_name=sprintf("No model: %s ~ %s",phe,paste0(names(data)[-1],collapse = " + "))
+  model_name=sprintf("No model: %s ~ %s",phe,paste0(names(d)[-1],collapse = " + "))
   if(n_total<min.records) {
     note=paste(note,"[Error: <",min.records," complete records]")
   } else if(length(unique(na.omit(d[[phe]])))<=1 | length(unique(na.omit(d[[gen]]))) <=1) {
@@ -141,7 +141,8 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
   #If the complete models were requested, add them as well.
   if(return.models) {
     attributes(output)$model=model
-    attributes(output)$model_name=model_name}
+    attributes(output)$model_name=model_name
+  }
   attributes(output)$successful.phenotype=ifelse(is.na(p),NA,phe_o)
   attributes(output)$successful.genotype=ifelse(is.na(p),NA,gen)
   #Return this to the loop to be merged.
