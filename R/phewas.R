@@ -1,6 +1,7 @@
 phewas <-
 function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcomes, predictors, cores=1, additive.genotypes=T, 
-         significance.threshold, alpha=0.05, unadjusted=F, return.models=F, min.records=20, MASS.confint.level=NA,quick.confint.level) {
+         significance.threshold, alpha=0.05, unadjusted=F, return.models=F, min.records=20, MASS.confint.level=NA,quick.confint.level,
+         clean.phecode.predictors=F) {
   if(missing(phenotypes)) {
     if(!missing(outcomes)) phenotypes=outcomes
     else stop("Either phenotypes or outcomes must be passed in.")
@@ -78,7 +79,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
   if(return.models) {
     message("Collecting models...")
     models=lapply(result,function(x){attributes(x)$model})
-    names(models)=sapply(models,function(x){paste0(as.character(terms(x))[c(2,1,3)],collapse=" ")})
+    names(models)=sapply(result,function(x){attributes(x)$model_name})
   }
   
   message("Compiling results...")
@@ -157,9 +158,15 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
       attributes(sig)$simplem.product.meff=sm
     }
   }
+  
+  #Refine the names for phecode predictors if requested
+  if(clean.phecode.predictors) {
+    sig$snp=sub("`([0-9.]+)`(TRUE)?","\\1",sig$snp)
+  }
+  
   if(!missing(outcomes)) names(sig)[names(sig)=="phenotype"]="outcome"
   if(!missing(predictors)) names(sig)[names(sig)=="snp"]="predictor"
-  if(return.models){sig=list(results=sig,models=models)}
+
   if(!missing(quick.confint.level)) {
     if(quick.confint.level>=1|quick.confint.level<=0) {warning("Quick confidence interval requested, but a value in the range (0,1) was not supplied")}
     else {
@@ -171,5 +178,8 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
       sig=sig[,c(sig.names[1:5],"lower.q","upper.q",sig.names[6:length(sig.names)])]
     }
   }
+  
+  if(return.models){sig=list(results=sig,models=models)}
+  
   return(sig)
 }

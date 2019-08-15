@@ -35,6 +35,7 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
   type=NA_character_
   note=""
   model=NA
+  model_name=sprintf("No model: %s ~ %s",phe,paste0(names(d)[-1],collapse = " + "))
   if(n_total<min.records) {
     note=paste(note,"[Error: <",min.records," complete records]")
   } else if(length(unique(na.omit(d[[phe]])))<=1 | length(unique(na.omit(d[[gen]]))) <=1) {
@@ -67,6 +68,7 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
       else {
         model = glm(as.formula(paste(phe," ~ .")), data=d, family=binomial)
         modsum= summary(model)
+        model_name=paste0(as.character(terms(model))[c(2,1,3)],collapse=" ")
         #If the models did not converge, report NA values instead.
         if(model$converged) {
           #Find the rows with results that gets merged across all loops
@@ -86,8 +88,9 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
         note=paste(note,"[Error: <",min.records," records with phenotype and genotype]")
       } else {
         model = glm(as.formula(paste(phe," ~ .", sep="", collapse="")), data=d)
-  
         modsum= summary(model)
+        model_name=paste0(as.character(terms(model))[c(2,1,3)],collapse=" ")
+        
         #If the models did not converge, report NA values instead.
         if(model$converged) {
           #Find the rows with results that gets merged across all loops
@@ -103,14 +106,6 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
     }
   }
   
-  #Check to see there were numbers (ie phewas codes) as the predictor, and clean up.
-  if(suppressWarnings(!is.na(as.numeric(gen)))){
-    gens=substring(gens,2)
-    #Clean up if there was just one TRUE entry
-    if(length(gens)==1 & substring(gens,length(gens)-4)=="TRUE") {
-      gens=substring(gens,1,length(gens)-4)
-    }
-  }
   output=data.frame(phenotype=phe_o,snp=gens,
                     adjustment=adjustment,
                     beta=beta, SE=se,
@@ -144,7 +139,10 @@ function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.le
   }
   
   #If the complete models were requested, add them as well.
-  if(return.models) {attributes(output)$model=model}
+  if(return.models) {
+    attributes(output)$model=model
+    attributes(output)$model_name=model_name
+  }
   attributes(output)$successful.phenotype=ifelse(is.na(p),NA,phe_o)
   attributes(output)$successful.genotype=ifelse(is.na(p),NA,gen)
   #Return this to the loop to be merged.
