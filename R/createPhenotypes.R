@@ -31,7 +31,7 @@ createPhenotypes <-
     #Check exclusions, and add them to the list
     if(add.phecode.exclusions) {
       message("Mapping exclusions...")
-      exclusions = inner_join(phecode %>% rename(exclusion_criteria=code), phecode_exclude, by = "exclusion_criteria")
+      exclusions = inner_join(phecode %>% rename(exclusion_criteria=code), exclusion.map, by = "exclusion_criteria")
       exclusions = exclusions %>%  transmute(id, code, count=-1) %>% distinct()
       phecode=rbind(phecode,exclusions)
     }

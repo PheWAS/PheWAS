@@ -7,7 +7,7 @@ Creates a phenotype table from id, ICD9CM, ICD10CM (or phecode, etc), data.
 This function takes a data frame with four columns: id, vocabulary_id, code, and index. It returns a wide table with phecodes as TRUE/FALSE/NA. It can optionally use the PheWAS exclusion criteria.
 }
 \usage{
-createPhewasTable(id.vocab.code.index, min.code.count=2, 
+createPhenotypes(id.vocab.code.index, min.code.count=2, 
            add.phecode.exclusions=T, translate=T, id.sex, 
            full.population.ids=unique(id.vocab.code.index[[1]]),
            aggregate.fun=PheWAS:::default_code_agg, 

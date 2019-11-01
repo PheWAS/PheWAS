@@ -12,8 +12,8 @@ This package provides the tools necessary to perform a PheWAS analysis.
 \tabular{ll}{
 Package: \tab PheWAS\cr
 Type: \tab Package\cr
-Version: \tab 0.99.5-2\cr
-Date: \tab 2019-08-15\cr
+Version: \tab 0.99.5-3\cr
+Date: \tab 2019-11-01\cr
 License: \tab GPL3\cr
 }
 This package contains the mappings and information for phecodes version 1.2 (ICD9CM) and the 2018 beta version of ICD10CM.
