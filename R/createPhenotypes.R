@@ -72,7 +72,7 @@ createPhenotypes <-
     }
     
     #Limit to full population ids
-    filter(phens, id %in% full.population.ids)
+    phens = filter(phens, id %in% full.population.ids)
     
     #Rename the ID column to the input ID column name
     names(phens)[1]=id.name
