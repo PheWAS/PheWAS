@@ -56,8 +56,8 @@ Adjust point size based on odds ratios? Requires d to contain the \code{OR} colu
 Adjust point shape based on odds ratio direction? Requires d to contain the \code{OR} column. Default is FALSE.
 }
   \item{annotate.level}{
-For \code{phenotypeManhattan}, annotate points at or below this \code{p} with a default of genomewide.line
-For \code{phenotypePlot}, minimum \code{value} to annotate points. Default of no annotation.
+For \code{phenotypeManhattan} or \code{phenotypeManhattan}, annotate points at or below this \code{p} with a default of \code{significant.line}. Set to \code{NA} to disable adding these annotations.
+For \code{phenotypePlot}, minimum \code{value} to annotate points. Default of no annotation with a missing arugment, or set to \code{NA} to disable.
 }
   \item{y.axis.interval}{
 The interval for y axis labeling. Defaults to 5. Scale is in -log10 units for the Manhattan plots and is the same as \code{value} for \code{phenotypePlot}.

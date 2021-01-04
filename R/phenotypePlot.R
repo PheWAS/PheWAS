@@ -26,13 +26,13 @@ phenotypePlot <-
     #Check for annotation information
     if (!missing(annotate.phenotype.description)) {
       #If it is a data frame with appropriate fields, set it up
-      if(is.data.frame(annotate.phenotype.description) & sum(c("phenotype","description") %in% names(annotate.phenotype.description))==2) {
+      if(is.data.frame(annotate.phenotype.description) && sum(c("phenotype","description") %in% names(annotate.phenotype.description))==2) {
         #Add annotation
         d=merge(d,annotate.phenotype.description)
         annotate.phenotype.description=T
       } else if(is.logical(annotate.phenotype.description)) {
         #If there is a logical, check to see if it meets criteria
-        if(annotate.phenotype.description==T & !length(d$description)) {
+        if(annotate.phenotype.description==T && !length(d$description)) {
           stop("Annotate.phenotype.description must contain columns phenotype and description, or be TRUE with provided d$description.")
         }
         #Else do nothing, as it is ready.
@@ -44,18 +44,18 @@ phenotypePlot <-
       #If no description annotation was mentioned, set it to FALSE
       annotate.phenotype.description=F
     }
-    if ((annotate.snp|annotate.snp.w.phenotype) & !("snp" %in% names(d))) stop("You requested SNP annotation but d$snp is not defined.")
-    if(annotate.snp.w.phenotype&annotate.snp) warning("You requested SNP annotation twice")
+    if ((annotate.snp || annotate.snp.w.phenotype) && !("snp" %in% names(d))) stop("You requested SNP annotation but d$snp is not defined.")
+    if(annotate.snp.w.phenotype && annotate.snp) warning("You requested SNP annotation twice")
     
     #Is there any annotation?
-    annotate=annotate.phenotype.description|annotate.phenotype|annotate.snp|annotate.snp.w.phenotype
+    annotate=annotate.phenotype.description || annotate.phenotype || annotate.snp || annotate.snp.w.phenotype
     #If so, but nothing listing to annotate, warn and remove annotate flag
-    if(annotate&missing(annotate.level)&missing(annotate.list)) {
+    if(annotate && (missing(annotate.level) || is.na(annotate.level)) && missing(annotate.list)) {
       warning("You requested annotation, but did not specify annotate.level or annotate.list.")
       annotate=F
     }
     #Check for conflicting color commands
-    if(!use.color & !missing(color.palette)) stop("You requested no color, but provided a color palette.")
+    if(!use.color && !missing(color.palette)) stop("You requested no color, but provided a color palette.")
     #Check for color
     if(use.color) {
       if(missing(color.palette)) {
@@ -63,7 +63,7 @@ phenotypePlot <-
         else if(class(d$color)=="factor") warning("The color attribute is a factor and no color palette is provided: R default color scheme will be used. Convert color to character if it contains color names or codes")
       }
       #Set up color if using a palette
-      if(!missing(color.palette)&!length(d$color)) {
+      if(!missing(color.palette) && !length(d$color)) {
         if(length(d$groupnum)) d$color=d$groupnum
         else stop("You requested use.color, but d$color or d$groupnum were not provided to distinguish groups.")
       }
@@ -73,18 +73,18 @@ phenotypePlot <-
     }
     
     #Check for point sizing/direction information if requested
-    if(sizes&!length(d$size)) stop("You requested size information, but did not provide d$size")
-    if(direction&!length(d$direction)) stop("You requested direction information, but did not provide d$direction")
+    if(sizes && !length(d$size)) stop("You requested size information, but did not provide d$size")
+    if(direction && !length(d$direction)) stop("You requested direction information, but did not provide d$direction")
     #Set point size if sizes are not requested
     if(!sizes) d$size=point.size
     
     #Remove lc.labels flag if no annotations
-    if(!annotate.phenotype.description&!annotate.phenotype&!annotate.snp&!annotate.snp.w.phenotype) lc.labels=F
+    if(!annotate.phenotype.description && !annotate.phenotype && !annotate.snp && !annotate.snp.w.phenotype) lc.labels=F
     
     #One cannot sort by value and have x.group.labels
-    if (sort.by.value & x.group.labels) stop("One cannot sort universally by value and have x group labels. Try sort.by.category.value or not labeling the groups.")
+    if (sort.by.value && x.group.labels) stop("One cannot sort universally by value and have x group labels. Try sort.by.category.value or not labeling the groups.")
     #Check for group information if requested
-    if((sort.by.category.value|x.group.labels)&(sum(c("groupnum","group") %in% names(d))<2)) {
+    if((sort.by.category.value || x.group.labels) && (sum(c("groupnum","group") %in% names(d))<2)) {
       stop("Requested group information, but did not provide d$groupnum and d$group.")
     }
     
@@ -94,7 +94,7 @@ phenotypePlot <-
     }
     
     #Remove items with NA values or phenotypes
-    d=d[!(is.na(d$phenotype)|is.na(d$value)),]
+    d=d[!(is.na(d$phenotype) | is.na(d$value)),]
     
     #Sort by the phenotype
     d=d[order(d$phenotype),]
@@ -163,8 +163,8 @@ phenotypePlot <-
       plot=ggplot(d,ylab=y.axis.label,xlab=x.axis.label)
       
       #Include lines for significance thresholds
-      if (!missing(suggestive.line)&!is.na(suggestive.line)) plot=plot+geom_hline(yintercept=suggestive.line,colour="blue", alpha=I(1/3),size=1)
-      if (!missing(significant.line)&!is.na(significant.line)) plot=plot+geom_hline(yintercept=significant.line,colour="red",alpha=I(1/3),size=1)
+      if (!missing(suggestive.line) && !is.na(suggestive.line)) plot=plot+geom_hline(yintercept=suggestive.line,colour="blue", alpha=I(1/3),size=1)
+      if (!missing(significant.line) && !is.na(significant.line)) plot=plot+geom_hline(yintercept=significant.line,colour="red",alpha=I(1/3),size=1)
       
       plot=plot+aes(seq,value,size=size,colour=color)
       if(!sizes) plot=plot+scale_size(range=c(point.size,point.size),guide="none")
@@ -202,8 +202,8 @@ phenotypePlot <-
       plot=ggplot(d,xlab=y.axis.label,ylab=x.axis.label)
       
       #Include lines for significance thresholds
-      if (!missing(suggestive.line)&!is.na(suggestive.line)) plot=plot+geom_vline(xintercept=suggestive.line,colour="blue", alpha=I(1/3),size=1)
-      if (!missing(significant.line)&!is.na(significant.line)) plot=plot+geom_vline(xintercept=significant.line,colour="red",alpha=I(1/3),size=1)
+      if (!missing(suggestive.line) && !is.na(suggestive.line)) plot=plot+geom_vline(xintercept=suggestive.line,colour="blue", alpha=I(1/3),size=1)
+      if (!missing(significant.line) && !is.na(significant.line)) plot=plot+geom_vline(xintercept=significant.line,colour="red",alpha=I(1/3),size=1)
       
       plot=plot+aes(value,seq,size=size,colour=color)
       if(!sizes) plot=plot+scale_size(range=c(point.size,point.size),guide="none")
@@ -255,9 +255,9 @@ phenotypePlot <-
       #If provided with a list of phenotypes to annotate, select those.
       if(!missing(annotate.list)) d[d$phenotype %in% annotate.list, ]$annotate=T
       #Include those above the given threshold
-      if((!missing(annotate.level))&(sum(d$value>=annotate.level)>0)) d[d$value>=annotate.level, ]$annotate=T
+      if((!missing(annotate.level) && !is.na(annotate.level)) && (sum(d$value>=annotate.level)>0)) d[d$value>=annotate.level, ]$annotate=T
       #Select only the largest value for each phenotype to label, unless requested otherwise
-      if(sum(d$value!=d$min.value)>0&annotate.only.largest) d[d$value!=d$min.value,]$annotate=F
+      if(sum(d$value!=d$min.value)>0 && annotate.only.largest) d[d$value!=d$min.value,]$annotate=F
       #If no base descriptions were included, add empty ones
       if(!annotate.phenotype.description) {
         d$description=""
@@ -278,7 +278,7 @@ phenotypePlot <-
         warning("Annotation requested, but no points met criteria")
       } else {
         #Add annotations
-        if(annotate.phenotype.description|annotate.phenotype|annotate.snp.w.phenotype) {
+        if(annotate.phenotype.description || annotate.phenotype || annotate.snp.w.phenotype) {
           plot = plot + if(!base.labels) { ggrepel::geom_text_repel(aes(label=description),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.angle)
                           } else {geom_text(aes(label=description),colour="black",data=d[d$annotate,],hjust=0,size=annotate.size,angle=annotate.angle)}
         }
