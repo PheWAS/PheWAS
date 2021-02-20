@@ -129,11 +129,11 @@ set.seed(1)
 #Generate some example data
 ex=generateExample()
 #Extract the two parts from the returned list
-id.icd9.count=ex$id.icd9.count
+id.vocab.code.count=ex$id.vocab.code.count
 genotypes=ex$genotypes
 #Create the PheWAS code table- translates the icd9s, adds 
 #exclusions, and reshapes to a wide format
-phenotypes=createPhewasTable(id.icd9.count)
+phenotypes=createPhenotypes(id.vocab.code.count)
 #Run the PheWAS
 results=phewas(phenotypes,genotypes,cores=1,
   significance.threshold=c("bonferroni"))
