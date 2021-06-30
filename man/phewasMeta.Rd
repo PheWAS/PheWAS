@@ -20,7 +20,7 @@ Use the fixed effects model results in columns \code{p, OR, beta,} and \code{SE}
 If \code{FALSE}, remove the specified fixed effects and random effects results columns (e.g., \code{p.fixed} and \code{p.random}). Default is \code{TRUE}.
 }
   \item{cores}{
-The number of cores to use in the parallel socket cluster implementation. If \code{cores=1},  \code{} will be used instead.
+The default of 1 will use \code{dplyr} to execute. Using a value greater than 1 will attempt to use the package \code{multidplyr}, failing if the package is not installed.
 }
   \item{\dots}{
 Additional parameters to be passed to \code{metagen}.
