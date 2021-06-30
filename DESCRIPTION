@@ -10,6 +10,6 @@ Description: Functions to perform Phenome Wide Association
  Studies (PheWAS). These functions include the conversion of ICD9CM codes to 
  phecodes (v1.2), statistical analysis, and plotting.
 License: GPL-3
-Depends: dplyr, tidyr, ggplot2 (>= 2.2.0), parallel
+Depends: R (>= 3.5.0), dplyr, tidyr, ggplot2 (>= 2.2.0), parallel
 Imports: MASS, meta, ggrepel, DT, survival, logistf, lmtest
 LazyData: yes
