@@ -68,7 +68,7 @@ createPhewasTable <-
 
     #If there are gender restrictions, set them to NA
     if(!missing(id.gender)) {
-      phens=restrictPhecodesByGender(phens,id.gender)
+      phens=restrictPhecodesBySex(phens,id.gender)
     }
     
     #Rename the ID column to the input ID column name
