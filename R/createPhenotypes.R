@@ -1,11 +1,12 @@
 createPhenotypes <-
   function(id.vocab.code.index, min.code.count=2, add.phecode.exclusions=T, translate=T, id.sex, 
            full.population.ids=unique(id.vocab.code.index[[1]]),
-           aggregate.fun=PheWAS:::default_code_agg, 
+           aggregate.fun=PheWAS:::default_code_agg,
            vocabulary.map=PheWAS::phecode_map,
            rollup.map=PheWAS::phecode_rollup_map,
            exclusion.map=PheWAS::phecode_exclude,
-           sex.restriction=PheWAS::sex_restriction)
+           sex.restriction=PheWAS::sex_restriction,
+           map.codes.make.distinct = FALSE)
   {
     id.name=names(id.vocab.code.index)[1]
     
@@ -22,7 +23,7 @@ createPhenotypes <-
       if(!class(id.vocab.code.index[[3]]) %in% c("character","factor")) {stop("Please ensure character or factor code representation. Some vocabularies, eg ICD9CM, require strings to be represented accurately: E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
       names(id.vocab.code.index)=c("id","vocabulary_id","code","index")
       message("Mapping codes to phecodes...")
-      phemapped=mapCodesToPhecodes(id.vocab.code.index, vocabulary.map=vocabulary.map, rollup.map=rollup.map) %>% transmute(id, code=phecode, index)
+      phemapped=mapCodesToPhecodes(id.vocab.code.index, make.distinct=map.codes.make.distinct, vocabulary.map=vocabulary.map, rollup.map=rollup.map) %>% transmute(id, code=phecode, index)
     }
     
     message("Aggregating codes...")

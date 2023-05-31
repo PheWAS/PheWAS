@@ -14,7 +14,8 @@ createPhenotypes(id.vocab.code.index, min.code.count=2,
            vocabulary.map=PheWAS::phecode_map,
            rollup.map=PheWAS::phecode_rollup_map,
            exclusion.map=PheWAS::phecode_exclude,
-           sex.restriction=PheWAS::sex_restriction)
+           sex.restriction=PheWAS::sex_restriction,
+           map.codes.make.distinct = FALSE)
 }
 
 \arguments{
@@ -54,7 +55,10 @@ Map between phecodes and all codes that they expand to, eg parent codes. By defa
 Map between phecodes and their exclusions. By default uses the PheWAS::phecode_exclude.
 }
   \item{sex.restriction}{
-List that specifies sex-specific phecodes. By default uses the PheWAS::sex_restriction.
+Map that specifies sex-specific phecodes. By default uses the PheWAS::sex_restriction.
+}
+  \item{map.codes.make.distinct}{
+Controls the \code{make.distinct} flag for the internal \code{mapCodesToPhecodes} function. The default works well with the default \code{aggregate.fun}, which handles counting distinct dates. Included primarily to support replicating from prior builds. By default FALSE.
 }
 }
 \details{
