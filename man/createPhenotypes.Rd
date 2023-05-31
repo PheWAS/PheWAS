@@ -58,7 +58,7 @@ Map between phecodes and their exclusions. By default uses the PheWAS::phecode_e
 Map that specifies sex-specific phecodes. By default uses the PheWAS::sex_restriction.
 }
   \item{map.codes.make.distinct}{
-Controls the \code{make.distinct} flag for the internal \code{mapCodesToPhecodes} function. The default works well with the default \code{aggregate.fun}, which handles counting distinct dates. Included primarily to support replicating from prior builds. By default FALSE.
+Controls the \code{make.distinct} flag for the internal \code{mapCodesToPhecodes} function. The default works well with the default \code{aggregate.fun}, which handles counting distinct dates. Included primarily to support replicating from prior builds or to support possible dual-coding concerns. By default FALSE.
 }
 }
 \details{
