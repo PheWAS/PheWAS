@@ -26,6 +26,13 @@ createPhenotypes <-
       phemapped=mapCodesToPhecodes(id.vocab.code.index, make.distinct=map.codes.make.distinct, vocabulary.map=vocabulary.map, rollup.map=rollup.map) %>% transmute(id, code=phecode, index)
     }
     
+    #Warn if there are ICD9CM and ICD10CM codes and numeric indexes, but default aggregation and code count settings
+    if(missing(aggregate.fun) & map.codes.make.distinct == FALSE & min.code.count==2 &
+       is.numeric(id.vocab.code.index[[4]]) & 
+       "ICD9CM" %in% id.vocab.code.index[[2]] & "ICD10CM" %in% id.vocab.code.index[[2]] ) {
+         warning("You are using ICD9CM and ICD10CM codes and numeric counts as an index. With default settings, individuals dual-coded on a single day with ICD9CM and ICD10CM codes that indicate a single phecode will meet a minimum code count of 2, as each code counts separately. Consider providing dates as an index instead. If that's not possible, be sure to evaluate the scientific impacts and consider adjusting `min.code.count`, `map.codes.make.distinct`, or `aggregate.fun`.")
+       }
+    
     message("Aggregating codes...")
     phecode=ungroup(summarize(group_by(phemapped,id,code),count=aggregate.fun(index)))
     phecode=phecode[phecode$count>0,]
