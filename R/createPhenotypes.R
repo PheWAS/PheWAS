@@ -4,7 +4,8 @@ createPhenotypes <-
            aggregate.fun=PheWAS:::default_code_agg, 
            vocabulary.map=PheWAS::phecode_map,
            rollup.map=PheWAS::phecode_rollup_map,
-           exclusion.map=PheWAS::phecode_exclude)
+           exclusion.map=PheWAS::phecode_exclude,
+           sex.restriction=PheWAS::sex_restriction)
   {
     id.name=names(id.vocab.code.index)[1]
     
@@ -68,7 +69,7 @@ createPhenotypes <-
     
     #If there are sex restrictions, set them to NA
     if(!missing(id.sex)) {
-      phens=restrictPhecodesBySex(phens,id.sex)
+      phens=restrictPhecodesBySex(phens,id.sex,sex.restriction)
     }
     
     #Limit to full population ids

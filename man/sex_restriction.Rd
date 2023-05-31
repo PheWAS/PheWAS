@@ -1,11 +1,11 @@
-\name{gender_restriction}
-\alias{gender_restriction}
+\name{sex_restriction}
+\alias{sex_restriction}
 \docType{data}
 \title{
-Data frame containing potential gender-restricted phewas codes.
+Data frame containing potential sex-restricted phecodes.
 }
 \description{
-Some phewas codes are only typical for one gender or the other; this data frame describes those restrictions.
+Some phecodes are only typical for one sex or the other; this data frame describes those restrictions.
 }
 \usage{data(pheinfo)}
 \format{

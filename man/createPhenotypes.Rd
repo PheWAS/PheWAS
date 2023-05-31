@@ -13,7 +13,8 @@ createPhenotypes(id.vocab.code.index, min.code.count=2,
            aggregate.fun=PheWAS:::default_code_agg, 
            vocabulary.map=PheWAS::phecode_map,
            rollup.map=PheWAS::phecode_rollup_map,
-           exclusion.map=PheWAS::phecode_exclude)
+           exclusion.map=PheWAS::phecode_exclude,
+           sex.restriction=PheWAS::sex_restriction)
 }
 
 \arguments{
@@ -51,6 +52,9 @@ Map between phecodes and all codes that they expand to, eg parent codes. By defa
 }
   \item{exclusion.map}{
 Map between phecodes and their exclusions. By default uses the PheWAS::phecode_exclude.
+}
+  \item{sex.restriction}{
+List that specifies sex-specific phecodes. By default uses the PheWAS::sex_restriction.
 }
 }
 \details{
