@@ -89,8 +89,8 @@ id.sex=ex$id.sex
 #Sum up the counts in the data where applicable.
 phenotypes=createPhenotypes(id.vocab.code.count, 
   aggregate.fun=sum, id.sex=id.sex)
-#Create the phecode table for a PheWAS
-phenotypes=createPhewasTable(id.icd9.count)
+#Deprecated approach to create the phecode table for a PheWAS
+#phenotypes=createPhewasTable(id_icd9_count)
 phenotypes[1:10,1:10]
 }
 }
