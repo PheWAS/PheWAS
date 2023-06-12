@@ -75,7 +75,7 @@ Laura Wiley
 }
 \examples{
 #Simple example
-id_icd9_count=data.frame(id=c(1,2,2,2,3),vocabulary_id="icd9",code=c("714","250.11","714.1","714","250.11"),
+id_icd9_count=data.frame(id=c(1,2,2,2,3),vocabulary_id="ICD9CM",code=c("714","250.11","714.1","714","250.11"),
   count=c(1,5,1,1,0))
 createPhenotypes(id_icd9_count)
 \donttest{
@@ -89,8 +89,8 @@ id.sex=ex$id.sex
 #Sum up the counts in the data where applicable.
 phenotypes=createPhenotypes(id.vocab.code.count, 
   aggregate.fun=sum, id.sex=id.sex)
-#Create the phecode table for a PheWAS
-phenotypes=createPhewasTable(id.icd9.count)
+#Deprecated approach to create the phecode table for a PheWAS
+#phenotypes=createPhewasTable(id_icd9_count)
 phenotypes[1:10,1:10]
 }
 }
