@@ -1,11 +1,52 @@
+#' Fill in later
+#'
+#' @param d n/a
+#' @param max.y n/a
+#' @param max.x n/a
+#' @param suggestive.line n/a
+#' @param significant.line n/a
+#' @param size.x.labels n/a
+#' @param size.y.labels n/a
+#' @param switch.axis n/a
+#' @param sort.by.value n/a
+#' @param sort.by.category.value n/a
+#' @param base.labels n/a
+#' @param annotate.phenotype.description n/a
+#' @param annotate.angle n/a
+#' @param annotate.size n/a
+#' @param annotate.level n/a
+#' @param annotate.phenotype n/a
+#' @param annotate.snp.w.phenotype n/a
+#' @param annotate.snp n/a
+#' @param annotate.snp.angle n/a
+#' @param annotate.list n/a
+#' @param annotate.only.largest n/a
+#' @param lc.labels n/a
+#' @param x.group.labels n/a
+#' @param x.phenotype.labels n/a
+#' @param sizes n/a
+#' @param direction n/a
+#' @param point.size n/a
+#' @param use.color n/a
+#' @param color.palette n/a
+#' @param title n/a
+#' @param x.axis.label n/a
+#' @param y.axis.label n/a
+#' @param y.axis.interval n/a
+#'
+#' @return n/a
+#' @export
+#' @import ggplot2
+#' @importFrom ggrepel geom_text_repel
+#' @examples phenotypePlot(n/a)
 phenotypePlot <-
-  function(d, max.y,max.x, suggestive.line, significant.line, 
+  function(d, max.y,max.x, suggestive.line, significant.line,
            size.x.labels=9, size.y.labels=9, switch.axis=F, sort.by.value=F, sort.by.category.value=F,
            #annotation
            base.labels=F,
            annotate.phenotype.description,
            annotate.angle=0, annotate.size=5, annotate.level,
-           annotate.phenotype=F, 
+           annotate.phenotype=F,
            annotate.snp.w.phenotype=F,
            annotate.snp=F, annotate.snp.angle=0,
            annotate.list, annotate.only.largest=T,
@@ -22,7 +63,7 @@ phenotypePlot <-
            y.axis.interval=5) {
     #Check to ensure the input contains columns phenotype and value
     if ( sum(c("phenotype","value") %in% names(d))<2 ) stop("Data input must contain columns phenotype and value.")
-    
+
     #Check for annotation information
     if (!missing(annotate.phenotype.description)) {
       #If it is a data frame with appropriate fields, set it up
@@ -46,7 +87,7 @@ phenotypePlot <-
     }
     if ((annotate.snp || annotate.snp.w.phenotype) && !("snp" %in% names(d))) stop("You requested SNP annotation but d$snp is not defined.")
     if(annotate.snp.w.phenotype && annotate.snp) warning("You requested SNP annotation twice")
-    
+
     #Is there any annotation?
     annotate=annotate.phenotype.description || annotate.phenotype || annotate.snp || annotate.snp.w.phenotype
     #If so, but nothing listing to annotate, warn and remove annotate flag
@@ -60,7 +101,7 @@ phenotypePlot <-
     if(use.color) {
       if(missing(color.palette)) {
         if(!("color" %in% names(d))) stop("You requested color, but did not provide a color attribute in d or color.palette")
-        else if(class(d$color)=="factor") warning("The color attribute is a factor and no color palette is provided: R default color scheme will be used. Convert color to character if it contains color names or codes")
+        else if(is(d$color, 'factor')) warning("The color attribute is a factor and no color palette is provided: R default color scheme will be used. Convert color to character if it contains color names or codes")
       }
       #Set up color if using a palette
       if(!missing(color.palette) && !length(d$color)) {
@@ -71,43 +112,43 @@ phenotypePlot <-
       #Set the colors to all black if no color is requested
       d$color="#000000"
     }
-    
+
     #Check for point sizing/direction information if requested
     if(sizes && !length(d$size)) stop("You requested size information, but did not provide d$size")
     if(direction && !length(d$direction)) stop("You requested direction information, but did not provide d$direction")
     #Set point size if sizes are not requested
     if(!sizes) d$size=point.size
-    
+
     #Remove lc.labels flag if no annotations
     if(!annotate.phenotype.description && !annotate.phenotype && !annotate.snp && !annotate.snp.w.phenotype) lc.labels=F
-    
+
     #One cannot sort by value and have x.group.labels
     if (sort.by.value && x.group.labels) stop("One cannot sort universally by value and have x group labels. Try sort.by.category.value or not labeling the groups.")
     #Check for group information if requested
     if((sort.by.category.value || x.group.labels) && (sum(c("groupnum","group") %in% names(d))<2)) {
       stop("Requested group information, but did not provide d$groupnum and d$group.")
     }
-    
+
     #If no group info, just assign all to group 0
-    if(!("groupnum"%in%names(d))) { 
+    if(!("groupnum"%in%names(d))) {
       d$groupnum=0
     }
-    
+
     #Remove items with NA values or phenotypes
     d=d[!(is.na(d$phenotype) | is.na(d$value)),]
-    
+
     #Sort by the phenotype
     d=d[order(d$phenotype),]
-        
+
     #Set the maximum x value to fit all phenotypes if not specified
     if(missing(max.x)) max.x = length(unique(d$phenotype))
-    
-    
+
+
     #Create the list of phenotypes, finding the best values for each phenotype
     phenotypes=aggregate(value ~ phenotype + groupnum, d,FUN=max)
     #Remove the least significant phenotypes; only has an effect if max.x was specified.
     phenotypes=phenotypes[order(phenotypes$value, decreasing=T),][1:min(nrow(phenotypes),max.x),]
-    
+
     #If the user requested sorting by values
     if (sort.by.value) {
       #Sort by values
@@ -121,134 +162,134 @@ phenotypePlot <-
       #TODO: What about non-numeric phenotypes? Need this to sort 008 etc.
       phenotypes=phenotypes[order(phenotypes$groupnum,phenotypes$phenotype),]
     }
-    
-    phenotypes$seq = 1:nrow(phenotypes)      
 
-    
+    phenotypes$seq = 1:nrow(phenotypes)
+
+
     #Limit to phenotype and seq, as they are the only relevant columns
     #Include value as min.value for annotation purposes
     phenotypes=phenotypes[,c("phenotype","seq","value")]
     names(phenotypes)[3]="min.value"
-    
+
     #Add sequence information
     d=inner_join(phenotypes,d,by="phenotype")
     d=d[order(d$seq),]
-    
+
     #Define the max y axis value if not provided
     if(missing(max.y)) max.y=ceiling(max(d$value))
-    
+
     if(switch.axis) {
       #Swap ordering
       d=d[nrow(d):1,]
       d$groupnum=max(d$groupnum)-d$groupnum+1
       d$seq=max(d$seq)-d$seq+1
     }
-    
+
     if (x.group.labels) {
       labels= summarize(group_by(d, groupnum), tick=mean(unique(seq)),label=as.character(group[1]))
       labels=labels[order(labels$tick),]
     }
-    
+
     if(missing(color.palette)) {
       color.palette = unique(d[order(d$seq),]$color)
       names(color.palette)=color.palette
     } else {
       names(color.palette) = unique(d[order(d$seq),]$color)
     }
-    
+
 
     #Check if we are using switch.axis
     if(!switch.axis) {
       #Generate the inital plot
       plot=ggplot(d,ylab=y.axis.label,xlab=x.axis.label)
-      
+
       #Include lines for significance thresholds
       if (!missing(suggestive.line) && !is.na(suggestive.line)) plot=plot+geom_hline(yintercept=suggestive.line,colour="blue", alpha=I(1/3),size=1)
       if (!missing(significant.line) && !is.na(significant.line)) plot=plot+geom_hline(yintercept=significant.line,colour="red",alpha=I(1/3),size=1)
-      
+
       plot=plot+aes(seq,value,size=size,colour=color)
       if(!sizes) plot=plot+scale_size(range=c(point.size,point.size),guide="none")
       #Add points
-      plot=plot+geom_point() 
-      
-      #Color as defined 
-      plot = plot + scale_colour_manual(values= color.palette, guide="none") 
-      
+      plot=plot+geom_point()
+
+      #Color as defined
+      plot = plot + scale_colour_manual(values= color.palette, guide="none")
+
       #If label the X axis with the groups if requested
       if (x.group.labels) {
-      
+
         plot=plot+scale_x_continuous(name=x.axis.label, limits=c(1,max.x), breaks=labels$tick, labels=labels$label, expand=c(.01,0))
-        
+
       } else {
         plot=plot+scale_x_continuous(name=x.axis.label, limits=c(1,max.x), breaks=c(-100), labels=c(""), expand=c(.015,0))
       }
-      
+
       #Set the Y scale and labels
       plot=plot+scale_y_continuous(y.axis.label, limits=c(0,max.y), breaks=seq(0,max.y,y.axis.interval), expand=c(0,.2))
-      
+
       #Set the default theme
       plot=plot+theme(
-        panel.background=element_blank(), 
+        panel.background=element_blank(),
         panel.grid.minor=element_blank(),
-        axis.text.x=element_text(size=size.x.labels, colour="black", angle=-40, hjust=0, vjust=1), 
-        axis.text.y=element_text(size=size.y.labels, colour="black"), 
+        axis.text.x=element_text(size=size.x.labels, colour="black", angle=-40, hjust=0, vjust=1),
+        axis.text.y=element_text(size=size.y.labels, colour="black"),
         axis.line =element_line(colour="black"),
         axis.ticks=element_line(colour="black")
-      ) 
+      )
     } else {
       ####Generate plot with switch.axis
-      
+
       #Generate the inital plot
       plot=ggplot(d,xlab=y.axis.label,ylab=x.axis.label)
-      
+
       #Include lines for significance thresholds
       if (!missing(suggestive.line) && !is.na(suggestive.line)) plot=plot+geom_vline(xintercept=suggestive.line,colour="blue", alpha=I(1/3),size=1)
       if (!missing(significant.line) && !is.na(significant.line)) plot=plot+geom_vline(xintercept=significant.line,colour="red",alpha=I(1/3),size=1)
-      
+
       plot=plot+aes(value,seq,size=size,colour=color)
       if(!sizes) plot=plot+scale_size(range=c(point.size,point.size),guide="none")
       #Add points
-      plot=plot+geom_point() 
-      
-      
-      #Color as defined 
-      plot = plot + scale_colour_manual(values= color.palette, guide="none") 
-      
+      plot=plot+geom_point()
+
+
+      #Color as defined
+      plot = plot + scale_colour_manual(values= color.palette, guide="none")
+
       #If label the Y axis with the groups if requested
       if (x.group.labels) {
-        plot=plot+scale_y_continuous(name=x.axis.label, limits=c(1,max.x), breaks=labels$tick, labels=labels$label, expand=c(.015,.02)) 
-        
+        plot=plot+scale_y_continuous(name=x.axis.label, limits=c(1,max.x), breaks=labels$tick, labels=labels$label, expand=c(.015,.02))
+
       } else {
         plot=plot+scale_y_continuous(name=x.axis.label, limits=c(0,max.x), breaks=c(-100), labels=c(""), expand=c(.015,0))
       }
-      
+
       #Set the Y scale and labels
       plot=plot+scale_x_continuous(y.axis.label, limits=c(0,max.y), breaks=seq(0,max.y,y.axis.interval), expand=c(0,.2))
-      
+
       #Set the default theme
       plot=plot+theme(
-        panel.background=element_blank(), 
+        panel.background=element_blank(),
         panel.grid.minor=element_blank(),
-        axis.text.y=element_text(size=size.x.labels, colour="black", hjust=1, vjust=.5), 
-        axis.text.x=element_text(size=size.y.labels, colour="black", hjust=.5, vjust=0), 
+        axis.text.y=element_text(size=size.x.labels, colour="black", hjust=1, vjust=.5),
+        axis.text.x=element_text(size=size.y.labels, colour="black", hjust=.5, vjust=0),
         axis.line =element_line(colour="black"),
         axis.ticks=element_line(colour="black")
-      ) 
+      )
     }
- 
+
     #Hide the legend by default
     plot = plot+theme(legend.position = "none")
-    
+
     #Add OR information
-    if(sizes){			
+    if(sizes){
       plot= suppressWarnings(plot + theme(legend.position="right") +
-        scale_size("Size", range = c(point.size, 2*point.size)))
+                               scale_size("Size", range = c(point.size, 2*point.size)))
     }
     if(direction){
-      plot=plot+aes(shape = factor(direction), fill=color) + 
-        scale_shape("Direction", solid = TRUE) + scale_shape_manual(values=c(25,24)) + 
-        scale_fill_manual(values= color.palette, guide="none") 
-    }		
+      plot=plot+aes(shape = factor(direction), fill=color) +
+        scale_shape("Direction", solid = TRUE) + scale_shape_manual(values=c(25,24)) +
+        scale_fill_manual(values= color.palette, guide="none")
+    }
     #If annotation present, start the definitions, otherwise skip it
     if (annotate) 	{
       d$annotate=F
@@ -261,13 +302,13 @@ phenotypePlot <-
       #If no base descriptions were included, add empty ones
       if(!annotate.phenotype.description) {
         d$description=""
-      }     
+      }
       #If requested the phenotype annotation, add it
       if(annotate.phenotype) d$description = paste(d$phenotype, ifelse(d$description=="","",paste(":",d$description)),sep="")
-      
+
       #Add snp annotation to the phenotype label
       if (annotate.snp.w.phenotype) d$description = paste(d$snp, ifelse(d$description=="","",paste(":",d$description)),sep="")
-      
+
       #Cap annotation length
       d$description = substr(d$description,1,60)
       #Add leading space
@@ -279,19 +320,19 @@ phenotypePlot <-
       } else {
         #Add annotations
         if(annotate.phenotype.description || annotate.phenotype || annotate.snp.w.phenotype) {
-          plot = plot + if(!base.labels) { ggrepel::geom_text_repel(aes(label=description),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.angle)
-                          } else {geom_text(aes(label=description),colour="black",data=d[d$annotate,],hjust=0,size=annotate.size,angle=annotate.angle)}
+          plot = plot + if(!base.labels) { geom_text_repel(aes(label=description),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.angle)
+          } else {geom_text(aes(label=description),colour="black",data=d[d$annotate,],hjust=0,size=annotate.size,angle=annotate.angle)}
         }
         #Add SNP annotations
         if(annotate.snp) {
-          plot = plot + if(!base.labels) {ggrepel::geom_text_repel(aes(label=snp),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.snp.angle)
-                          } else {geom_text(aes(label=snp),colour="black",data=d[d$annotate,],hjust=0,size=annotate.size,angle=annotate.snp.angle)}
+          plot = plot + if(!base.labels) {geom_text_repel(aes(label=snp),colour="black",data=d[d$annotate,],size=annotate.size,angle=annotate.snp.angle)
+          } else {geom_text(aes(label=snp),colour="black",data=d[d$annotate,],hjust=0,size=annotate.size,angle=annotate.snp.angle)}
         }
       }
-    } 
-    
+    }
+
     #Add the title
     plot=plot+labs(title=title) + theme(title=element_text(size=12))
-    
+
     plot
   }

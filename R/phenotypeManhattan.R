@@ -1,5 +1,23 @@
+#' Fill in later
+#'
+#' @param d n/a
+#' @param suggestive.line n/a
+#' @param significant.line n/a
+#' @param OR.size n/a
+#' @param OR.direction n/a
+#' @param sizes n/a
+#' @param annotate.level n/a
+#' @param y.axis.interval n/a
+#' @param y.axis.label n/a
+#' @param max.y n/a
+#' @param ... n/a
+#'
+#' @return n/a
+#' @export
+#'
+#' @examples phenotypeManhattan(n/a)
 phenotypeManhattan <-
-  function(d, suggestive.line=0.05, significant.line, 
+  function(d, suggestive.line=0.05, significant.line,
            OR.size=F,OR.direction=F, sizes,
            annotate.level,
            y.axis.interval=5,
@@ -30,12 +48,12 @@ phenotypeManhattan <-
     if(sum(d$p==0)>0)d[d$p==0,]$p=.Machine$double.xmin
     #Restrict to only those with appropriate p-values
     d=d[d$p>0 & d$p<=1,]
-    
+
     #Create the - log p value for plotting. No errors given restriction to p>0
     d$value = -log10(d$p)
-    
+
     max.y=ifelse(missing(max.y),max(ceiling(max(d$value)),4.4),max.y)
-    
+
     #Set default of sizing to FALSE
     sizing=FALSE
     #Check sizing parameters
@@ -47,22 +65,22 @@ phenotypeManhattan <-
         sizing=TRUE
       }
     }
-    
+
     #If OR sizes are requested, normalize them to magnitude only
     if(OR.size){
       sizing=TRUE
       d$size = d$OR
       d[d$size<1,]$size = 1/d[d$size<1,]$size
     }
-    
+
     #If the OR direction is requested, create it
     if(OR.direction) d$direction = d$OR>=1
     plot=phenotypePlot(d,suggestive.line=suggestive.line,significant.line=significant.line,
-                        sizes=sizing,direction=OR.direction,
-                        annotate.level=annotate.level,
-                        y.axis.interval=y.axis.interval,
-                        y.axis.label=y.axis.label, max.y=max.y,
-                        ...)
+                       sizes=sizing,direction=OR.direction,
+                       annotate.level=annotate.level,
+                       y.axis.interval=y.axis.interval,
+                       y.axis.label=y.axis.label, max.y=max.y,
+                       ...)
     if(OR.size) plot=suppressMessages(plot+scale_size("Odds Ratio", range = c(2, 4), breaks=c(1, 1.2, 1.6)))
     plot
   }

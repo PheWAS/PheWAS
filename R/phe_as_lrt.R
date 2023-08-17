@@ -1,3 +1,16 @@
+#' Fill in later
+#'
+#' @param phe.gen n/a
+#' @param min.records n/a
+#' @param return.models n/a
+#' @param my.data n/a
+#' @param ... n/a
+#'
+#' @return n/a
+#' @export
+#' @importFrom lmtest lrtest
+#'
+#' @examples phe_as_lrt(n/a)
 phe_as_lrt <-
   function(phe.gen, min.records=20,return.models=T, my.data, ...) {
     if(!missing(my.data)) data=my.data
@@ -10,7 +23,7 @@ phe_as_lrt <-
     #Turn covariates into a string, if not NA
     if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}
     else {covariates=NA_character_} #Make sure it is a character NA for aggregation
-    
+
     #Subset the data
     d=data[,na.omit(unlist(c(phenotype,gen,cov)))]
     d=na.omit(d)
@@ -22,7 +35,7 @@ phe_as_lrt <-
     note=""
     lrt=NA
     p=NA
-    
+
     #Drop columns with no variability
     drop.cols = names(d)[sapply(d, function(col) length(unique(col)))<=1]
     if(length(drop.cols>0)) {
@@ -31,13 +44,13 @@ phe_as_lrt <-
       #Remove dropped columns from covs- sticks around in the listed "covariates"
       cov=setdiff(cov,drop.cols)
     }
-    
+
     if(n_total<min.records) {
       note=paste(note,"[Error: <",min.records," complete records]")
     } else if(!(phenotype %in% names(d))) {
       note=paste(note,"[Error: non-varying phenotype]")
     } else {
-      
+
       #Check if phenotype is logical (boolean)
       if(class(d[,phenotype]) %in% c("logical")) {
         type = "logistic - LRT"
@@ -66,9 +79,9 @@ phe_as_lrt <-
     output=data.frame(phenotype=phenotype,genotype=gens,covariates=covariates,p=p,type=type,
                       n_total=n_total, n_cases=n_cases, n_controls=n_controls,
                       note=note, stringsAsFactors=F)
-    
-    
-    
+
+
+
     #If the complete models were requested, add them as well.
     if(return.models) {attributes(output)$lrt=lrt}
     attributes(output)$successful.phenotype=ifelse(is.na(lrt),NA,phenotype)

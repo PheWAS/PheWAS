@@ -1,3 +1,20 @@
+#' To be filled in later
+#'
+#' @param phe.gen N/A
+#' @param additive.genotypes N/A
+#' @param min.records N/A
+#' @param return.models N/A
+#' @param confint.level N/A
+#' @param factor.contrasts N/A
+#' @param strata N/A
+#' @param my.data N/A
+#' @param ... AN
+#'
+#' @return N/A
+#' @importFrom survival clogit
+#' @export
+#'
+#' @examples phe_as_clogit(n/a)
 phe_as_clogit <-
   function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.level=NA, factor.contrasts=NA, strata, my.data, ...) {
     if(!missing(my.data)) data=my.data
@@ -9,10 +26,10 @@ phe_as_clogit <-
     #Turn covariates into a string, if not NA
     if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}
     else {covariates=NA_character_} #Make sure it is a character NA for aggregation
-    
+
     #Subset the data
     d=data %>% select(one_of(na.omit(unlist(c(phe,gen,cov,strata)))))
-    
+
     #Exclude the exclusions for the target phenotype
     d=d[!is.na(d[[phe]]),]
     n_no_snp=sapply(d %>% select(one_of(gen)),
@@ -20,10 +37,10 @@ phe_as_clogit <-
     #Exclude rows with missing data
     d=na.omit(d)
     #Exclude strata with only one predictor class (or value) represented
-    strata.keep=d %>% group_by_at(.vars=strata) %>% summarize_at(.funs="n_distinct",na.rm=TRUE,.vars=gen) %>% 
+    strata.keep=d %>% group_by_at(.vars=strata) %>% summarize_at(.funs="n_distinct",na.rm=TRUE,.vars=gen) %>%
       filter_at(.vars=gen,.vars_predicate=all_vars(.>1)) %>% select(one_of(strata))
     d = inner_join(d,strata.keep,by=strata)
-    
+
     n_total=nrow(d)
     n_cases=NA_integer_
     n_controls=NA_integer_
@@ -40,7 +57,7 @@ phe_as_clogit <-
     formula.string=NA_character_
     expanded_formula=NA_character_
     gen_expansion=1:length(gen)
-    
+
     #Drop columns with no variability
     drop.cols = names(d)[sapply(d, function(col) length(unique(col)))<=1]
     if(length(drop.cols>0)) {
@@ -53,7 +70,7 @@ phe_as_clogit <-
     #Turn covariates into a string, if not NA
     if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}
     else {covariates=NA_character_} #Make sure it is a character NA for aggregation
-    
+
     if(n_total<min.records) {
       note=paste(note,"[Error: <",min.records," complete records]")
     } else if(sum(c(phe,gen) %in% names(d))!=length(c(phe,gen))) {
@@ -81,16 +98,16 @@ phe_as_clogit <-
                              }
                              c(a.f,hwe)
                            })
-        
-        
+
+
         allele_freq=sapply(snp.details,FUN=`[`,1)
         HWE_pval=sapply(snp.details,FUN=`[`,2)
-        
+
         #Report a warning as needed.
         if(min(sapply(d %>% select(one_of(gen)),
                       FUN=function(x){class(x) %in% c("numeric","integer") & sum(!(na.omit(x) %in% 0:2))==0}))!=TRUE){
           note=paste(note,"[Warning: At least one genotype was not coded 0,1,2, but additive.genotypes was TRUE.]")}
-      } 
+      }
       #Alter factors to use special contrasts
       if(suppressWarnings(!is.na(factor.contrasts))) {
         d=data.frame(lapply(d,function(x){
@@ -103,7 +120,7 @@ phe_as_clogit <-
       #Create the formula:
       formula.string=paste0("`",phe,"` ~ `",paste(c(gen,cov),collapse = "` + `"),'`'," + strata(`",strata,"`)")
       my.formula = as.formula(formula.string)
-      
+
       #Check if phenotype is logical (boolean)
       if(class(d[[phe]]) %in% c("logical")) {
         type = "conditional logistic"
@@ -113,7 +130,7 @@ phe_as_clogit <-
         n_strata=n_distinct(d[[strata]])
         if(n_cases<min.records|n_controls<min.records) {note=paste(note,"[Error: <",min.records," cases or controls]")}
         else {
-          
+
           model = tryCatch(clogit(my.formula, data=d), warning = function(w) {w$message}, error = function(e) {e$message})
           #If the models did not converge, report NA values instead.
           if(class(model)[1]!="character") {
@@ -141,18 +158,18 @@ phe_as_clogit <-
         note=paste(note,"[Error: clogit requires a logical/Boolean outcome]")
       }
     }
-    
+
     output=data.frame(phenotype=phe,snp=gens,
                       covariates=covariates,
                       beta=beta, SE=se,
                       OR=or,
                       p=p, type=type,
                       n_total=n_total, n_cases=n_cases, n_controls=n_controls,n_strata=n_strata,
-                      HWE_p=HWE_pval[gen_expansion],allele_freq=allele_freq[gen_expansion],n_no_snp=n_no_snp[gen_expansion], 
+                      HWE_p=HWE_pval[gen_expansion],allele_freq=allele_freq[gen_expansion],n_no_snp=n_no_snp[gen_expansion],
                       formula=formula.string,
                       expanded_formula = expanded_formula,
                       note=note, stringsAsFactors=F)
-    
+
     #Add confidence intervals if requested.
     if(!is.na(confint.level)) {
       if(!is.na(model)[1]){
@@ -165,13 +182,13 @@ phe_as_clogit <-
       }
       output$lower=lower
       output$upper=upper
-      
+
       output=output[,c("phenotype","snp", "covariates","beta","SE",
                        "lower","upper","OR","p","type",
                        "n_total","n_cases","n_controls","n_strata",
                        "HWE_p","allele_freq","n_no_snp","formula","expanded_formula","note")]
     }
-    
+
     #If the complete models were requested, add them as well.
     if(return.models) {attributes(output)$model=model}
     attributes(output)$successful.phenotype=ifelse(is.na(p),NA,phe)
