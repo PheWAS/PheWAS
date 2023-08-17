@@ -1,7 +1,12 @@
 Version: 1.0
 
+<<<<<<< Updated upstream
 RestoreWorkspace: Default
 SaveWorkspace: Default
+=======
+RestoreWorkspace: No
+SaveWorkspace: No
+>>>>>>> Stashed changes
 AlwaysSaveHistory: Default
 
 EnableCodeIndexing: Yes
@@ -12,6 +17,17 @@ Encoding: UTF-8
 RnwWeave: Sweave
 LaTeX: pdfLaTeX
 
+<<<<<<< Updated upstream
 BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
+=======
+AutoAppendNewline: Yes
+StripTrailingWhitespace: Yes
+LineEndingConversion: Posix
+
+BuildType: Package
+PackageUseDevtools: Yes
+PackageInstallArgs: --no-multiarch --with-keep.source
+PackageRoxygenize: rd,collate,namespace
+>>>>>>> Stashed changes
