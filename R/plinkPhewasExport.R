@@ -23,14 +23,13 @@
 #'
 #' @examples \donttest{
 #' #Generate some example data
-#' ex=generateExample(hit="335")
+#' data <- sample_data
 #' #Extract the two parts from the returned list
-#' id.icd9.count=ex$id.icd9.count
-#' genotypes=ex$genotypes
-#' #Create the PheWAS code table- translates the icd9s, adds exclusions, and reshapes to a wide format
-#' phenotypes=createPhewasTable(id.icd9.count)
+#' phenotype_data <- createPhenotypes(data$id.vocab.code.count,
+#'  id.sex = data$id.sex)
+#'  
 #' #Export the file for use in plink
-#' plinkPhewasExport(phenotypes, file="my.example.pheno")
+#' plinkPhewasExport(phenotype_data, file="my.example.pheno")
 #' }
 plinkPhewasExport <- function(phenotypes, file="plink.pheno", translateIDs=TRUE) {
   if(translateIDs) {

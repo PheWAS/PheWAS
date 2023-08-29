@@ -13,9 +13,7 @@
 #'
 #' @return The \code{phenotypes} data frame with NA values for individuals that
 #' do not match the sex for sex-specific codes.
-#' @export
-#'
-#' @examples restrictPhecodesBySex(dolater)
+
 restrictPhecodesBySex <- function(phenotypes,id.sex) {
   data=merge(phenotypes,id.sex,by=1,all.x=T)
   #Get the column of the sex

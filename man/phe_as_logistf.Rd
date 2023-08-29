@@ -38,6 +38,3 @@ n/a
 \description{
 To be filled in later
 }
-\examples{
-phe_as_logistf(n/a)
-}

@@ -12,9 +12,7 @@
 #'
 #' @return N/A
 #' @importFrom survival clogit
-#' @export
-#'
-#' @examples phe_as_clogit(n/a)
+
 phe_as_clogit <-
   function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.level=NA, factor.contrasts=NA, strata, my.data, ...) {
     if(!missing(my.data)) data=my.data

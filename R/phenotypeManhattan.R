@@ -13,9 +13,7 @@
 #' @param ... n/a
 #'
 #' @return n/a
-#' @export
-#'
-#' @examples phenotypeManhattan(n/a)
+
 phenotypeManhattan <-
   function(d, suggestive.line=0.05, significant.line,
            OR.size=F,OR.direction=F, sizes,

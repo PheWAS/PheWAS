@@ -10,10 +10,7 @@
 #' @param ... N/A
 #'
 #' @return FILL IN LATER
-#' @export
 
-#'
-#' @examples phe_as_ext('n/a')
 phe_as_ext <-
   function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.level=NA, factor.contrasts=NA, my.data, ...) {
     if(!missing(my.data)) data=my.data
@@ -24,6 +21,10 @@ phe_as_ext <-
     cov=phe.gen[[3]]
 
     #Subset the data
+   # print(phe)
+    #print(gen)
+    #print(cov)
+    #print()
     d=data %>% select(one_of(na.omit(unlist(c(phe,gen,cov)))))
     #Turn covariates into a string, if not NA
     if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}

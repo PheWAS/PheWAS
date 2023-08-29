@@ -113,6 +113,3 @@ n/a
 \description{
 Fill in later
 }
-\examples{
-phenotypePlot(n/a)
-}

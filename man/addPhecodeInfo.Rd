@@ -52,8 +52,11 @@ If a character (or factor) variable or vector is passed in, it will return
 code descriptions for those codes.
 }
 \examples{
-id_icd9_count=data.frame(id=c(1,2,2,2,3),vocabulary_id="icd9",
-code=c("714","250.11","714.1","714","250.11"),
-count=c(1,5,1,1,0))
-addPhecodeInfo(id_icd9_count)
+data <- sample_data
+phenotype_data <- createPhenotypes(data$id.vocab.code.count, id.sex = data$id.sex)
+final_data <- dplyr::inner_join(dplyr::inner_join(data$id.sex, data$genotypes), 
+phenotype_data)
+test_phewas <- phewas_ext(names(phenotype_data)[-1], 
+genotypes = c('rsEXAMPLE'), covariates = 'sex', data = final_data)
+addPhecodeInfo(test_phewas)
 }

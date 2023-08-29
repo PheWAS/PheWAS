@@ -35,10 +35,9 @@
 #' @param y.axis.interval n/a
 #'
 #' @return n/a
-#' @export
 #' @import ggplot2
 #' @importFrom ggrepel geom_text_repel
-#' @examples phenotypePlot(n/a)
+
 phenotypePlot <-
   function(d, max.y,max.x, suggestive.line, significant.line,
            size.x.labels=9, size.y.labels=9, switch.axis=F, sort.by.value=F, sort.by.category.value=F,

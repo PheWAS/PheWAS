@@ -15,6 +15,3 @@ an index or a length of an index
 \description{
 FILL IN LATER
 }
-\examples{
-default_code_agg()
-}

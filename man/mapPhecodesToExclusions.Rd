@@ -23,6 +23,3 @@ column}
 This function maps phecodes (optionally with ids for individuals) to a set of
 phecode exclusions. It has replaced \code{mapPheWAStoExclusions}.
 }
-\examples{
-mapPhecodesToExclusions(FILLINLATER)
-}

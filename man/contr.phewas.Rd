@@ -15,6 +15,3 @@ N/A
 \description{
 Fill in later
 }
-\examples{
-contr.phewas(n/a)
-}

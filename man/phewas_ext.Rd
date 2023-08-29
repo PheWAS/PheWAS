@@ -128,17 +128,13 @@ returned list needs to be used.
 \examples{
  \donttest{
 #Generate some example data
-ex=generateExample(hit="335")
-#Extract the two parts from the returned list
-id.icd9.count=ex$id.icd9.count
-genotypes=ex$genotypes
-#Create the PheWAS code table- translates the icd9s, adds exclusions,
-#and reshapes to a wide format
-phenotypes=createPhewasTable(id.icd9.count)
-#Join the data
-data=inner_join(phenotypes,genotypes)
-#Run the PheWAS
-results=phewas_ext(phenotypes=names(phenotypes)[-1],
-                  genotypes=names(genotypes)[-1],data=data,cores=4)
+data <- sample_data
+phenotype_data <- createPhenotypes(data$id.vocab.code.count,
+ id.sex = data$id.sex) 
+final_data <- dplyr::inner_join(dplyr::inner_join(data$id.sex, 
+data$genotypes),  phenotype_data)
+test_phewas <- phewas_ext(names(phenotype_data)[-1], 
+                         genotypes = c('rsEXAMPLE'), covariates = 'sex', 
+                         data = final_data)
 }
 }

@@ -41,6 +41,3 @@ N/A
 \description{
 To be filled in later
 }
-\examples{
-phe_as_clogit(n/a)
-}

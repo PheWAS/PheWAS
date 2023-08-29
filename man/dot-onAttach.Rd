@@ -17,6 +17,3 @@ A start up message
 \description{
 Startup Message
 }
-\examples{
-n/a
-}

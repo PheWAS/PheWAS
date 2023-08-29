@@ -20,5 +20,14 @@ n/a
 Fill in later
 }
 \examples{
-phewasManhattan(n/a)
+
+data <- sample_data
+phenotype_data <- createPhenotypes(data$id.vocab.code.count, 
+id.sex = data$id.sex) 
+final_data <- dplyr::inner_join(dplyr::inner_join(
+data$id.sex, data$genotypes),  phenotype_data)
+test_phewas <- phewas_ext(names(phenotype_data)[-1], 
+                         genotypes = c('rsEXAMPLE'), covariates = 'sex', 
+                         data = final_data)
+phewasManhattan(test_phewas)
 }

@@ -47,6 +47,3 @@ n/a
 \description{
 Fill in later
 }
-\examples{
-phenotypeManhattan(n/a)
-}

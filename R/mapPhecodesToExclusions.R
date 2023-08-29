@@ -12,9 +12,7 @@
 #' column}
 #' \item{exclusion_criteria}{Input phecodes}
 #' \item{exclusion}{The exclusion phecodes for the codes provided}
-#' @export
-#'
-#' @examples mapPhecodesToExclusions(FILLINLATER)
+
 mapPhecodesToExclusions <-
   function(phecodes, ids) {
     if(missing(ids)) {

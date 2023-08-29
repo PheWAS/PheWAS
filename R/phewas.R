@@ -88,24 +88,23 @@
 #' @examples
 #'  \donttest{
 #' #Generate some example data
-#' ex=generateExample(hit="335")
-#' #Extract the two parts from the returned list
-#' id.icd9.count=ex$id.icd9.count
-#' genotypes=ex$genotypes
-#' #Create the PheWAS code table- translates the icd9s, adds exclusions,
-#' #and reshapes to a wide format
-#' phenotypes=createPhewasTable(id.icd9.count)
-#' #Join the data
-#' data=inner_join(phenotypes,genotypes)
-#' #Run the PheWAS
-#' results=phewas_ext(phenotypes=names(phenotypes)[-1],
-#'                   genotypes=names(genotypes)[-1],data=data,cores=4)
+#'data <- sample_data
+#' phenotype_data <- createPhenotypes(data$id.vocab.code.count,
+#'  id.sex = data$id.sex) 
+#' final_data <- dplyr::inner_join(dplyr::inner_join(data$id.sex, 
+#' data$genotypes),  phenotype_data)
+#' test_phewas <- phewas_ext(names(phenotype_data)[-1], 
+#'                          genotypes = c('rsEXAMPLE'), covariates = 'sex', 
+#'                          data = final_data)
 #' }
 phewas_ext <-
   function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, cores=1, additive.genotypes=T,
            method="glm", strata=NA, factor.contrasts=contr.phewas,
            return.models=F, min.records=20, MASS.confint.level=NA, quick.confint.level) {
-    #Require an input data frame
+       # print(phenotypes)
+    #print(genotypes)
+    #print(head(data))
+     #Require an input data frame
     if(missing(data)) {
       stop("A data frame must be supplied in 'data'")
     }
@@ -124,6 +123,7 @@ phewas_ext <-
     #Checks for each of the PheWAS methods
     if(method=="glm") {
       association_method=phe_as_ext
+     # print('ext')
     } else if (method=="clogit") {
       association_method=phe_as_clogit
       #Check for a strata parameter
@@ -140,8 +140,16 @@ phewas_ext <-
 
     para=(cores>1)
     #Create the list of combinations to iterate over
+    #print(nrow(phenotypes))
+    #print(nrow(genotypes))
+   # print(nrow(covariates))
+    #print('expand.grid')
+    #print(nrow(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)))
+    #print('t')
+    #print(nrow(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F))))
+    #print(nrow(data.frame(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)),stringsAsFactors=F)))
     full_list=data.frame(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)),stringsAsFactors=F)
-
+    #print(full_list)
     #If parallel, run the parallel version.
     if(para) {
       #Check to make sure there is no existing phewas cluster.
@@ -166,6 +174,7 @@ phewas_ext <-
     } else {
       #Otherwise, just use lapply.
       message("Finding associations...")
+      #print(association_method)
       result=lapply(full_list,FUN=association_method, additive.genotypes=additive.genotypes,
                     confint.level=MASS.confint.level, my.data=data, min.records=min.records,
                     return.models=return.models,factor.contrasts=factor.contrasts,strata=strata)

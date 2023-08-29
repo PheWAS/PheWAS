@@ -68,3 +68,42 @@
 #' }
 "pheinfo"
 
+#' Sample Data
+#'
+#'Sample data for documentation and testing
+#'
+#' @format ## `sample_data`
+#' list of 3
+#' \describe{
+#' \item{id.vocab.code.count}{A data frame containing personID, vocabulary_ID, code, and count}
+#' \item{genotypes}{a dataframe containing the person_ID and rsEXAMPLE status}
+#' \item{id.sex}{a data frame containing the person_ID and their gender}
+#' ...
+#' }
+"sample_data"
+
+
+#' phecode_map_icd10
+#'
+#' Dataframe containing phecode mappings for ICD10
+#' 
+#' This data frame maps each ICD10 code to its directly mapped phecode(s).
+#' Can be provided to \code{\link[PheWAS:createPhenotypes]{createPhenotypes}} 
+#' in the \code{vocabulary.map} parameter to convert ICD10 codes for use in 
+#' the PheWAS methods.
+#' It is the map 1.2b1.
+#' \code{\link[PheWAS:phecode_map]{PheWAS::phecode_map}} contains mapping for 
+#' ICD9CM and ICD10CM (ie, US use cases).
+#'
+#' @format ## `phecode_map_icd10`
+#'  A data frame with 9505 observations on the following 3 variables.
+#' \describe{
+#' \item{\code{vocabulary_id}}{Character vector representing the vocabulary of 
+#' the code- always 'ICD10'}
+#' \item{\code{code}}{Character vector representing the specific code to be 
+#' mapped}
+#' \item{\code{phecode}}{Character vector representing the direct phecode 
+#' mapping}
+#' ...
+#' }
+"phecode_map_icd10"

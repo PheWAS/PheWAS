@@ -38,6 +38,3 @@ FILL IN LATER
 \description{
 Fill in later
 }
-\examples{
-phe_as_ext('n/a')
-}

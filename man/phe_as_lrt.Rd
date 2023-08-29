@@ -23,6 +23,3 @@ n/a
 \description{
 Fill in later
 }
-\examples{
-phe_as_lrt(n/a)
-}

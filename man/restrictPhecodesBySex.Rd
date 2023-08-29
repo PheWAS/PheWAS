@@ -24,6 +24,3 @@ do not match the sex for sex-specific codes.
 \code{\link[PheWAS:createPhenotypes]{createPhenotypes}}, to exclude
 individuals with non-applicable sexes from certain phenotypes.
 }
-\examples{
-restrictPhecodesBySex(dolater)
-}

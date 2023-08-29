@@ -69,14 +69,12 @@
 #' #Sum up the counts in the data where applicable.
 #' phenotypes=createPhenotypes(id.vocab.code.count,
 #'                             aggregate.fun=sum, id.sex=id.sex)
-#' #Create the phecode table for a PheWAS
-#' phenotypes=createPhewasTable(id.icd9.count)
-#' phenotypes[1:10,1:10]
+#' 
 #' }
 createPhenotypes <-
   function(id.vocab.code.index, min.code.count=2, add.phecode.exclusions=T, translate=T, id.sex,
            full.population.ids=unique(id.vocab.code.index[[1]]),
-           aggregate.fun=PheWAS::default_code_agg,
+           aggregate.fun=PheWAS:::default_code_agg,
            vocabulary.map=PheWAS::phecode_map,
            rollup.map=PheWAS::phecode_rollup_map,
            exclusion.map=PheWAS::phecode_exclude)
