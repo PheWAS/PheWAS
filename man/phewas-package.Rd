@@ -4,12 +4,28 @@
 \name{PheWAS-package}
 \alias{PheWAS}
 \alias{PheWAS-package}
-\title{PheWAS: What the Package Does (One Line, Title Case)}
+\title{PheWAS: Phenome Wide Association Studies (PheWAS)}
 \description{
-What the package does (one paragraph).
+Functions to perform Phenome Wide Association Studies (PheWAS). These functions include the conversion of ICD9CM codes to phecodes (v1.2), statistical analysis, and plotting.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{http://www.ncbi.nlm.nih.gov/pubmed/24733291}
+  \item Report bugs at \url{https://github.com/PheWAS/PheWAS/issues}
+}
+
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Robert Carroll \email{Robert.Carroll@vumc.org} (\href{https://orcid.org/0000-0003-3802-8183}{ORCID})
+
+Authors:
+\itemize{
+  \item Josh Denny \email{josh.denny@vumc.org} [data contributor, thesis advisor]
+  \item Lisa Bastarache \email{Lisa.Bastarache@vumc.org} (\href{https://orcid.org/0000-0003-3020-447X}{ORCID}) [data contributor]
+  \item Laura Wiley \email{Laura.Wiley@vumc.org}
+  \item Adam Lewis \email{Adam.Lewis.1@vumc.org} (\href{https://orcid.org/0000-0001-8240-7645}{ORCID})
+}
 
 }
 \keyword{internal}

@@ -1,11 +1,21 @@
 Package: PheWAS
-Title: What the Package Does (One Line, Title Case)
+Title: Phenome Wide Association Studies (PheWAS)
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: MIT + file LICENSE
+Authors@R: c(
+    person("Robert", "Carroll", email = "Robert.Carroll@vumc.org", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-3802-8183")),
+    person("Josh", "Denny",  email = "josh.denny@vumc.org", role = c("aut", "dtc", "ths")),
+    person("Lisa", "Bastarache", email = "Lisa.Bastarache@vumc.org", role = c("aut", "dtc"), comment = c(ORCID = "0000-0003-3020-447X")),
+    person("Laura", "Wiley", email = "Laura.Wiley@vumc.org", role = "aut"),
+    person("Adam", "Lewis", email = "Adam.Lewis.1@vumc.org", role = c("aut"),
+            comment = c(ORCID = "0000-0001-8240-7645")))
+Maintainer: Robert Carroll <Robert.Carroll@vumc.org>
+URL: http://www.ncbi.nlm.nih.gov/pubmed/24733291
+BugReports: https://github.com/PheWAS/PheWAS/issues
+Description: Functions to perform Phenome Wide Association 
+ Studies (PheWAS). These functions include the conversion of ICD9CM codes to 
+ phecodes (v1.2), statistical analysis, and plotting.
+License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
@@ -23,4 +33,9 @@ Imports:
     survival,
     tidyr,
     utils,
-    methods
+    methods,
+    data.table,
+    PheWASmaps
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

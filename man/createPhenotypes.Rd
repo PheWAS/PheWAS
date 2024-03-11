@@ -11,10 +11,10 @@ createPhenotypes(
   translate = T,
   id.sex,
   full.population.ids = unique(id.vocab.code.index[[1]]),
-  aggregate.fun = PheWAS:::default_code_agg,
-  vocabulary.map = PheWAS::phecode_map,
-  rollup.map = PheWAS::phecode_rollup_map,
-  exclusion.map = PheWAS::phecode_exclude
+  aggregate.fun = default_code_agg,
+  vocabulary.map = PheWASmaps::phecode_map,
+  rollup.map = PheWASmaps::phecode_rollup_map,
+  exclusion.map = PheWASmaps::phecode_exclude
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ names, but id must be consistent among input files. The vocabulary_id and
 code must match up with the vocabulary.map file. The default supports the
 vocabularies "ICD9CM" and "ICD10CM". Code contains the raw code value. Note
 the beta ICD10 map is provided in
-\code{\link[PheWAS:phecode_map_icd10]{PheWAS::phecode_map_icd10}},
+\code{\link[PheWASmaps:phecode_map_icd10]{PheWASmaps::phecode_map_icd10}},
 which can be provided as a parameter to
 \code{vocabulary.map}.}
 
@@ -51,17 +51,17 @@ status, eg 0s or FALSE in every field.}
 
 \item{vocabulary.map}{Map between supplied vocabularies and phecodes. Allows
 for custom phecode maps. By default uses
-\code{\link[PheWAS:phecode_map]{PheWAS::phecode_map}},
+\code{\link[PheWASmaps:phecode_map]{PheWASmaps::phecode_map}},
 which supports ICD9CM (v1.2) and ICD10CM (beta-2018).
 The package also includes the ICD10 beta map
-(\code{\link[PheWAS:phecode_map_icd10]{PheWAS::phecode_map_icd10}}), which
+(\code{\link[PheWASmaps:phecode_map_icd10]{PheWASmaps::phecode_map_icd10}}), which
 can be used in this parameter.}
 
 \item{rollup.map}{Map between phecodes and all codes that they expand to, eg
-parent codes. By default uses the PheWAS::phecode_rollup_map.}
+parent codes. By default uses the PheWASmaps::phecode_rollup_map.}
 
 \item{exclusion.map}{Map between phecodes and their exclusions. By default
-uses the PheWAS::phecode_exclude.}
+uses the PheWASmaps::phecode_exclude.}
 }
 \value{
 A data frame. The first column contains the supplied id for each

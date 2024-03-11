@@ -17,7 +17,7 @@
 #' code must match up with the vocabulary.map file. The default supports the
 #' vocabularies "ICD9CM" and "ICD10CM". Code contains the raw code value. Note
 #' the beta ICD10 map is provided in
-#' \code{\link[PheWAS:phecode_map_icd10]{PheWAS::phecode_map_icd10}},
+#' \code{\link[PheWASmaps:phecode_map_icd10]{PheWASmaps::phecode_map_icd10}},
 #'  which can be provided as a parameter to
 #' \code{vocabulary.map}.
 #' @param min.code.count The minimum code count to be considered a case. NA
@@ -37,15 +37,15 @@
 #' "distinct date" approach. Use \code{sum} to support count data.
 #' @param vocabulary.map Map between supplied vocabularies and phecodes. Allows
 #' for custom phecode maps. By default uses
-#' \code{\link[PheWAS:phecode_map]{PheWAS::phecode_map}},
+#' \code{\link[PheWASmaps:phecode_map]{PheWASmaps::phecode_map}},
 #' which supports ICD9CM (v1.2) and ICD10CM (beta-2018).
 #'  The package also includes the ICD10 beta map
-#'  (\code{\link[PheWAS:phecode_map_icd10]{PheWAS::phecode_map_icd10}}), which
+#'  (\code{\link[PheWASmaps:phecode_map_icd10]{PheWASmaps::phecode_map_icd10}}), which
 #'  can be used in this parameter.
 #' @param rollup.map Map between phecodes and all codes that they expand to, eg
-#'  parent codes. By default uses the PheWAS::phecode_rollup_map.
+#'  parent codes. By default uses the PheWASmaps::phecode_rollup_map.
 #' @param exclusion.map Map between phecodes and their exclusions. By default
-#'  uses the PheWAS::phecode_exclude.
+#'  uses the PheWASmaps::phecode_exclude.
 #'
 #' @return A data frame. The first column contains the supplied id for each
 #'  individual (preserving the name of the original column). The following
@@ -74,16 +74,16 @@
 createPhenotypes <-
   function(id.vocab.code.index, min.code.count=2, add.phecode.exclusions=T, translate=T, id.sex,
            full.population.ids=unique(id.vocab.code.index[[1]]),
-           aggregate.fun=PheWAS:::default_code_agg,
-           vocabulary.map=PheWAS::phecode_map,
-           rollup.map=PheWAS::phecode_rollup_map,
-           exclusion.map=PheWAS::phecode_exclude)
+           aggregate.fun=default_code_agg,
+           vocabulary.map=PheWASmaps::phecode_map,
+           rollup.map=PheWASmaps::phecode_rollup_map,
+           exclusion.map=PheWASmaps::phecode_exclude)
   {
     id.name=names(id.vocab.code.index)[1]
-
+    
     #Warn if id.sex information is not provided.
     if(missing(id.sex)) { warning("It is recommended to provide id.sex information to help address spurious sex-specific associations.") }
-
+    #print(sum(tolower(id.vocab.code.index[[2]])=='phecode'))
     if(!translate) {
       #Warn about exclusions if input is not translated and not phecodes. Same with id.sex
       if(add.phecode.exclusions & sum(tolower(id.vocab.code.index[[2]])=='phecode')!=nrow(id.vocab.code.index)){stop("Codes are not translated and vocab is not 'phecode' for every row, but exclusions are to be applied. Ensure that the code column has only phecodes or disable add.phecode.exclusions for accurate results.")}
@@ -91,7 +91,7 @@ createPhenotypes <-
       phemapped=tbl_df(data.frame(id=id.vocab.code.index[[1]],code=id.vocab.code.index[[3]],index=id.vocab.code.index[[4]],stringsAsFactors = F))
     } else {
       #check to make sure numeric codes were not passed in
-      if(!class(id.vocab.code.index[[3]]) %in% c("character","factor")) {stop("Please ensure character or factor code representation. Some vocabularies, eg ICD9CM, require strings to be represented accurately: E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
+      if(!class(id.vocab.code.index[[3]]) %in% c("character")) {stop("Please ensure character or factor code representation. Some vocabularies, eg ICD9CM, require strings to be represented accurately: E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
       names(id.vocab.code.index)=c("id","vocabulary_id","code","index")
       message("Mapping codes to phecodes...")
       phemapped=mapCodesToPhecodes(id.vocab.code.index, vocabulary.map=vocabulary.map, rollup.map=rollup.map) %>% transmute(id, code=phecode, index)

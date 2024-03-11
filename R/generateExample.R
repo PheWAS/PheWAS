@@ -13,10 +13,31 @@
 #' \item{genotypes}{A data frame of columns id and rsEXAMPLE, suitable for use in \code{phewas} after joining with phenotypic data.}
 #' \item{id.sex}{A data frame of columns id and sex, suitable for use in \code{phewas} and \code{createPhenotypes}.}
 #' @export
-#' @import dplyr
-#' @examples generateExample()
+#' @importFrom dplyr select
+#' @importFrom dplyr inner_join
+#' @importFrom dplyr %>%
+#' @importFrom dplyr bind_rows
+#' @importFrom dplyr summarize
+#' @importFrom dplyr transmute
+#' @importFrom dplyr group_by
+#' @importFrom dplyr rename
+#' @importFrom dplyr distinct
+#' @importFrom dplyr ungroup
+#' @importFrom dplyr tbl_df
+#' @importFrom dplyr filter
+#' @importFrom dplyr sample_n
+#' @importFrom dplyr as_tibble
+#' @importFrom dplyr one_of
+#' @importFrom dplyr group_by_at
+#' @importFrom dplyr summarize_at
+#' @importFrom dplyr filter_at
+#' @importFrom dplyr all_vars
+#' @importFrom dplyr n_distinct
+#' @importFrom dplyr mutate
+#' @importFrom dplyr everything
+#' @examples generateExample(n=1000)
 generateExample <- function(n=5000,phenotypes.per=10,hit="335") {
-  phecode=unique(PheWAS::pheinfo$phecode)
+  phecode=unique(PheWASmaps::pheinfo$phecode)
   #Exclude the code to add
   phecode=phecode[phecode!=hit]
   #Assign individuals random phenotypes
@@ -34,8 +55,8 @@ generateExample <- function(n=5000,phenotypes.per=10,hit="335") {
   signal$phecode=hit
   random=rbind(random,signal[signal$phenotype,c("id","phecode","count")])
   #Map to ICD9/10CM codes and pick one per phecode
-  random=inner_join(random,PheWAS::phecode_rollup_map, by=c("phecode"="code")) %>%
-    inner_join(PheWAS::phecode_map,by=c("phecode_unrolled"="phecode")) %>%
+  random=inner_join(random,PheWASmaps::phecode_rollup_map, by=c("phecode"="code")) %>%
+    inner_join(PheWASmaps::phecode_map,by=c("phecode_unrolled"="phecode")) %>%
     group_by(id, phecode_unrolled) %>% sample_n(1) %>% ungroup()
   random$count= rpois(nrow(random),4)
   random[random$phecode==hit,]$count=random[random$phecode==hit,]$count+2

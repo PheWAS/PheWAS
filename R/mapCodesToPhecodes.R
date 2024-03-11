@@ -11,14 +11,14 @@
 #' @param vocabulary.map Data frame with columns \code{vocabulary_id},
 #' \code{code}, and \code{phecode}. Each row represents a mapping from a
 #' specific vocabulary and code to a specific phecode. The default map
-#' \code{\link[PheWAS:phecode_map]{PheWAS::phecode_map}} supports ICD9CM
+#' \code{\link[PheWASmaps:phecode_map]{PheWASmaps::phecode_map}} supports ICD9CM
 #' (map v1.2) and ICD10CM (map 2018 beta). If \code{NULL}, it will skip the
 #'  mapping codes to phecodes step. This may be useful if one is seeking to
 #'   expand or roll up an existing set of phecodes.
 #' @param rollup.map Data frame with columns \code{code}, and
 #' \code{phecode_unrolled}. Each row represents a mapping from a specific
 #'  phecode to all parent phecodes. The default map
-#'  \code{\link[PheWAS:phecode_rollup_map]{PheWAS::phecode_rollup_map}} is the
+#'  \code{\link[PheWASmaps:phecode_rollup_map]{PheWASmaps::phecode_rollup_map}} is the
 #'   complete rollup map for phecode map v1.2. If \code{NULL}, it will skip the
 #'   rollup step. This may be useful if one is seeking to only consider the
 #'   directly mapped phecodes.
@@ -30,49 +30,90 @@
 #' original \code{code} and \code{vocabulary_id} columns have been replaced
 #' with \code{phecode} now containing the phecode as character.
 #' @export
-#'
+#' @import data.table
 #' @examples diabetes_billing=data.frame(id=1:3,vocabulary_id=
 #' c("ICD9CM","ICD9CM","ICD10CM"),code=c("250.00","250.01","E11.00"))
 #' phecodes=mapCodesToPhecodes(diabetes_billing)
-#' phecodes
-#' addPhecodeInfo(phecodes)
+#'
 #'
 mapCodesToPhecodes <-
   function(input,
-           vocabulary.map=PheWAS::phecode_map,
-           rollup.map=PheWAS::phecode_rollup_map,
+           vocabulary.map=PheWASmaps::phecode_map,
+           rollup.map=PheWASmaps::phecode_rollup_map,
            make.distinct=TRUE) {
     if(sum(names(input) %in% c("vocabulary_id","code"))!=2) {
       stop("Must supply a data frame with 'vocabulary_id' and 'code' columns")
     }
-    if(!class(input[["code"]]) %in% c("character","factor")) {stop("Please ensure character or factor code representation. Some vocabularies, eg ICD9CM, require strings to be represented accurately: E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
+    if(!class(input[["code"]]) %in% c("character")) {stop("Please ensure character or factor code representation. Some vocabularies, eg ICD9CM, require strings to be represented accurately: E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
 
     if(!is.null(vocabulary.map)){
       #Perform the direct map
+      print(is.data.table(input))
+      ##Check to see if is Data Table.  If so, use data table join. if not, continue using tibble.
+     #print('test3')
+   #   if(!is.data.table(input)){
+      #  input <- as.data.table(input)
+     # }
+       if(!is.data.table(input)){
       withCallingHandlers(output <- inner_join(input,vocabulary.map,by=c("vocabulary_id","code")),
                           warning = function(w) { if (grepl("coercing into character vector", w$message)) {invokeRestart("muffleWarning")}})
-      #Remove old columns
-      output = output %>% select(-code,-vocabulary_id) %>% rename(code=phecode)
+             #     print('tibble2')  #Remove old columns
+                #  print(head(output))
+               #   print('tibble')
+                  
+        }else if(is.data.table(input)){
+          setkey(input, vocabulary_id, code)
+         vocabulary.map <- as.data.table(vocabulary.map)
+          setkey(vocabulary.map, vocabulary_id, code)
+        withCallingHandlers(output <- input[vocabulary.map, on = .(vocabulary_id, code), nomatch = NULL, allow.cartesian = TRUE],
+                            warning = function(w) { if (grepl("coercing into character vector", w$message)) {invokeRestart("muffleWarning")}})
+    #print('dt2')
+    # print(head(output))
+     
+
+    #colnames(output)[2] <- "count"
+    #print(head(output))
+
+     #print(head(output))
+        }
+      output <- output %>% select(-code,-vocabulary_id) %>% rename(code=phecode)
+
     } else {
       #Warn if the vocabulary IDs are not phecodes
-      if(sum(input$vocabulary_id!="phecode")!=0) {warning("Phecode mapping was not requested, but the vocabulary_id of all codes is not 'phecode'")}
+      if(sum(input$vocabulary_id!="phecode")!=0) {stop("Phecode mapping was not requested, but the vocabulary_id of all codes is not 'phecode'")}
       #Prepare for just the phecode expansion
       output=input %>% filter(vocabulary_id=="phecode") %>% select(-vocabulary_id)
     }
     #Make distinct
+   # print('test3')
     if(make.distinct) {output = distinct(output)}
     #Perform the rollup
     if(!is.null(rollup.map)) {
+      print('test4')
+     if(!is.data.table(output)){
+       # print(output)
       withCallingHandlers(output <- inner_join(output ,rollup.map,by="code"),
                           warning = function(w) { if (grepl("coercing into character vector", w$message)) {invokeRestart("muffleWarning")}})
-      output = output %>% select(-code) %>% rename(phecode=phecode_unrolled)
+     } else if(is.data.table(output)){
+        print(output)
+       setkey(output, 'code')
+        #rollup.map <- as.data.table(rollup.map)
+        #setkey(rollup.map, code)
+        withCallingHandlers(output <- output[rollup.map, on = .(code), nomatch = NULL, allow.cartesian = TRUE],
+                          warning = function(w) { if (grepl("coercing into character vector", w$message)) {invokeRestart("muffleWarning")}})
+    }
+      
+         output = output %>% select(-code) %>% rename(phecode=phecode_unrolled)
+     # print('test5')
       #Make distinct
-      if(make.distinct) {output = distinct(output)}
+      if(make.distinct) {output = distinct(output)} 
+    #  print('hi')
     } else {
       #Rename output column to phecode
+      #print('bye')
       output = output %>% rename(phecode=code)
     }
-
+    #print(output)
     #Return the output
     output
   }

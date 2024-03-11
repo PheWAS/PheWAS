@@ -24,3 +24,7 @@ do not match the sex for sex-specific codes.
 \code{\link[PheWAS:createPhenotypes]{createPhenotypes}}, to exclude
 individuals with non-applicable sexes from certain phenotypes.
 }
+\examples{
+data <- sample_data
+restrictPhecodesBySex(data$id.vocab.code.count, data$id.sex)
+}

@@ -32,7 +32,7 @@ The \code{translateIDs} options allows users to supply their own FID/IID
 pairs in case they are not identical (common in sets with no family information).
 }
 \examples{
-\donttest{
+\dontrun{
 #Generate some example data
 data <- sample_data
 #Extract the two parts from the returned list

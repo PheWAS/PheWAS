@@ -31,41 +31,41 @@
 #' \item{groupnum}{The assigned number of the phecode group.}
 #' \item{color}{The default plotting color of the phecode group.}
 #' @export
+#' @import PheWASmaps
 #' @importFrom utils methods
 #' @importFrom methods is
 #'
 #' @examples 
-#' data <- sample_data
-#' phenotype_data <- createPhenotypes(data$id.vocab.code.count, id.sex = data$id.sex)
-#' final_data <- dplyr::inner_join(dplyr::inner_join(data$id.sex, data$genotypes), 
-#' phenotype_data)
-#' test_phewas <- phewas_ext(names(phenotype_data)[-1], 
-#' genotypes = c('rsEXAMPLE'), covariates = 'sex', data = final_data)
-#' addPhecodeInfo(test_phewas)
+
+#' addPhecodeInfo(example_phewas)
 addPhecodeInfo <- function(data, descriptions=T, groups=T, groupnums=F, groupcolors=F) {
   #Convert a vector of phecodes to a data frame
-  if(class(data)[1] %in% c("character", "factor")) {data=data.frame(phenotype=data,stringsAsFactors=F)}
+ # if(class(data)[1] %in% c("character", "factor")) {data=data.frame(phenotype=data,stringsAsFactors=F)}
+  #only accept data frames.
+  if(class(data)[1] != 'data.frame'){stop('Data is not a Data Frame')}
   names=names(data)
+ # print(names)
+ # print('hi')
+  
+
   #Find the likely phecode column
-  first_match=grep("pheno|phewas|phecode",names,ignore.case=T)[1]
+  first_match=grep("phenotype",names,ignore.case=T)[1]
+  #print('hi')
   if(is.na(first_match)) {
-    warning("Name matching 'pheno', 'phecode', or 'phewas' not found, using the first column")
-    name=names[1]
+    stop("Name matching 'pheno' not found.")
+   # name=names[1]
   } else {
     name=names[first_match]
   }
-
+#print(name)
   #Check to make sure the selected column is the correct class
   if (!is(data[[name]], 'character')) {
-    if (is(data[[name]], factor)) {
-      warning("Factor phenotype input mapped to characters")
-      data[,name]=as.character(data[,name])
-    } else {
-      stop("Non-character or non-factor phenotypes passed in, so an accurate phecode mapping is not possible.")
-    }
+    
+      stop("Non-character phenotypes passed in, so an accurate phecode mapping is not possible.")
+    
   }
 
-  data = inner_join(data, PheWAS::pheinfo, by = setNames("phecode", name))
+  data = inner_join(data, PheWASmaps::pheinfo, by = setNames("phecode", name))
 
   if(!descriptions) data = data %>% select(-description)
   if(!groups) data = data %>% select(-group)

@@ -11,7 +11,6 @@ phewas_ext(
   covariates = NA,
   outcomes,
   predictors,
-  cores = 1,
   additive.genotypes = T,
   method = "glm",
   strata = NA,
@@ -38,9 +37,6 @@ These can be logical (for logistic regression) or continuous
 
 \item{predictors}{An alternate to \code{genotypes}. It will be ignored if
 \code{genotypes} exists.}
-
-\item{cores}{The number of cores to use in the parallel socket cluster
-implementation. If \code{cores=1}, \code{lapply} will be used instead.}
 
 \item{additive.genotypes}{Are additive genotypes being supplied? If so,
 it will attempt to calculate allele frequencies and HWE values. Default
