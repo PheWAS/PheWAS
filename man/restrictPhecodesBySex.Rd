@@ -4,14 +4,20 @@
 \alias{restrictPhecodesBySex}
 \title{Add PheWAS code descriptions to existing data.}
 \usage{
-restrictPhecodesBySex(phenotypes, id.sex)
+restrictPhecodesBySex(
+  phenotypes,
+  id.sex,
+  gender.exclusion = PheWASmaps::gender_restriction
+)
 }
 \arguments{
 \item{phenotypes}{The PheWAS table to have restrictions applied. The first
 column should be the id.}
 
 \item{id.sex}{A data frame with the first column being the id and the second
-the gender, "M" or "F", of the individual. Individuals with any other
+the gender, "M" or "F", of the individual. Individuals with any other}
+
+\item{gender.exclusion}{the map used for gender exclusions
 
 specification will have all gender specific phenotypes set to NA.}
 }
@@ -23,4 +29,8 @@ do not match the sex for sex-specific codes.
 \code{restrictPhecodesBySex} alters a table for PheWAS with phecodes, as from
 \code{\link[PheWAS:createPhenotypes]{createPhenotypes}}, to exclude
 individuals with non-applicable sexes from certain phenotypes.
+}
+\examples{
+data <- sample_data
+restrictPhecodesBySex(data$id.vocab.code.count, data$id.sex)
 }

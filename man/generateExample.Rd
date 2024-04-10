@@ -26,5 +26,5 @@ List with three named items:
 The output from this function will be random results with a significant association found between the genotype data and the selected phecode. It does not represent actual treatment data, though some highly connected phenotypes can also have strong associations due to the data creation methods.
 }
 \examples{
-generateExample()
+generateExample(n=1000)
 }

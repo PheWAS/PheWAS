@@ -17,8 +17,6 @@
 #' \code{phenotypes} exists.
 #' @param predictors An alternate to \code{genotypes}. It will be ignored if
 #' \code{genotypes} exists.
-#' @param cores The number of cores to use in the parallel socket cluster
-#' implementation. If \code{cores=1}, \code{lapply} will be used instead.
 #' @param additive.genotypes Are additive genotypes being supplied? If so,
 #' it will attempt to calculate allele frequencies and HWE values. Default
 #' is TRUE.
@@ -98,12 +96,10 @@
 #'                          data = final_data)
 #' }
 phewas_ext <-
-  function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, cores=1, additive.genotypes=T,
+  function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, additive.genotypes=T,
            method="glm", strata=NA, factor.contrasts=contr.phewas,
            return.models=F, min.records=20, MASS.confint.level=NA, quick.confint.level) {
-       # print(phenotypes)
-    #print(genotypes)
-    #print(head(data))
+
      #Require an input data frame
     if(missing(data)) {
       stop("A data frame must be supplied in 'data'")
@@ -123,7 +119,7 @@ phewas_ext <-
     #Checks for each of the PheWAS methods
     if(method=="glm") {
       association_method=phe_as_ext
-     # print('ext')
+
     } else if (method=="clogit") {
       association_method=phe_as_clogit
       #Check for a strata parameter
@@ -138,47 +134,20 @@ phewas_ext <-
       stop("Method must be one of: 'glm', 'clogit', 'lrt', or 'logistf'.")
     }
 
-    para=(cores>1)
+ 
     #Create the list of combinations to iterate over
-    #print(nrow(phenotypes))
-    #print(nrow(genotypes))
-   # print(nrow(covariates))
-    #print('expand.grid')
-    #print(nrow(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)))
-    #print('t')
-    #print(nrow(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F))))
-    #print(nrow(data.frame(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)),stringsAsFactors=F)))
+   
     full_list=data.frame(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)),stringsAsFactors=F)
-    #print(full_list)
+
     #If parallel, run the parallel version.
-    if(para) {
-      #Check to make sure there is no existing phewas cluster.
-      if(exists("phewas.cluster.handle")) {
-        #If there is, kill it and remove it
-        message("Old cluster detected (phewas.cluster.handle), removing...")
-        try(parallel::stopCluster(phewas.cluster.handle), silent=T)
-        rm(phewas.cluster.handle, envir=.GlobalEnv)
-      }
-      message("Starting cluster...")
-      assign("phewas.cluster.handle", parallel::makeCluster(cores), envir = .GlobalEnv)
-      message("Cluster created, finding associations...")
-      parallel::clusterExport(phewas.cluster.handle,c("data"), envir=environment())
-      parallel::clusterCall(phewas.cluster.handle,library,package="dplyr",character.only=T)
-      #Loop across every phenotype- iterate in parallel
-      result <-parallel::parLapplyLB(phewas.cluster.handle, full_list, association_method, additive.genotypes=additive.genotypes,
-                           confint.level=MASS.confint.level, min.records=min.records,
-                           return.models=return.models,factor.contrasts=factor.contrasts,strata=strata)
-      #Once we have succeeded, stop the cluster and remove it.
-      parallel::stopCluster(phewas.cluster.handle)
-      rm(phewas.cluster.handle, envir=.GlobalEnv)
-    } else {
+   
       #Otherwise, just use lapply.
       message("Finding associations...")
-      #print(association_method)
+      
       result=lapply(full_list,FUN=association_method, additive.genotypes=additive.genotypes,
                     confint.level=MASS.confint.level, my.data=data, min.records=min.records,
                     return.models=return.models,factor.contrasts=factor.contrasts,strata=strata)
-    }
+    
 
     if(return.models) {
       message("Collecting models...")

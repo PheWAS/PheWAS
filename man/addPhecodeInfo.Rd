@@ -9,7 +9,8 @@ addPhecodeInfo(
   descriptions = T,
   groups = T,
   groupnums = F,
-  groupcolors = F
+  groupcolors = F,
+  pheinfo = PheWASmaps::pheinfo
 )
 }
 \arguments{
@@ -25,6 +26,9 @@ plotting}
 
 \item{groupcolors}{Add the phecode group colors? Default is FALSE (no). Used
 in plotting}
+
+\item{pheinfo}{The data table conntaining phenotype information.  Default is
+\code{\link[PheWASmaps:pheinfo_X]{PheWASmaps::pheinfo_X}}}
 }
 \value{
 Data frame with added columns:
@@ -52,11 +56,5 @@ If a character (or factor) variable or vector is passed in, it will return
 code descriptions for those codes.
 }
 \examples{
-data <- sample_data
-phenotype_data <- createPhenotypes(data$id.vocab.code.count, id.sex = data$id.sex)
-final_data <- dplyr::inner_join(dplyr::inner_join(data$id.sex, data$genotypes), 
-phenotype_data)
-test_phewas <- phewas_ext(names(phenotype_data)[-1], 
-genotypes = c('rsEXAMPLE'), covariates = 'sex', data = final_data)
-addPhecodeInfo(test_phewas)
+addPhecodeInfo(example_phewas)
 }

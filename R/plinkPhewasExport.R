@@ -21,7 +21,7 @@
 #' @importFrom utils write.table
 #' @export
 #'
-#' @examples \donttest{
+#' @examples \dontrun{
 #' #Generate some example data
 #' data <- sample_data
 #' #Extract the two parts from the returned list

@@ -34,7 +34,7 @@ phenotypePlot(
   point.size = 3,
   use.color = T,
   color.palette,
-  title = paste0("Phenotype Plot ", date()),
+  title = paste0("Phenotype Plot"),
   x.axis.label = "Phenotypes",
   y.axis.label = "Values",
   y.axis.interval = 5

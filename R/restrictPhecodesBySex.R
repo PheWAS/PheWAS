@@ -8,18 +8,22 @@
 #' column should be the id.
 #' @param id.sex A data frame with the first column being the id and the second
 #' the gender, "M" or "F", of the individual. Individuals with any other
+#' @param gender.exclusion the map used for gender exclusions
 #'
 #' specification will have all gender specific phenotypes set to NA.
-#'
+#' @export
 #' @return The \code{phenotypes} data frame with NA values for individuals that
 #' do not match the sex for sex-specific codes.
+#' @examples
+#' data <- sample_data
+#' restrictPhecodesBySex(data$id.vocab.code.count, data$id.sex)
 
-restrictPhecodesBySex <- function(phenotypes,id.sex) {
+restrictPhecodesBySex <- function(phenotypes,id.sex, gender.exclusion = PheWASmaps::gender_restriction) {
   data=merge(phenotypes,id.sex,by=1,all.x=T)
   #Get the column of the sex
   g=dim(data)[2]
   #Get the restrictions found in the phenotypes data frame
-  current_gender_restriction=gender_restriction[gender_restriction$phecode %in% names(phenotypes)[-1],]
+  current_gender_restriction=gender.exclusion[gender.exclusion$phecode %in% names(phenotypes)[-1],]
   #Get male and female-only phenotypes
   male_only=current_gender_restriction[current_gender_restriction$male_only,"phecode"]
   female_only=current_gender_restriction[current_gender_restriction$female_only,"phecode"]

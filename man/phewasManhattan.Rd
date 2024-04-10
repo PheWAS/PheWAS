@@ -4,12 +4,19 @@
 \alias{phewasManhattan}
 \title{Fill in later}
 \usage{
-phewasManhattan(d, annotate.phenotype.description = T, ...)
+phewasManhattan(
+  d,
+  annotate.phenotype.description = T,
+  pheinfo.map = PheWASmaps::pheinfo,
+  ...
+)
 }
 \arguments{
 \item{d}{n/a}
 
 \item{annotate.phenotype.description}{n/a}
+
+\item{pheinfo.map}{a map of phecode descriptions for visualization}
 
 \item{...}{n/a}
 }
@@ -21,13 +28,5 @@ Fill in later
 }
 \examples{
 
-data <- sample_data
-phenotype_data <- createPhenotypes(data$id.vocab.code.count, 
-id.sex = data$id.sex) 
-final_data <- dplyr::inner_join(dplyr::inner_join(
-data$id.sex, data$genotypes),  phenotype_data)
-test_phewas <- phewas_ext(names(phenotype_data)[-1], 
-                         genotypes = c('rsEXAMPLE'), covariates = 'sex', 
-                         data = final_data)
-phewasManhattan(test_phewas)
+phewasManhattan(PheWAS:::test_phewas)
 }

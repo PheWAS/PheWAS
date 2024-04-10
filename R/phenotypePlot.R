@@ -56,7 +56,7 @@ phenotypePlot <-
            #plot characteristics
            use.color=T,
            color.palette,
-           title= paste0("Phenotype Plot ", date()),
+           title= paste0("Phenotype Plot"),
            x.axis.label="Phenotypes",
            y.axis.label="Values",
            y.axis.interval=5) {
@@ -73,6 +73,7 @@ phenotypePlot <-
       } else if(is.logical(annotate.phenotype.description)) {
         #If there is a logical, check to see if it meets criteria
         if(annotate.phenotype.description==T && !length(d$description)) {
+
           stop("Annotate.phenotype.description must contain columns phenotype and description, or be TRUE with provided d$description.")
         }
         #Else do nothing, as it is ready.
