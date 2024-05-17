@@ -3,6 +3,7 @@
 export(addPhecodeInfo)
 export(createPhenotypes)
 export(generateExample)
+export(joinCovar)
 export(mapCodesToPhecodes)
 export(mapPhecodesToExclusions)
 export(phewasManhattan)

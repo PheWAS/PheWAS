@@ -16,6 +16,9 @@
 #' @export
 #'
 #' @examples
+#' phenotype_data <- createPhenotypes(sample_data$id.vocab.code.count, id.sex = sample_data$id.sex)
+#' joinCovar(phenotype_data, sample_data$id.sex, sample_data$genotypes)
+
 joinCovar <- function(pheno, id.sex, covar){
   final_data <- dplyr::inner_join(dplyr::inner_join(id.sex, covar),  
                                   pheno)
