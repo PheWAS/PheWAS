@@ -1,4 +1,3 @@
-
 #' Sample Data
 #'
 #'Sample data for documentation and testing

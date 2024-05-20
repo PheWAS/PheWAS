@@ -20,12 +20,14 @@ a wide data table consisting of person_ids as rows and covariates and
 phecodes as columns
 }
 \description{
-This function takes up to three tables, all of which contain a person_ID to
-join on.  These tables include thee phenotype table (the output of
-createPhenotype), id.sex (optional), and covar(data$genotypes in sample data,
-but this can be whatever dependent variable and covariates you're looking for)
+This function takes up to three tables.  These tables include thee phenotype
+table (the output of createPhenotype), id.sex (optional), and covar
+(data$genotypes in sample data,
+but this can be whatever dependent variable and
+covariates you're looking for)
 }
 \examples{
-phenotype_data <- createPhenotypes(sample_data$id.vocab.code.count, id.sex = sample_data$id.sex)
+phenotype_data <- createPhenotypes(sample_data$id.vocab.code.count, id.sex = 
+sample_data$id.sex)
 joinCovar(phenotype_data, sample_data$id.sex, sample_data$genotypes)
 }

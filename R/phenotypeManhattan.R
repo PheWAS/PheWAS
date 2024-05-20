@@ -63,7 +63,6 @@ phenotypeManhattan <-
         sizing=TRUE
       }
     }
-
     #If OR sizes are requested, normalize them to magnitude only
     if(OR.size){
       sizing=TRUE

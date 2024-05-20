@@ -141,7 +141,6 @@ createPhenotypes <-
     #Change to logical if there is a min code count
     if(!is.na(min.code.count)) {phens[,-1]=phens[,-1]>0}
 
-
     #If there are sex restrictions, set them to NA
     if(!missing(id.sex)) {
       phens=restrictPhecodesBySex(phens,id.sex, gender.exclusion)
@@ -152,6 +151,5 @@ createPhenotypes <-
  
     #Rename the ID column to the input ID column name
     names(phens)[1]=id.name
-
     phens
   }

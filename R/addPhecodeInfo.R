@@ -46,20 +46,15 @@ addPhecodeInfo <- function(data, descriptions=T, groups=T, groupnums=F, groupcol
   #only accept data frames.
   if(class(data)[1] != 'data.frame'){stop('Data is not a Data Frame')}
   names=names(data)
- # print(names)
- # print('hi')
-  
-
   #Find the likely phecode column
   first_match=grep("phenotype",names,ignore.case=T)[1]
-  #print('hi')
+  
   if(is.na(first_match)) {
     stop("Name matching 'pheno' not found.")
    # name=names[1]
   } else {
     name=names[first_match]
   }
-#print(name)
   #Check to make sure the selected column is the correct class
   if (!is(data[[name]], 'character')) {
     

@@ -48,9 +48,7 @@ mapCodesToPhecodes <-
 
     if(!is.null(vocabulary.map)){
       #Perform the direct map
-      
       ##Check to see if is Data Table.  If so, use data table join. if not, continue using tibble.
-
    #   if(!is.data.table(input)){
       #  input <- as.data.table(input)
      # }
@@ -65,10 +63,8 @@ mapCodesToPhecodes <-
           setkey(vocabulary.map, vocabulary_id, code)
         withCallingHandlers(output <- input[vocabulary.map, on = .(vocabulary_id, code), nomatch = NULL, allow.cartesian = TRUE],
                             warning = function(w) { if (grepl("coercing into character vector", w$message)) {invokeRestart("muffleWarning")}})
- 
         }
       output <- output %>% select(-code,-vocabulary_id) %>% rename(code=phecode)
-
     } else {
       #Warn if the vocabulary IDs are not phecodes
       if(sum(input$vocabulary_id!="phecode")!=0) {stop("Phecode mapping was not requested, but the vocabulary_id of all codes is not 'phecode'")}
@@ -101,10 +97,8 @@ mapCodesToPhecodes <-
    
     } else {
       #Rename output column to phecode
-    
       output = output %>% rename(phecode=code)
     }
- 
     #Return the output
     output
   }
