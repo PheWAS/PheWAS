@@ -51,6 +51,4 @@ included mappings are from ICD9CM and ICD10CM.
 diabetes_billing=data.frame(id=1:3,vocabulary_id=
 c("ICD9CM","ICD9CM","ICD10CM"),code=c("250.00","250.01","E11.00"))
 phecodes=mapCodesToPhecodes(diabetes_billing)
-
-
 }

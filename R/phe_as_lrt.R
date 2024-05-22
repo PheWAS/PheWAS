@@ -78,9 +78,6 @@ phe_as_lrt <-
     output=data.frame(phenotype=phenotype,genotype=gens,covariates=covariates,p=p,type=type,
                       n_total=n_total, n_cases=n_cases, n_controls=n_controls,
                       note=note, stringsAsFactors=F)
-
-
-
     #If the complete models were requested, add them as well.
     if(return.models) {attributes(output)$lrt=lrt}
     attributes(output)$successful.phenotype=ifelse(is.na(lrt),NA,phenotype)

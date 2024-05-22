@@ -38,7 +38,6 @@
 #' @importFrom methods is
 #'
 #' @examples 
-
 #' addPhecodeInfo(example_phewas)
 addPhecodeInfo <- function(data, descriptions=T, groups=T, groupnums=F, groupcolors=F, pheinfo = PheWASmaps::pheinfo) {
   #Convert a vector of phecodes to a data frame
@@ -48,7 +47,6 @@ addPhecodeInfo <- function(data, descriptions=T, groups=T, groupnums=F, groupcol
   names=names(data)
   #Find the likely phecode column
   first_match=grep("phenotype",names,ignore.case=T)[1]
-  
   if(is.na(first_match)) {
     stop("Name matching 'pheno' not found.")
    # name=names[1]
@@ -57,17 +55,12 @@ addPhecodeInfo <- function(data, descriptions=T, groups=T, groupnums=F, groupcol
   }
   #Check to make sure the selected column is the correct class
   if (!is(data[[name]], 'character')) {
-    
       stop("Non-character phenotypes passed in, so an accurate phecode mapping is not possible.")
-    
   }
-
   data = inner_join(data, pheinfo, by = setNames("phecode", name))
-
   if(!descriptions) data = data %>% select(-description)
   if(!groups) data = data %>% select(-group)
   if(!groupnums) data = data %>% select(-groupnum)
   if(!groupcolors) data = data %>% select(-color)
-
   data
 }

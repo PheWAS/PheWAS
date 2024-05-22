@@ -34,8 +34,6 @@
 #' @examples diabetes_billing=data.frame(id=1:3,vocabulary_id=
 #' c("ICD9CM","ICD9CM","ICD10CM"),code=c("250.00","250.01","E11.00"))
 #' phecodes=mapCodesToPhecodes(diabetes_billing)
-#'
-#'
 mapCodesToPhecodes <-
   function(input,
            vocabulary.map=PheWASmaps::phecode_map,
@@ -56,7 +54,6 @@ mapCodesToPhecodes <-
       withCallingHandlers(output <- inner_join(input,vocabulary.map,by=c("vocabulary_id","code")),
                           warning = function(w) { if (grepl("coercing into character vector", w$message)) {invokeRestart("muffleWarning")}})
   #Remove old columns
-              
         }else if(is.data.table(input)){
           setkey(input, vocabulary_id, code)
          vocabulary.map <- as.data.table(vocabulary.map)
@@ -72,29 +69,21 @@ mapCodesToPhecodes <-
       output=input %>% filter(vocabulary_id=="phecode") %>% select(-vocabulary_id)
     }
     #Make distinct
-
     if(make.distinct) {output = distinct(output)}
     #Perform the rollup
     if(!is.null(rollup.map)) {
-
      if(!is.data.table(output)){
-
       withCallingHandlers(output <- inner_join(output ,rollup.map,by="code"),
                           warning = function(w) { if (grepl("coercing into character vector", w$message)) {invokeRestart("muffleWarning")}})
      } else if(is.data.table(output)){
-      
        setkey(output, 'code')
-
         #setkey(rollup.map, code)
         withCallingHandlers(output <- output[rollup.map, on = .(code), nomatch = NULL, allow.cartesian = TRUE],
                           warning = function(w) { if (grepl("coercing into character vector", w$message)) {invokeRestart("muffleWarning")}})
     }
-     
          output = output %>% select(-code) %>% rename(phecode=phecode_unrolled)
-    
       #Make distinct
       if(make.distinct) {output = distinct(output)} 
-   
     } else {
       #Rename output column to phecode
       output = output %>% rename(phecode=code)

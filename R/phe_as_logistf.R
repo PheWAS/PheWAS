@@ -11,7 +11,6 @@
 #'
 #' @return n/a
 #' @importFrom logistf logistf
-
 phe_as_logistf <-
   function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.level=NA, factor.contrasts=NA, my.data, ...) {
     if(!missing(my.data)) data=my.data
@@ -20,17 +19,14 @@ phe_as_logistf <-
     gen=phe.gen[[2]]
     gens=gen
     cov=phe.gen[[3]]
-
     #Subset the data
     d=data %>% select(one_of(na.omit(unlist(c(phe,gen,cov)))))
     #Turn covariates into a string, if not NA
     if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}
     else {covariates=NA_character_} #Make sure it is a character NA for aggregation
-
     #Set up confidence intervals
     return.confint=!is.na(confint.level)
     if(!return.confint) {confint.level=0.05}
-
     #Exclude the exclusions for the target phenotype
     d=d[!is.na(d[[phe]]),]
     n_no_snp=sapply(d %>% select(one_of(gen)),
@@ -52,7 +48,6 @@ phe_as_logistf <-
     formula.string=NA_character_
     expanded_formula=NA_character_
     gen_expansion=1:length(gen)
-
     #Drop columns with no variability
     drop.cols = names(d)[sapply(d, function(col) length(unique(col)))<=1]
     if(length(drop.cols>0)) {
@@ -61,7 +56,6 @@ phe_as_logistf <-
       #Remove dropped columns from covs- sticks around in the listed "covariates"
       cov=setdiff(cov,drop.cols)
     }
-
     if(n_total<min.records) {
       note=paste(note,"[Error: <",min.records," complete records]")
     } else if(sum(c(phe,gen) %in% names(d))!=length(c(phe,gen))) {
@@ -89,8 +83,6 @@ phe_as_logistf <-
                              }
                              c(a.f,hwe)
                            })
-
-
         allele_freq=sapply(snp.details,FUN=`[`,1)
         HWE_pval=sapply(snp.details,FUN=`[`,2)
 
@@ -111,7 +103,6 @@ phe_as_logistf <-
       #Create the formula:
       formula.string=paste0("`",phe,"` ~ `",paste(na.omit(c(gen,cov)),collapse = "` + `"),'`')
       my.formula = as.formula(formula.string)
-
       #Check if phenotype is logical (boolean) or 0/1
       if(class(d[[phe]]) %in% c("logical") | sum(d[[phe]] %in% c(0,1))==nrow(d)) {
         type = "firth logistic"

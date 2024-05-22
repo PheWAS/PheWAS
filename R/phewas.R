@@ -119,7 +119,6 @@ phewas_ext <-
     #Checks for each of the PheWAS methods
     if(method=="glm") {
       association_method=phe_as_ext
-
     } else if (method=="clogit") {
       association_method=phe_as_clogit
       #Check for a strata parameter
@@ -133,28 +132,17 @@ phewas_ext <-
     } else {
       stop("Method must be one of: 'glm', 'clogit', 'lrt', or 'logistf'.")
     }
-
- 
     #Create the list of combinations to iterate over
-   
     full_list=data.frame(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)),stringsAsFactors=F)
-
-    #If parallel, run the parallel version.
-   
-      #Otherwise, just use lapply.
       message("Finding associations...")
-      
       result=lapply(full_list,FUN=association_method, additive.genotypes=additive.genotypes,
                     confint.level=MASS.confint.level, my.data=data, min.records=min.records,
                     return.models=return.models,factor.contrasts=factor.contrasts,strata=strata)
-    
-
     if(return.models) {
       message("Collecting models...")
       models=lapply(result,function(x){attributes(x)$model})
       names(models)=sapply(models,function(x){paste0(as.character(terms(x))[c(2,1,3)],collapse=" ")})
     }
-
     message("Compiling results...")
     successful.phenotypes=na.omit(sapply(result,function(x){attributes(x)$successful.phenotype}))
     n.tests=length(successful.phenotypes)

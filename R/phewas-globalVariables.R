@@ -28,4 +28,6 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c('pheinfo',
                                                         '.',
                                                         'phewas.cluster.handle',
                                                         'FID',
-                                                        'IID'))
+                                                        'IID',
+                                                        'id.name',
+                                                        'id.vocab.code.index'))

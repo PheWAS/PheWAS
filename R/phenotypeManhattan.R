@@ -69,7 +69,6 @@ phenotypeManhattan <-
       d$size = d$OR
       d[d$size<1,]$size = 1/d[d$size<1,]$size
     }
-
     #If the OR direction is requested, create it
     if(OR.direction) d$direction = d$OR>=1
     plot=phenotypePlot(d,suggestive.line=suggestive.line,significant.line=significant.line,

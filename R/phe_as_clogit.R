@@ -96,8 +96,6 @@ phe_as_clogit <-
                              }
                              c(a.f,hwe)
                            })
-
-
         allele_freq=sapply(snp.details,FUN=`[`,1)
         HWE_pval=sapply(snp.details,FUN=`[`,2)
 
@@ -118,7 +116,6 @@ phe_as_clogit <-
       #Create the formula:
       formula.string=paste0("`",phe,"` ~ `",paste(c(gen,cov),collapse = "` + `"),'`'," + strata(`",strata,"`)")
       my.formula = as.formula(formula.string)
-
       #Check if phenotype is logical (boolean)
       if(class(d[[phe]]) %in% c("logical")) {
         type = "conditional logistic"
@@ -128,7 +125,6 @@ phe_as_clogit <-
         n_strata=n_distinct(d[[strata]])
         if(n_cases<min.records|n_controls<min.records) {note=paste(note,"[Error: <",min.records," cases or controls]")}
         else {
-
           model = tryCatch(clogit(my.formula, data=d), warning = function(w) {w$message}, error = function(e) {e$message})
           #If the models did not converge, report NA values instead.
           if(class(model)[1]!="character") {
@@ -156,7 +152,6 @@ phe_as_clogit <-
         note=paste(note,"[Error: clogit requires a logical/Boolean outcome]")
       }
     }
-
     output=data.frame(phenotype=phe,snp=gens,
                       covariates=covariates,
                       beta=beta, SE=se,
@@ -180,13 +175,11 @@ phe_as_clogit <-
       }
       output$lower=lower
       output$upper=upper
-
       output=output[,c("phenotype","snp", "covariates","beta","SE",
                        "lower","upper","OR","p","type",
                        "n_total","n_cases","n_controls","n_strata",
                        "HWE_p","allele_freq","n_no_snp","formula","expanded_formula","note")]
     }
-
     #If the complete models were requested, add them as well.
     if(return.models) {attributes(output)$model=model}
     attributes(output)$successful.phenotype=ifelse(is.na(p),NA,phe)

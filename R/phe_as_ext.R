@@ -24,7 +24,6 @@ phe_as_ext <-
     #Turn covariates into a string, if not NA
     if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}
     else {covariates=NA_character_} #Make sure it is a character NA for aggregation
-
     #Exclude the exclusions for the target phenotype
     d=d[!is.na(d[[phe]]),]
     n_no_snp=sapply(d %>% select(one_of(gen)),
@@ -32,7 +31,6 @@ phe_as_ext <-
     #Exclude rows with missing data
     d=na.omit(d)
     n_total=nrow(d)
-
     n_cases=NA_integer_
     n_controls=NA_integer_
     allele_freq=NA_real_
@@ -56,7 +54,6 @@ phe_as_ext <-
       #Remove dropped columns from covs- sticks around in the listed "covariates"
       cov=setdiff(cov,drop.cols)
     }
-
     if(n_total<min.records) {
       note=paste(note,"[Error: <",min.records," complete records]")
     } else if(sum(c(phe,gen) %in% names(d))!=length(c(phe,gen))) {
@@ -84,8 +81,6 @@ phe_as_ext <-
                              }
                              c(a.f,hwe)
                            })
-
-
         allele_freq=sapply(snp.details,FUN=`[`,1)
         HWE_pval=sapply(snp.details,FUN=`[`,2)
 

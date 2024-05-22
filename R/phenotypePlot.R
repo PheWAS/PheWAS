@@ -333,6 +333,5 @@ phenotypePlot <-
 
     #Add the title
     plot=plot+labs(title=title) + theme(title=element_text(size=12))
-
     plot
   }
