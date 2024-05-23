@@ -98,5 +98,52 @@ createPhenotypes <-
       message("Mapping codes to phecodes...")
       phemapped=mapCodesToPhecodes(id.vocab.code.index, vocabulary.map=vocabulary.map, rollup.map=rollup.map) %>% transmute(id, code=phecode, index)
     }
-    phens = pheSpread(phemapped, min.code.count, add.phecode.exclusions, id.sex, full.population.ids, aggregate.fun, vocabulary.map,  rollup.map, exclusion.map, gender.exclusion, id.name)
-  }
+    #phens = pheSpread(phemapped, min.code.count, add.phecode.exclusions, id.sex, full.population.ids, aggregate.fun, vocabulary.map,  rollup.map, exclusion.map, gender.exclusion, id.name)
+  
+    message("Aggregating codes...")
+    phecode=ungroup(summarize(group_by(phemapped,id,code),count=aggregate.fun(index)))
+    phecode=phecode[phecode$count>0,]
+    #Check exclusions, and add them to the list
+    if(add.phecode.exclusions) {
+      message("Mapping exclusions...")
+      exclusions = inner_join(phecode %>% rename(exclusion_criteria=code), exclusion.map, by = "exclusion_criteria")
+      exclusions = exclusions %>%  transmute(id, code, count=-1) %>% distinct()
+      phecode=rbind(phecode,exclusions)
+    }
+    
+    #If there is request for a min code count, adjust counts to -1 if needed
+    if(!is.na(min.code.count)&(max(!is.na(phecode$count)&phecode$count<min.code.count))) {
+      phecode[!is.na(phecode$count)&phecode$count<min.code.count,]$count=-1
+    }
+    if(!is.na(min.code.count)|add.phecode.exclusions) {
+      message("Coalescing exclusions and min.code.count as applicable...")
+      phecode=ungroup(summarize(group_by(phecode,id,code),count=max(count)))
+    }
+    message("Reshaping data...")
+    phens=spread(phecode,code,count,fill=0)
+    #Set exclusions to NA, preserving IDs just in case one is -1
+    tmp_id=phens[,1]
+    phens[phens==-1]=NA
+    phens[,1]=tmp_id
+    #Add in inds present in input or the full population list, but without mapped phecodes
+    missing_ids=setdiff(full.population.ids,phens[["id"]])
+    if(length(missing_ids)>0) {
+      empty_record=phens[1,-1]
+      empty_record[]=0
+      phens=rbind(phens,data.frame(id=missing_ids,empty_record,check.names=F))
+    }
+    #Change to logical if there is a min code count
+    if(!is.na(min.code.count)) {phens[,-1]=phens[,-1]>0}
+    #If there are sex restrictions, set them to NA
+    if(!missing(id.sex)) {
+      phens=restrictPhecodesBySex(phens,id.sex, gender.exclusion)
+    }
+    #Limit to full population ids
+    phens = filter(phens, id %in% full.population.ids)
+    #Rename the ID column to the input ID column name
+    if(!missing(id.name)){
+      names(phens)[1]=id.name
+    }
+    phens
+    
+    }

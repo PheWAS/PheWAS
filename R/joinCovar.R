@@ -21,15 +21,24 @@
 #' sample_data$id.sex)
 #' joinCovar(phenotype_data, sample_data$id.sex, sample_data$genotypes)
 joinCovar <- function(pheno, id.sex, covar){
-if(!missing(id.sex)){
+if(missing(pheno)){
+  stop('Phenotype table not found')
+}
+  if(!missing(id.sex)){
   if(!missing(covar)){
+    print('ID.Sex and covar present')
   final_data <- dplyr::inner_join(dplyr::inner_join(id.sex, covar),  
                                   pheno)
   }else{
+    print('ID.Sex Present')
     final_data <- dplyr::inner_join(pheno, id.sex)
   }
-}else{
+}else if(!missing(covar)){
+  print('Covar presenet')
   final_data <- dplyr::inner_join(pheno, covar)
+} else {
+  print('No inputs to join, returning phenotype file')
+  final_data <- pheno
 }
   return(final_data)
 }
