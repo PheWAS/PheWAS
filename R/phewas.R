@@ -114,7 +114,9 @@ phewas_ext <-
       else stop("Either genotypes or predictors must be passed in.")
     }
     #Convert covariates to a list if it is not one
-    if(!is(covariates, 'list')) { covariates=list(covariates)}
+    if(!is(covariates, 'list')) { 
+      print('Changed to list')
+      covariates=list(covariates)}
 
     #Checks for each of the PheWAS methods
     if(method=="glm") {
