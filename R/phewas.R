@@ -137,7 +137,8 @@ phewas_ext <-
     #Create the list of combinations to iterate over
     full_list=data.table(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)),stringsAsFactors=F)
    data <- as.data.table(data)
-     print(is.data.table(full_list))
+   setkey(data, 'id')
+   message("Setting keys...")
       message("Finding associations...")
       result=lapply(full_list,FUN=association_method, additive.genotypes=additive.genotypes,
                     confint.level=MASS.confint.level, my.data=data, min.records=min.records,
@@ -158,9 +159,7 @@ phewas_ext <-
     if(max(grepl(pattern = "[Error: The model did not converge]", sig$note, fixed=TRUE))){
       warning("Not all models converged, check the notes column for details.")
     }
-
     message("Cleaning up...")
-
     if(!missing(outcomes)) names(sig)[names(sig)=="phenotype"]="outcome"
     if(!missing(predictors)) names(sig)[names(sig)=="snp"]="predictor"
     if(return.models){sig=list(results=sig,models=models)}
@@ -175,7 +174,5 @@ phewas_ext <-
         sig=sig[,c(sig.names[1:5],"lower.q","upper.q",sig.names[6:length(sig.names)])]
       }
     }
-    print('hi')
-    print(is.data.table(sig))
     return(sig)
   }

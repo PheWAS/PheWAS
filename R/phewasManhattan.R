@@ -28,7 +28,6 @@ phewasManhattan <-
     if(min(nchar(d$phenotype))<3) stop('Phenotypes with length <3 observed,ensure they are are 0-padded')
 
     #Add the groups and phecode descriptions as requested
-
     d=addPhecodeInfo(d,groupnums =T, groupcolors = T
                      ,pheinfo = pheinfo.map
                      )
