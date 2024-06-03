@@ -21,6 +21,7 @@ phe_as_ext <-
     cov=phe.gen[[3]]
     #Subset the data
     d=data %>% select(one_of(na.omit(unlist(c(phe,gen,cov)))))
+    #print(is.data.table(d))
     #Turn covariates into a string, if not NA
     if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}
     else {covariates=NA_character_} #Make sure it is a character NA for aggregation

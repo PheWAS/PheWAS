@@ -135,7 +135,9 @@ phewas_ext <-
       stop("Method must be one of: 'glm', 'clogit', 'lrt', or 'logistf'.")
     }
     #Create the list of combinations to iterate over
-    full_list=data.frame(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)),stringsAsFactors=F)
+    full_list=data.table(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)),stringsAsFactors=F)
+   data <- as.data.table(data)
+     print(is.data.table(full_list))
       message("Finding associations...")
       result=lapply(full_list,FUN=association_method, additive.genotypes=additive.genotypes,
                     confint.level=MASS.confint.level, my.data=data, min.records=min.records,
@@ -173,5 +175,7 @@ phewas_ext <-
         sig=sig[,c(sig.names[1:5],"lower.q","upper.q",sig.names[6:length(sig.names)])]
       }
     }
+    print('hi')
+    print(is.data.table(sig))
     return(sig)
   }
