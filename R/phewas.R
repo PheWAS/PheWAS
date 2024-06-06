@@ -140,6 +140,7 @@ phewas_ext <-
    setkey(data, 'id')
    message("Setting keys...")
       message("Finding associations...")
+      print('test3')
       result=lapply(full_list,FUN=association_method, additive.genotypes=additive.genotypes,
                     confint.level=MASS.confint.level, my.data=data, min.records=min.records,
                     return.models=return.models,factor.contrasts=factor.contrasts,strata=strata)
