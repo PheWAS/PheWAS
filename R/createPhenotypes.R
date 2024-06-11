@@ -99,7 +99,4 @@ createPhenotypes <-
       phemapped=mapCodesToPhecodes(id.vocab.code.index, vocabulary.map=vocabulary.map, rollup.map=rollup.map) %>% transmute(id, code=phecode, index)
     }
     phens = pheSpread(phemapped, min.code.count, add.phecode.exclusions, id.sex, full.population.ids, aggregate.fun, vocabulary.map,  rollup.map, exclusion.map, gender.exclusion, id.name)
-  
-    
-    
     }

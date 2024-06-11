@@ -160,7 +160,7 @@ phe_as_ext <-
       }
     }
 
-    output=data.table(phenotype=phe,snp=gens,
+    output=data.frame(phenotype=phe,snp=gens,
                       covariates=covariates,
                       beta=beta, SE=se,
                       OR=or,

@@ -64,7 +64,6 @@ pheSpread <- function(phemapped, min.code.count=2,add.phecode.exclusions = T,
     exclusions = exclusions %>%  transmute(id, code, count=-1) %>% distinct()
     phecode=rbind(phecode,exclusions)
   }
-  
   #If there is request for a min code count, adjust counts to -1 if needed
   if(!is.na(min.code.count)&(max(!is.na(phecode$count)&phecode$count<min.code.count))) {
     phecode[!is.na(phecode$count)&phecode$count<min.code.count,]$count=-1

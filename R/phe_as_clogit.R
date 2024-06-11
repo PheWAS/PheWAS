@@ -24,10 +24,8 @@ phe_as_clogit <-
     #Turn covariates into a string, if not NA
     if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}
     else {covariates=NA_character_} #Make sure it is a character NA for aggregation
-
     #Subset the data
     d=data %>% select(one_of(na.omit(unlist(c(phe,gen,cov,strata)))))
-
     #Exclude the exclusions for the target phenotype
     d=d[!is.na(d[[phe]]),]
     n_no_snp=sapply(d %>% select(one_of(gen)),
@@ -38,7 +36,6 @@ phe_as_clogit <-
     strata.keep=d %>% group_by_at(.vars=strata) %>% summarize_at(.funs="n_distinct",na.rm=TRUE,.vars=gen) %>%
       filter_at(.vars=gen,.vars_predicate=all_vars(.>1)) %>% select(one_of(strata))
     d = inner_join(d,strata.keep,by=strata)
-
     n_total=nrow(d)
     n_cases=NA_integer_
     n_controls=NA_integer_
@@ -55,7 +52,6 @@ phe_as_clogit <-
     formula.string=NA_character_
     expanded_formula=NA_character_
     gen_expansion=1:length(gen)
-
     #Drop columns with no variability
     drop.cols = names(d)[sapply(d, function(col) length(unique(col)))<=1]
     if(length(drop.cols>0)) {
@@ -64,11 +60,10 @@ phe_as_clogit <-
       #Remove dropped columns from covs- sticks around in the listed "covariates"
       cov=setdiff(cov,drop.cols)
     }
-
     #Turn covariates into a string, if not NA
     if(!is.na(cov[1])) {covariates=paste(cov,collapse=",")}
     else {covariates=NA_character_} #Make sure it is a character NA for aggregation
-
+    
     if(n_total<min.records) {
       note=paste(note,"[Error: <",min.records," complete records]")
     } else if(sum(c(phe,gen) %in% names(d))!=length(c(phe,gen))) {

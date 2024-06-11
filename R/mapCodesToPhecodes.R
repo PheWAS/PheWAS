@@ -45,11 +45,6 @@ mapCodesToPhecodes <-
     if(!class(input[["code"]]) %in% c("character")) {stop("Please ensure character or factor code representation. Some vocabularies, eg ICD9CM, require strings to be represented accurately: E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
 
     if(!is.null(vocabulary.map)){
-      #Perform the direct map
-      ##Check to see if is Data Table.  If so, use data table join. if not, continue using tibble.
-   #   if(!is.data.table(input)){
-      #  input <- as.data.table(input)
-     # }
        if(!is.data.table(input)){
       withCallingHandlers(output <- inner_join(input,vocabulary.map,by=c("vocabulary_id","code")),
                           warning = function(w) { if (grepl("coercing into character vector", w$message)) {invokeRestart("muffleWarning")}})

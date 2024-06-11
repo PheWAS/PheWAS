@@ -135,9 +135,9 @@ phewas_ext <-
       stop("Method must be one of: 'glm', 'clogit', 'lrt', or 'logistf'.")
     }
     #Create the list of combinations to iterate over
-    full_list=data.table(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)),stringsAsFactors=F)
-   data <- as.data.table(data)
-   setkey(data, 'id')
+    full_list=data.frame(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)),stringsAsFactors=F)
+   #data <- as.data.table(data)
+   #setkey(data, 'id')
    message("Setting keys...")
       message("Finding associations...")
       print('test3')
