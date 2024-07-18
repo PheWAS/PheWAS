@@ -1,8 +1,8 @@
 #' Fill in later
 #'
-#' @param x N/A
+#' @param x A contrasts function used to contrast a column and rename the column
 #'
-#' @return N/A
+#' @return A data frame with the contrasts and a renamed column name
 #' 
 #'
 #' 

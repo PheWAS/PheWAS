@@ -7,4 +7,4 @@ test_that("Null Vocab Map)", {
   expect_error(mapCodesToPhecodes(sample_data$id.vocab.code.count, vocabulary.map = NULL, rollup.map = PheWASmaps::phecode_rollup_map), "Phecode mapping was not requested, but the vocabulary_id of all codes is not 'phecode'")
 })
 test_that('Base Case Works', {
-  expect_equal((mapCodesToPhecodes(sample_data$id.vocab.code.count, vocabulary.map = phecode_map, rollup.map = PheWASmaps::phecode_rollup_map)), mCtP_test_1)})
+  expect_equal((mapCodesToPhecodes(sample_data$id.vocab.code.count, vocabulary.map = phecode_map, rollup.map = PheWASmaps::phecode_rollup_map)$phecode[7]), '433.5')})

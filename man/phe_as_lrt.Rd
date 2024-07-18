@@ -7,13 +7,18 @@
 phe_as_lrt(phe.gen, min.records = 20, return.models = T, my.data, ...)
 }
 \arguments{
-\item{phe.gen}{n/a}
+\item{phe.gen}{A list with the name of the phecode column being used in the
+regression, the column name of independent variable, and covariates}
 
-\item{min.records}{n/a}
+\item{min.records}{The minimum number of records to perform a test. For
+logistic regression, there must be at least this number of each cases and
+controls, for linear regression this total number of records. Default is 20}
 
-\item{return.models}{n/a}
+\item{return.models}{Return a list the complete models, with the names equal
+to the string formula used to create them, as well as the results. Default is
+FALSE.}
 
-\item{my.data}{n/a}
+\item{my.data}{The data table containing the data for the regression.}
 
 \item{...}{n/a}
 }

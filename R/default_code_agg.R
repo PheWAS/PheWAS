@@ -1,10 +1,11 @@
 #' Sum or count distinct
 #'
-#' FILL IN LATER
+#' a function that either returns the sum of an input, if numeric, or the length
+#' of an input if not numeric 
 #'
 #' @param index an index
 #'
-#' @return an index or a length of an index
+#' @return the sum of an index or a length of an index
 
 default_code_agg <- function(index) {
   #If it's a number, sum, otherwise count distinct

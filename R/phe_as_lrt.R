@@ -1,9 +1,14 @@
 #' Fill in later
 #'
-#' @param phe.gen n/a
-#' @param min.records n/a
-#' @param return.models n/a
-#' @param my.data n/a
+#' @param phe.gen A list with the name of the phecode column being used in the 
+#' regression, the column name of independent variable, and covariates
+#' @param min.records The minimum number of records to perform a test. For
+#' logistic regression, there must be at least this number of each cases and
+#'  controls, for linear regression this total number of records. Default is 20
+#' @param return.models Return a list the complete models, with the names equal
+#' to the string formula used to create them, as well as the results. Default is
+#'  FALSE.
+#' @param my.data The data table containing the data for the regression.
 #' @param ... n/a
 #'
 #' @return n/a

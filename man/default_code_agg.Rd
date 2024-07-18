@@ -10,8 +10,9 @@ default_code_agg(index)
 \item{index}{an index}
 }
 \value{
-an index or a length of an index
+the sum of an index or a length of an index
 }
 \description{
-FILL IN LATER
+a function that either returns the sum of an input, if numeric, or the length
+of an input if not numeric
 }

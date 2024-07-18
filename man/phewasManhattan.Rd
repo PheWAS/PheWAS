@@ -28,5 +28,5 @@ Fill in later
 }
 \examples{
 
-phewasManhattan(PheWAS:::test_phewas)
+phewasManhattan(PheWAS:::test_phewas, pheinfo.map = PheWASmaps::pheinfo_X)
 }

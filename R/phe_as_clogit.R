@@ -1,14 +1,28 @@
 #' To be filled in later
 #'
-#' @param phe.gen N/A
-#' @param additive.genotypes N/A
-#' @param min.records N/A
-#' @param return.models N/A
-#' @param confint.level N/A
-#' @param factor.contrasts N/A
-#' @param strata N/A
-#' @param my.data N/A
-#' @param ... AN
+#' @param phe.gen A list with the name of the phecode column being used in the 
+#' regression, the column name of independent variable, and covariates
+#' @param additive.genotypes Are additive genotypes being supplied? If so,
+#' it will attempt to calculate allele frequencies and HWE values. Default
+#' is TRUE.
+#' @param min.records The minimum number of records to perform a test. For
+#' logistic regression, there must be at least this number of each cases and
+#'  controls, for linear regression this total number of records. Default is 20
+#' @param return.models Return a list the complete models, with the names equal
+#' to the string formula used to create them, as well as the results. Default is
+#'  FALSE.
+#' @param confint.level Uses the \code{MASS} package and the \code{confint}
+#'  function to calculate a confidence interval at the specified level.
+#'   \code{confint} uses a profile likelihood method, which takes some time to
+#'    compute. Output is stored in the \code{lower} and \code{upper} columns.
+#'    Logistic models will report OR CIs and linear models will report beta CIs.
+#'     Default is NA, which does not calculate confidence intervals.
+#' @param factor.contrasts Contrasts used for factors to generate names used
+#' in clogit.
+#' @param my.data The data table containing the data for the regression.
+#' @param ... N/A
+#' @param strata Name of the grouping / strat column
+
 #'
 #' @return N/A
 #' @importFrom survival clogit

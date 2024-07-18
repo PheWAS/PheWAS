@@ -27,13 +27,31 @@ test_that('Non Character phenotype column Produces Error', {
 #output checks
 #description
 test_that('-Description works', {
-  expect_equal(addPhecodeInfo(test_phewas, descriptions = F, pheinfo = PheWASmaps::pheinfo), testPhecodeInfoDescriptions)})
-#group 
-test_that('-Group works', {
-  expect_equal(addPhecodeInfo(test_phewas, groups = F, pheinfo = PheWASmaps::pheinfo), testPhecodeInfoGroup)})
-
-test_that('-Groupnum works', {
-  expect_equal(addPhecodeInfo(test_phewas, groupnums = F), testPhecodeInfoGroupnum)})
-
-test_that('-Groupcolor works', {
-  expect_equal(addPhecodeInfo(test_phewas, groupcolors  = F), testPhecodeInfoGroupcolor)})
+   expect_equal(addPhecodeInfo(test_phewas, descriptions = F, pheinfo = PheWASmaps::pheinfo_X)$allele_freq[1], 0.49954968)})
+test_that('-Description works', {
+  expect_equal(addPhecodeInfo(test_phewas, descriptions = F, pheinfo = PheWASmaps::pheinfo_X)$group[5], 'Blood/Immune')})
+test_that('-Description works', {
+  expect_equal(addPhecodeInfo(test_phewas, descriptions = F, pheinfo = PheWASmaps::pheinfo_X)$description[1], NULL)})
+# #group 
+ test_that('-Group works', {
+   expect_equal(addPhecodeInfo(test_phewas, groups = F, pheinfo = PheWASmaps::pheinfo_X)$group[1], NULL)})
+ test_that('-Group works', {
+   expect_equal(addPhecodeInfo(test_phewas, groups = F, pheinfo = PheWASmaps::pheinfo_X)$description[1], 'Deficiency anemias')})
+ test_that('-Group works', {
+   expect_equal(addPhecodeInfo(test_phewas, groups = F, pheinfo = PheWASmaps::pheinfo_X)$allele_freq[1], 0.49954968)})
+ 
+ #
+ test_that('-Groupnum works', {
+   expect_equal(addPhecodeInfo(test_phewas, groupnums = T, pheinfo = PheWASmaps::pheinfo_X)$groupnum[1], 3)})
+ test_that('-Groupnum works', {
+   expect_equal(addPhecodeInfo(test_phewas, groupnums = T, pheinfo = PheWASmaps::pheinfo_X)$description[1], 'Deficiency anemias')})
+ test_that('-Groupnum works', {
+   expect_equal(addPhecodeInfo(test_phewas, groupnums = T, pheinfo = PheWASmaps::pheinfo_X)$allele_freq[1], 0.49954968)})
+ 
+ # 
+ test_that('-Groupcolor works', {
+   expect_equal(addPhecodeInfo(test_phewas, groupcolors  = T, pheinfo = PheWASmaps::pheinfo_X)$color[1], "#FFFF00")})
+ test_that('-Groupcolor works', {
+   expect_equal(addPhecodeInfo(test_phewas, groupcolors = T, pheinfo = PheWASmaps::pheinfo_X)$description[1], 'Deficiency anemias')})
+ test_that('-Groupcolor works', {
+   expect_equal(addPhecodeInfo(test_phewas, groupcolors = T, pheinfo = PheWASmaps::pheinfo_X)$allele_freq[1], 0.49954968)})

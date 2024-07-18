@@ -7,10 +7,10 @@
 contr.phewas(x)
 }
 \arguments{
-\item{x}{N/A}
+\item{x}{A contrasts function used to contrast a column and rename the column}
 }
 \value{
-N/A
+A data frame with the contrasts and a renamed column name
 }
 \description{
 Fill in later

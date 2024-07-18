@@ -17,8 +17,7 @@
 #' @export
 #'
 #' @examples
-#' phenotype_data <- createPhenotypes(sample_data$id.vocab.code.count, id.sex = 
-#' sample_data$id.sex)
+#' phenotype_data <- PheWAS:::sample_join_cov
 #' joinCovar(phenotype_data, sample_data$id.sex, sample_data$genotypes)
 joinCovar <- function(pheno, id.sex, covar){
 if(missing(pheno)){

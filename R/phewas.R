@@ -86,14 +86,9 @@
 #' @examples
 #'  \donttest{
 #' #Generate some example data
-#'data <- sample_data
-#' phenotype_data <- createPhenotypes(data$id.vocab.code.count,
-#'  id.sex = data$id.sex) 
-#' final_data <- dplyr::inner_join(dplyr::inner_join(data$id.sex, 
-#' data$genotypes),  phenotype_data)
-#' test_phewas <- phewas_ext(names(phenotype_data)[-1], 
+#' test_phewas <- phewas_ext(names(PheWAS:::test_data_phenotype_1)[-1], 
 #'                          genotypes = c('rsEXAMPLE'), covariates = 'sex', 
-#'                          data = final_data)
+#'                          data = PheWAS:::test_data_phenotype_2)
 #' }
 phewas_ext <-
   function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, additive.genotypes=T,
@@ -135,12 +130,11 @@ phewas_ext <-
       stop("Method must be one of: 'glm', 'clogit', 'lrt', or 'logistf'.")
     }
     #Create the list of combinations to iterate over
-    full_list=data.frame(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)),stringsAsFactors=F)
-   #data <- as.data.table(data)
-   #setkey(data, 'id')
-   message("Setting keys...")
+    full_list=data.table(t(expand.grid(phenotypes,genotypes,covariates,stringsAsFactors=F)),stringsAsFactors=F)
+  data <- as.data.table(data)
+   setkey(data, 'id')
+   #message("Setting keys...")
       message("Finding associations...")
-      print('test3')
       result=lapply(full_list,FUN=association_method, additive.genotypes=additive.genotypes,
                     confint.level=MASS.confint.level, my.data=data, min.records=min.records,
                     return.models=return.models,factor.contrasts=factor.contrasts,strata=strata)

@@ -18,7 +18,8 @@
 #' @param rollup.map Data frame with columns \code{code}, and
 #' \code{phecode_unrolled}. Each row represents a mapping from a specific
 #'  phecode to all parent phecodes. The default map
-#'  \code{\link[PheWASmaps:phecode_rollup_map]{PheWASmaps::phecode_rollup_map}} is the
+#'  \code{\link[PheWASmaps:phecode_rollup_map]{PheWASmaps::phecode_rollup_map}} 
+#'  is the
 #'   complete rollup map for phecode map v1.2. If \code{NULL}, it will skip the
 #'   rollup step. This may be useful if one is seeking to only consider the
 #'   directly mapped phecodes.

@@ -124,13 +124,8 @@ returned list needs to be used.
 \examples{
  \donttest{
 #Generate some example data
-data <- sample_data
-phenotype_data <- createPhenotypes(data$id.vocab.code.count,
- id.sex = data$id.sex) 
-final_data <- dplyr::inner_join(dplyr::inner_join(data$id.sex, 
-data$genotypes),  phenotype_data)
-test_phewas <- phewas_ext(names(phenotype_data)[-1], 
+test_phewas <- phewas_ext(names(PheWAS:::test_data_phenotype_1)[-1], 
                          genotypes = c('rsEXAMPLE'), covariates = 'sex', 
-                         data = final_data)
+                         data = PheWAS:::test_data_phenotype_2)
 }
 }

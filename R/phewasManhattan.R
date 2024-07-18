@@ -10,7 +10,7 @@
 #'
 #' @examples 
 #' 
-#' phewasManhattan(PheWAS:::test_phewas)
+#' phewasManhattan(PheWAS:::test_phewas, pheinfo.map = PheWASmaps::pheinfo_X)
 phewasManhattan <-
   function(d, annotate.phenotype.description=T
            , pheinfo.map = PheWASmaps::pheinfo

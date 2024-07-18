@@ -62,7 +62,7 @@
 #' createPhenotypes(id_icd9_count)
 #' \donttest{
 #' #Complex example
-#' ex=generateExample(n=500,hit="335")
+#' ex=sample_data
 #' #Extract the two relevant parts from the returned list
 #' id.vocab.code.count=ex$id.vocab.code.count
 #' id.sex=ex$id.sex
@@ -70,8 +70,8 @@
 #' #exclusions, and reshapes to a wide format.
 #' #Sum up the counts in the data where applicable.
 #' phenotypes=createPhenotypes(id.vocab.code.count,
-#'                             aggregate.fun=sum, id.sex=id.sex)
-#' 
+#' #'                             #aggregate.fun=sum,
+#'                              id.sex=id.sex)
 #' }
 createPhenotypes <-
   function(id.vocab.code.index, min.code.count=2, add.phecode.exclusions=T, translate=T, id.sex,

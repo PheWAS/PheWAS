@@ -16,21 +16,34 @@ phe_as_logistf(
 )
 }
 \arguments{
-\item{phe.gen}{n/a}
+\item{phe.gen}{A list with the name of the phecode column being used in the
+regression, the column name of independent variable, and covariates}
 
-\item{additive.genotypes}{n/a}
+\item{additive.genotypes}{Are additive genotypes being supplied? If so,
+it will attempt to calculate allele frequencies and HWE values. Default
+is TRUE.}
 
-\item{min.records}{n/a}
+\item{min.records}{The minimum number of records to perform a test. For
+logistic regression, there must be at least this number of each cases and
+controls, for linear regression this total number of records. Default is 20}
 
-\item{return.models}{n/a}
+\item{return.models}{Return a list the complete models, with the names equal
+to the string formula used to create them, as well as the results. Default is
+FALSE.}
 
-\item{confint.level}{n/a}
+\item{confint.level}{Uses the \code{MASS} package and the \code{confint}
+function to calculate a confidence interval at the specified level.
+\code{confint} uses a profile likelihood method, which takes some time to
+compute. Output is stored in the \code{lower} and \code{upper} columns.
+Logistic models will report OR CIs and linear models will report beta CIs.
+Default is NA, which does not calculate confidence intervals.}
 
-\item{factor.contrasts}{n/a}
+\item{factor.contrasts}{Contrasts used for factors to generate names used
+in clogit.}
 
-\item{my.data}{n/a}
+\item{my.data}{The data table containing the data for the regression.}
 
-\item{...}{n/a}
+\item{...}{N/A}
 }
 \value{
 n/a
