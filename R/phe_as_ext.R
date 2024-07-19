@@ -28,6 +28,7 @@ phe_as_ext <-
   function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.level=NA, factor.contrasts=NA, my.data, ...) {
     if(!missing(my.data)) data=my.data
     #Retrieve the targets for this loop
+    print(phe.gen)
     phe=phe.gen[[1]]
     gen=phe.gen[[2]]
     gens=gen
