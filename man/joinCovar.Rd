@@ -4,10 +4,10 @@
 \alias{joinCovar}
 \title{A function to join all the covariate and phenotype files.}
 \usage{
-joinCovar(pheno, id.sex, covar)
+joinCovar(phecode, id.sex, covar)
 }
 \arguments{
-\item{pheno}{a wide table with columns representing phecodes and rows
+\item{phecode}{a wide table with columns representing phecodes and rows
 representing people}
 
 \item{id.sex}{an nx2 table with person_ids and gender information}

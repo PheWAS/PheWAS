@@ -6,7 +6,7 @@
 #' but this can be whatever dependent variable and 
 #' covariates you're looking for)
 #'
-#' @param pheno a wide table with columns representing phecodes and rows 
+#' @param phecode a wide table with columns representing phecodes and rows 
 #' representing people
 #' @param id.sex an nx2 table with person_ids and gender information
 #' @param covar a table of variable width consisting of person_IDs and whatever 
@@ -19,25 +19,25 @@
 #' @examples
 #' phenotype_data <- PheWAS:::sample_join_cov
 #' joinCovar(phenotype_data, sample_data$id.sex, sample_data$genotypes)
-joinCovar <- function(pheno, id.sex, covar){
-if(missing(pheno)){
+joinCovar <- function(phecode, id.sex, covar){
+if(missing(phecode)){
   stop('Phenotype table not found')
 }
   if(!missing(id.sex)){
   if(!missing(covar)){
     print('ID.Sex and covar present')
   final_data <- dplyr::inner_join(dplyr::inner_join(id.sex, covar),  
-                                  pheno)
+                                  phecode)
   }else{
     print('ID.Sex Present')
-    final_data <- dplyr::inner_join(pheno, id.sex)
+    final_data <- dplyr::inner_join(phecode, id.sex)
   }
 }else if(!missing(covar)){
   print('Covar presenet')
-  final_data <- dplyr::inner_join(pheno, covar)
+  final_data <- dplyr::inner_join(phecode, covar)
 } else {
   print('No inputs to join, returning phenotype file')
-  final_data <- pheno
+  final_data <- phecode
 }
   return(final_data)
 }
