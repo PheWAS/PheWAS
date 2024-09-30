@@ -29,6 +29,7 @@
 #' data frame with the first column being the id and the second the sex, "M" or
 #' "F", of the individual. Individuals with any other specification will have
 #' all sex specific phenotypes set to NA.
+#' @param wide.table Boolean value, TRUE if converting to wide table 
 #' @param full.population.ids List of IDs in the "complete" population. This
 #' allows for individuals with no observed codes to have appropriate "control"
 #' status, eg 0s or FALSE in every field.
@@ -74,7 +75,8 @@
 #'                              id.sex=id.sex)
 #' }
 createPhenotypes <-
-  function(id.vocab.code.index, min.code.count=2, add.phecode.exclusions=T, translate=T, id.sex,
+  function(id.vocab.code.index, min.code.count=2, add.phecode.exclusions=T, 
+           translate=T, id.sex, wide.table = T,
            full.population.ids=unique(id.vocab.code.index[[1]]),
            aggregate.fun=default_code_agg,
            vocabulary.map=PheWASmaps::phecode_map,
@@ -98,5 +100,10 @@ createPhenotypes <-
       message("Mapping codes to phecodes...")
       phemapped=mapCodesToPhecodes(id.vocab.code.index, vocabulary.map=vocabulary.map, rollup.map=rollup.map) %>% transmute(id, code=phecode, index)
     }
+    if(wide.table){
     phens = pheSpread(phemapped, min.code.count, add.phecode.exclusions, id.sex, full.population.ids, aggregate.fun, vocabulary.map,  rollup.map, exclusion.map, gender.exclusion, id.name)
+    }else{
+      phemapped
+    }
+    
     }

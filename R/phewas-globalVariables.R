@@ -30,4 +30,5 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c('pheinfo',
                                                         'FID',
                                                         'IID',
                                                         'id.name',
-                                                        'id.vocab.code.index'))
+                                                        'id.vocab.code.index',
+                                                        'N'))
