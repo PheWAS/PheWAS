@@ -150,8 +150,8 @@ phe_as_ext <-
           note=paste(note,"[Error: <",min.records," records with phenotype and genotype]")
         } else {
           model = glm(my.formula, data=d)
-
           modsum= summary(model)
+          note = paste(note, modsum)
           #If the models did not converge, report NA values instead.
           if(model$converged) {
             #Find the observed genotype columns

@@ -1,4 +1,4 @@
-phenotype_data <- createPhenotypes(sample_data$id.vocab.code.count, id.sex = 
+phenotype_data <- createPhenotypes(sample_data$id.vocab.code.count, id.sex =
  sample_data$id.sex)
 joinCovar(phenotype_data, sample_data$id.sex, sample_data$genotypes)
 test_that('Base Works', {

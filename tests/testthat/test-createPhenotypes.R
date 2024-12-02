@@ -16,9 +16,9 @@ test_that('Base Case Works', {
 
 test_that('Exclusions = False', {
   expect_equal(createPhenotypes(sample_data$id.vocab.code.count, id.sex = sample_data$id.sex, add.phecode.exclusions = F)$`010`[11], FALSE)})
-test_that('Exclusions = False works', { 
+test_that('Exclusions = False works', {
   expect_equal(createPhenotypes(sample_data$id.vocab.code.count, id.sex = sample_data$id.sex, add.phecode.exclusions = F)$`031`[17], TRUE)})
-test_that('Min Case Count Works', { 
+test_that('Min Case Count Works', {
   expect_equal(createPhenotypes(sample_data$id.vocab.code.count, id.sex = sample_data$id.sex, min.code.count = 10 )$`031`[17], NA)})
 test_that('No Sex Works', {
   expect_equal(createPhenotypes(sample_data$id.vocab.code.count, id.sex = sample_data$id.sex)$`214.1`[1], NA)})

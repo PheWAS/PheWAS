@@ -10,7 +10,6 @@ createPhenotypes(
   add.phecode.exclusions = T,
   translate = T,
   id.sex,
-  wide.table = T,
   full.population.ids = unique(id.vocab.code.index[[1]]),
   aggregate.fun = default_code_agg,
   vocabulary.map = PheWASmaps::phecode_map,
@@ -42,8 +41,6 @@ TRUE. Generally recommended, though can be skipped if phecodes are provided.}
 data frame with the first column being the id and the second the sex, "M" or
 "F", of the individual. Individuals with any other specification will have
 all sex specific phenotypes set to NA.}
-
-\item{wide.table}{Boolean value, TRUE if converting to wide table}
 
 \item{full.population.ids}{List of IDs in the "complete" population. This
 allows for individuals with no observed codes to have appropriate "control"
