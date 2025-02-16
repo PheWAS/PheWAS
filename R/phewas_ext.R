@@ -12,8 +12,10 @@ function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, cores
     else stop("Either phenotypes or outcomes must be passed in.")
   }
   if(missing(genotypes)) {
-    if(!missing(predictors)) genotypes=predictors
-    else stop("Either genotypes or predictors must be passed in.")
+    if(!missing(predictors)) {
+      genotypes=predictors
+      additive.genotypes=FALSE
+    } else stop("Either genotypes or predictors must be passed in.")
   }
   #Convert covariates to a list if it is not one
   if(class(covariates)!="list") { covariates=list(covariates)}
