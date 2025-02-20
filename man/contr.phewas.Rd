@@ -2,7 +2,7 @@
 % Please edit documentation in R/contr_phewas.R
 \name{contr.phewas}
 \alias{contr.phewas}
-\title{Fill in later}
+\title{An internal function used to contrast a column and rename the column}
 \usage{
 contr.phewas(x)
 }
@@ -13,5 +13,5 @@ contr.phewas(x)
 A data frame with the contrasts and a renamed column name
 }
 \description{
-Fill in later
+An internal function used to contrast a column and rename the column
 }

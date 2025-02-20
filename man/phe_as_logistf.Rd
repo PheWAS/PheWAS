@@ -2,7 +2,8 @@
 % Please edit documentation in R/phe_as_logistf.R
 \name{phe_as_logistf}
 \alias{phe_as_logistf}
-\title{To be filled in later}
+\title{Function to perform and return logistf results on a single genotype-phenotype
+association.}
 \usage{
 phe_as_logistf(
   phe.gen,
@@ -49,5 +50,6 @@ in clogit.}
 n/a
 }
 \description{
-To be filled in later
+Function to perform and return logistf results on a single genotype-phenotype
+association.
 }

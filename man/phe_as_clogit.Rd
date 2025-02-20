@@ -2,7 +2,8 @@
 % Please edit documentation in R/phe_as_clogit.R
 \name{phe_as_clogit}
 \alias{phe_as_clogit}
-\title{To be filled in later}
+\title{Function to perform and return clogit results on a single genotype-phenotype
+association.}
 \usage{
 phe_as_clogit(
   phe.gen,
@@ -52,5 +53,6 @@ in clogit.}
 N/A
 }
 \description{
-To be filled in later
+Function to perform and return clogit results on a single genotype-phenotype
+association.
 }

@@ -2,7 +2,8 @@
 % Please edit documentation in R/phe_as_ext.R
 \name{phe_as_ext}
 \alias{phe_as_ext}
-\title{Fill in later}
+\title{Function to perform and return GLM results on a single genotype-phenotype
+association.}
 \usage{
 phe_as_ext(
   phe.gen,
@@ -46,8 +47,33 @@ in clogit.}
 \item{...}{N/A}
 }
 \value{
-FILL IN LATER
+The following are the default columns included in the returned data
+frame. The attributes of the returned data frame contain additional
+information about the anaylsis. This returns an output withh a single row for
+a single genotype-phenotyping analysis
+\item{phenotype}{The outcome under study}
+\item{snp}{The predictor under study}
+\item{adjustment}{The one off adjustment used}
+\item{beta}{The beta coefficient for the predictor}
+\item{SE}{The standard error for the beta coefficient}
+\item{lower.p}{The lower bound of the quick confidence interval, if requested}
+\item{upper.p}{The upper bound of the quick confidence interval, if requested}
+\item{lower}{The lower bound of the \code{confint} confidence interval, if
+requested}
+\item{upper}{The upper bound of the \code{confint} confidence interval, if
+requested}
+\item{OR}{For logistic regression, the odds ratio for the predictor}
+\item{p}{The p-value for the predictor}
+\item{type}{The type of regression model used}
+\item{n_total}{The total number of records in the analysis}
+\item{n_cases}{The number of cases in the analysis (logical outcome only)}
+\item{n_controls}{The number of controls in the analysis (logical outcome only)}
+\item{HWE_p}{The Hardy-Weinberg equilibrium p-value for the predictor,
+assuming 0,1,2 allele coding}
+\item{allele_freq}{The allele frequency in the predictor for the coded allele}
+\item{n_no_snp}{The number of records with a missing predictor}
 }
 \description{
-Fill in later
+Function to perform and return GLM results on a single genotype-phenotype
+association.
 }

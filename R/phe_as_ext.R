@@ -1,4 +1,5 @@
-#' Fill in later
+#' Function to perform and return GLM results on a single genotype-phenotype 
+#' association.
 #'
 #' @param phe.gen A list with the name of the phecode column being used in the 
 #' regression, the column name of independent variable, and covariates
@@ -22,7 +23,31 @@
 #' @param my.data The data table containing the data for the regression.
 #' @param ... N/A
 #'
-#' @return FILL IN LATER
+#' @return The following are the default columns included in the returned data
+#' frame. The attributes of the returned data frame contain additional
+#'  information about the anaylsis. This returns an output withh a single row for
+#'  a single genotype-phenotyping analysis
+#' \item{phenotype}{The outcome under study}
+#' \item{snp}{The predictor under study}
+#' \item{adjustment}{The one off adjustment used}
+#' \item{beta}{The beta coefficient for the predictor}
+#' \item{SE}{The standard error for the beta coefficient}
+#' \item{lower.p}{The lower bound of the quick confidence interval, if requested}
+#' \item{upper.p}{The upper bound of the quick confidence interval, if requested}
+#' \item{lower}{The lower bound of the \code{confint} confidence interval, if
+#' requested}
+#' \item{upper}{The upper bound of the \code{confint} confidence interval, if
+#' requested}
+#' \item{OR}{For logistic regression, the odds ratio for the predictor}
+#' \item{p}{The p-value for the predictor}
+#' \item{type}{The type of regression model used}
+#' \item{n_total}{The total number of records in the analysis}
+#' \item{n_cases}{The number of cases in the analysis (logical outcome only)}
+#' \item{n_controls}{The number of controls in the analysis (logical outcome only)}
+#' \item{HWE_p}{The Hardy-Weinberg equilibrium p-value for the predictor,
+#' assuming 0,1,2 allele coding}
+#' \item{allele_freq}{The allele frequency in the predictor for the coded allele}
+#' \item{n_no_snp}{The number of records with a missing predictor}
 
 phe_as_ext <-
   function(phe.gen, additive.genotypes=T,min.records=20,return.models=F,confint.level=NA, factor.contrasts=NA, my.data, ...) {

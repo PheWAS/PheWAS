@@ -1,4 +1,4 @@
-#' Fill in later
+#' An internal function used to contrast a column and rename the column
 #'
 #' @param x A contrasts function used to contrast a column and rename the column
 #'

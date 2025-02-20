@@ -19,30 +19,55 @@ phenotypeManhattan(
 )
 }
 \arguments{
-\item{d}{n/a}
+\item{d}{Data frame containing phenotype and p, or in the case of
+phenotypePlot, phenotype and value.}
 
-\item{suggestive.line}{n/a}
+\item{suggestive.line}{For phenotypeManhattan, Draw a blue line at this
+p-value to show a suggestive significance threshold. Defaults to 0.05. A
+missing or NA value as applicable will result in no line. For phenotypePlot,
+Blue line drawn at value to emphasize interesting data points. Missing or an
+NA value will result in no line.}
 
-\item{significant.line}{n/a}
+\item{significant.line}{For phenotypeManhattan, draw a red line at this
+p-value to show an adjusted significance threshold. Defaults to
+suggestive.line divided by the number of non-NA p-values. An NA value will
+result in no line. For phenotypePlot, the red line is drawn at the specified
+value to emphasize interesting data points. Missing or an NA value will
+result in no line.}
 
-\item{OR.size}{n/a}
+\item{OR.size}{Adjust point size based on odds ratios? Requires d to contain
+the OR column. Default is FALSE. Mutually exclusive with sizes.}
 
-\item{OR.direction}{n/a}
+\item{OR.direction}{Adjust point shape based on odds ratio direction?
+Requires d to contain the OR column. Default is FALSE.}
 
 \item{sizes}{n/a}
 
-\item{annotate.level}{n/a}
+\item{annotate.level}{For phenotypeManhattan or phenotypeManhattan, annotate
+points at or below this p with a default of significant.line. Set to NA to
+disable adding these annotations. For phenotypePlot, minimum value to
+annotate points. Default of no annotation with a missing arugment, or set
+to NA to disable.}
 
-\item{y.axis.interval}{n/a}
+\item{y.axis.interval}{The interval for y axis labeling. Defaults to 5.
+Scale is in -log10 units for the Manhattan plots and is the same as value for
+phenotypePlot.}
 
-\item{y.axis.label}{n/a}
+\item{y.axis.label}{The label for the y axis. Defaults to a stylized
+"-log10(p)" for the Manhattan plots and "Values" for phenotypePlot.}
 
-\item{max.y}{n/a}
+\item{max.y}{For the Manhattan plots, the maximum -log10(p) on the axis.
+Defaults to the larger of 4.4 or the maximum -log10(p) in the supplied data.
+For phenotypePlot, the maximum value for the plot. If missing, defaults to
+the maximum value in the supplied data.}
 
 \item{...}{n/a}
 }
 \value{
-n/a
+A ggplot2 plot. It contains PheWAS codes against their -log10
+transformed p-values for phewasManhattan, generic phenotypes versus -log10
+transformed p-values for phenotypeManhattan, and generic phenotypes versus
+generic values for phenotypePlot.
 }
 \description{
 Fill in later

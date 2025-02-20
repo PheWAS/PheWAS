@@ -1,40 +1,82 @@
 #' Fill in later
 #'
-#' @param d n/a
-#' @param max.y n/a
-#' @param max.x n/a
-#' @param suggestive.line n/a
-#' @param significant.line n/a
-#' @param size.x.labels n/a
-#' @param size.y.labels n/a
-#' @param switch.axis n/a
-#' @param sort.by.value n/a
-#' @param sort.by.category.value n/a
-#' @param base.labels n/a
-#' @param annotate.phenotype.description n/a
-#' @param annotate.angle n/a
-#' @param annotate.size n/a
-#' @param annotate.level n/a
-#' @param annotate.phenotype n/a
-#' @param annotate.snp.w.phenotype n/a
-#' @param annotate.snp n/a
-#' @param annotate.snp.angle n/a
-#' @param annotate.list n/a
-#' @param annotate.only.largest n/a
-#' @param lc.labels n/a
-#' @param x.group.labels n/a
-#' @param x.phenotype.labels n/a
-#' @param sizes n/a
-#' @param direction n/a
-#' @param point.size n/a
-#' @param use.color n/a
-#' @param color.palette n/a
-#' @param title n/a
-#' @param x.axis.label n/a
-#' @param y.axis.label n/a
-#' @param y.axis.interval n/a
+#' @param d 	Data frame containing phenotype and p, or in the case of 
+#' phenotypePlot, phenotype and value.
+#' @param max.y For the Manhattan plots, the maximum -log10(p) on the axis. 
+#' Defaults to the larger of 4.4 or the maximum -log10(p) in the supplied data. 
+#' For phenotypePlot, the maximum value for the plot. If missing, defaults to 
+#' the maximum value in the supplied data.
+#' @param max.x Maximum number of phenotypes for the plot. If missing, defaults 
+#' to the total number.
+#' @param suggestive.line For phenotypeManhattan, Draw a blue line at this 
+#' p-value to show a suggestive significance threshold. Defaults to 0.05. 
+#' A missing or NA value as applicable will result in no line. For 
+#' phenotypePlot, Blue line drawn at value to emphasize interesting data points.
+#'  Missing or an NA value will result in no line.
+#' @param significant.line For phenotypeManhattan, draw a red line at this 
+#' p-value to show an adjusted significance threshold. Defaults to 
+#' suggestive.line divided by the number of non-NA p-values. An NA value will 
+#' result in no line. For phenotypePlot, the red line is drawn at the specified 
+#' value to emphasize interesting data points. Missing or an NA value will 
+#' result in no line.
+#' @param size.x.labels The size of the x axis labels.
+#' @param size.y.labels The size of the y axis labels.
+#' @param switch.axis 	Switch the X and Y axis? Currently non-functioning. 
+#' Defaults to false.
+#' @param sort.by.value Sort the plot by highest to lowest -log10(p) or value? 
+#' Defaults to false.
+#' @param sort.by.category.value Sort the plot by highest to lowest -log10(p) 
+#' or value? Defaults to false.
+#' @param base.labels Use base ggplot2 labels? Defaults to FALSE, which uses
+#'  ggrepel.
+#' @param annotate.phenotype.description Contains either TRUE or a data frame 
+#' that contains description annotations for each phenotype. Should contain 
+#' columns "phenotype" and "description". Missing or FALSE yields no description
+#'  annotation.
+#' @param annotate.angle Angle for annotation text.
+#' @param annotate.size Size of annotation tex
+#' @param annotate.level 	For phenotypeManhattan or phenotypeManhattan, 
+#' annotate points at or below this p with a default of significant.line. 
+#' Set to NA to disable adding these annotations. For phenotypePlot, minimum 
+#' value to annotate points. Default of no annotation with a missing arugment, 
+#' or set to NA to disable.
+#' @param annotate.phenotype 	Include the phenotype name in the annotation? 
+#' 
+#' Default is FALSE.
+#' @param annotate.snp.w.phenotype Include the snp in the phenotype annotation? 
+#' Default is FALSE.
+#' @param annotate.snp 	Annotate the SNP? This is a second annotation, default is FALSE.
+#' @param annotate.snp.angle 	Angle of annotation for the SNP only annotation.
+#' @param annotate.list 	A vector of phenotypes to force annotation, regardless of significance.
+#' @param annotate.only.largest 	Should only the largest point for each 
+#' phenotype be annotated? Default is TRUE, which only shows text for each 
+#' phenotype once, even if multiple points pass the annotation threshold or are
+#'  listed.
+#' @param lc.labels 	Force the labels to lower case? Default is FALSE.
+#' @param x.group.labels 	Label the phenotype groups? Requires group attributes
+#'  in d. Default is TRUE.
+#' @param x.phenotype.labels 	Label every phenotype? Default is no, cannot be 
+#' used in conjunction with x.group.labels
+#' @param sizes 	Adjust point size based on size in d? Default is FALSE. 
+#' Mutually exclusive with OR.size available in the Manhattan plots.
+#' @param direction 	Adjust point shape based on direction in d? Default is 
+#' FALSE.
+#' @param point.size 	Size of the points. Default is 2.
+#' @param use.color 	Color the points? Requires color.palette or color in d. 
+#' Default is TRUE
+#' @param color.palette 	An alternate color palette. Requires at least the 
+#' number of groups that exist.
+#' @param title Title for the plot. Defaults to "Phenotype Plot" with the
+#'  date and time.
+#' @param x.axis.label 	Title for the plot. Defaults to "Phenotype Plot" with 
+#' the date and time.
+#' @param y.axis.label 	The label for the y axis. Defaults to a stylized 
+#' "-log10(p)" for the Manhattan plots and "Values" for phenotypePlot.
+#' @param y.axis.interval The interval for y axis labeling. Defaults to 5. 
+#' Scale is in -log10 units for the Manhattan plots and is the same as value 
+#' for phenotypePlot
 #'
-#' @return n/a
+
 #' @import ggplot2
 #' @importFrom ggrepel geom_text_repel
 

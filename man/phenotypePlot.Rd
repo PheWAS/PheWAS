@@ -41,74 +41,113 @@ phenotypePlot(
 )
 }
 \arguments{
-\item{d}{n/a}
+\item{d}{Data frame containing phenotype and p, or in the case of
+phenotypePlot, phenotype and value.}
 
-\item{max.y}{n/a}
+\item{max.y}{For the Manhattan plots, the maximum -log10(p) on the axis.
+Defaults to the larger of 4.4 or the maximum -log10(p) in the supplied data.
+For phenotypePlot, the maximum value for the plot. If missing, defaults to
+the maximum value in the supplied data.}
 
-\item{max.x}{n/a}
+\item{max.x}{Maximum number of phenotypes for the plot. If missing, defaults
+to the total number.}
 
-\item{suggestive.line}{n/a}
+\item{suggestive.line}{For phenotypeManhattan, Draw a blue line at this
+p-value to show a suggestive significance threshold. Defaults to 0.05.
+A missing or NA value as applicable will result in no line. For
+phenotypePlot, Blue line drawn at value to emphasize interesting data points.
+Missing or an NA value will result in no line.}
 
-\item{significant.line}{n/a}
+\item{significant.line}{For phenotypeManhattan, draw a red line at this
+p-value to show an adjusted significance threshold. Defaults to
+suggestive.line divided by the number of non-NA p-values. An NA value will
+result in no line. For phenotypePlot, the red line is drawn at the specified
+value to emphasize interesting data points. Missing or an NA value will
+result in no line.}
 
-\item{size.x.labels}{n/a}
+\item{size.x.labels}{The size of the x axis labels.}
 
-\item{size.y.labels}{n/a}
+\item{size.y.labels}{The size of the y axis labels.}
 
-\item{switch.axis}{n/a}
+\item{switch.axis}{Switch the X and Y axis? Currently non-functioning.
+Defaults to false.}
 
-\item{sort.by.value}{n/a}
+\item{sort.by.value}{Sort the plot by highest to lowest -log10(p) or value?
+Defaults to false.}
 
-\item{sort.by.category.value}{n/a}
+\item{sort.by.category.value}{Sort the plot by highest to lowest -log10(p)
+or value? Defaults to false.}
 
-\item{base.labels}{n/a}
+\item{base.labels}{Use base ggplot2 labels? Defaults to FALSE, which uses
+ggrepel.}
 
-\item{annotate.phenotype.description}{n/a}
+\item{annotate.phenotype.description}{Contains either TRUE or a data frame
+that contains description annotations for each phenotype. Should contain
+columns "phenotype" and "description". Missing or FALSE yields no description
+annotation.}
 
-\item{annotate.angle}{n/a}
+\item{annotate.angle}{Angle for annotation text.}
 
-\item{annotate.size}{n/a}
+\item{annotate.size}{Size of annotation tex}
 
-\item{annotate.level}{n/a}
+\item{annotate.level}{For phenotypeManhattan or phenotypeManhattan,
+annotate points at or below this p with a default of significant.line.
+Set to NA to disable adding these annotations. For phenotypePlot, minimum
+value to annotate points. Default of no annotation with a missing arugment,
+or set to NA to disable.}
 
-\item{annotate.phenotype}{n/a}
+\item{annotate.phenotype}{Include the phenotype name in the annotation?
 
-\item{annotate.snp.w.phenotype}{n/a}
+Default is FALSE.}
 
-\item{annotate.snp}{n/a}
+\item{annotate.snp.w.phenotype}{Include the snp in the phenotype annotation?
+Default is FALSE.}
 
-\item{annotate.snp.angle}{n/a}
+\item{annotate.snp}{Annotate the SNP? This is a second annotation, default is FALSE.}
 
-\item{annotate.list}{n/a}
+\item{annotate.snp.angle}{Angle of annotation for the SNP only annotation.}
 
-\item{annotate.only.largest}{n/a}
+\item{annotate.list}{A vector of phenotypes to force annotation, regardless of significance.}
 
-\item{lc.labels}{n/a}
+\item{annotate.only.largest}{Should only the largest point for each
+phenotype be annotated? Default is TRUE, which only shows text for each
+phenotype once, even if multiple points pass the annotation threshold or are
+listed.}
 
-\item{x.group.labels}{n/a}
+\item{lc.labels}{Force the labels to lower case? Default is FALSE.}
 
-\item{x.phenotype.labels}{n/a}
+\item{x.group.labels}{Label the phenotype groups? Requires group attributes
+in d. Default is TRUE.}
 
-\item{sizes}{n/a}
+\item{x.phenotype.labels}{Label every phenotype? Default is no, cannot be
+used in conjunction with x.group.labels}
 
-\item{direction}{n/a}
+\item{sizes}{Adjust point size based on size in d? Default is FALSE.
+Mutually exclusive with OR.size available in the Manhattan plots.}
 
-\item{point.size}{n/a}
+\item{direction}{Adjust point shape based on direction in d? Default is
+FALSE.}
 
-\item{use.color}{n/a}
+\item{point.size}{Size of the points. Default is 2.}
 
-\item{color.palette}{n/a}
+\item{use.color}{Color the points? Requires color.palette or color in d.
+Default is TRUE}
 
-\item{title}{n/a}
+\item{color.palette}{An alternate color palette. Requires at least the
+number of groups that exist.}
 
-\item{x.axis.label}{n/a}
+\item{title}{Title for the plot. Defaults to "Phenotype Plot" with the
+date and time.}
 
-\item{y.axis.label}{n/a}
+\item{x.axis.label}{Title for the plot. Defaults to "Phenotype Plot" with
+the date and time.}
 
-\item{y.axis.interval}{n/a}
-}
-\value{
-n/a
+\item{y.axis.label}{The label for the y axis. Defaults to a stylized
+"-log10(p)" for the Manhattan plots and "Values" for phenotypePlot.}
+
+\item{y.axis.interval}{The interval for y axis labeling. Defaults to 5.
+Scale is in -log10 units for the Manhattan plots and is the same as value
+for phenotypePlot}
 }
 \description{
 Fill in later

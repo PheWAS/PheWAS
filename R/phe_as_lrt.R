@@ -1,5 +1,5 @@
-#' Fill in later
-#'
+#' Function to perform and return lrt results on a single genotype-phenotype 
+#' association.
 #' @param phe.gen A list with the name of the phecode column being used in the 
 #' regression, the column name of independent variable, and covariates
 #' @param min.records The minimum number of records to perform a test. For

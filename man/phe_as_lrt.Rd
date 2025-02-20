@@ -2,7 +2,8 @@
 % Please edit documentation in R/phe_as_lrt.R
 \name{phe_as_lrt}
 \alias{phe_as_lrt}
-\title{Fill in later}
+\title{Function to perform and return lrt results on a single genotype-phenotype
+association.}
 \usage{
 phe_as_lrt(phe.gen, min.records = 20, return.models = T, my.data, ...)
 }
@@ -26,5 +27,6 @@ FALSE.}
 n/a
 }
 \description{
-Fill in later
+Function to perform and return lrt results on a single genotype-phenotype
+association.
 }

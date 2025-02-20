@@ -1,5 +1,6 @@
-#' To be filled in later
-#'
+#' Function to perform and return clogit results on a single genotype-phenotype 
+#' association.
+#' 
 #' @param phe.gen A list with the name of the phecode column being used in the 
 #' regression, the column name of independent variable, and covariates
 #' @param additive.genotypes Are additive genotypes being supplied? If so,
