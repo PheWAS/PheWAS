@@ -60,19 +60,6 @@
 #' code=c("714","250.11","714.1","714","250.11"),
 #' count=c(1,5,1,1,0))
 #' createPhenotypes(id_icd9_count)
-#' \donttest{
-#' #Complex example
-#' ex=sample_data
-#' #Extract the two relevant parts from the returned list
-#' id.vocab.code.count=ex$id.vocab.code.count
-#' id.sex=ex$id.sex
-#' #Create the phecode table- translates the codes, adds
-#' #exclusions, and reshapes to a wide format.
-#' #Sum up the counts in the data where applicable.
-#' phenotypes=createPhenotypes(id.vocab.code.count,
-#' #'                             #aggregate.fun=sum,
-#'                              id.sex=id.sex)
-#' }
 createPhenotypes <-
   function(id.vocab.code.index, min.code.count=2, add.phecode.exclusions=T, 
            translate=T, id.sex,

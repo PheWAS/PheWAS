@@ -84,12 +84,12 @@
 #' @export
 #'
 #' @examples
-#'  \donttest{
+#
 #' #Generate some example data
 #' test_phewas <- phewas(names(PheWAS:::test_data_phenotype_1)[-1], 
 #'                          genotypes = c('rsEXAMPLE'), covariates = 'sex', 
 #'                          data = PheWAS:::test_data_phenotype_2)
-#' }
+#' 
 phewas <-
   function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, additive.genotypes=T,
            method="glm", strata=NA, factor.contrasts=contr.phewas,

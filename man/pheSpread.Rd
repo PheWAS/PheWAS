@@ -71,9 +71,8 @@ used as a helper function for createPhenotype, but it can be used on its own
 as well
 }
 \examples{
-\donttest{
 pheSpread(PheWAS:::test_phemapped, full.population.ids=
 unique(sample_data$id.vocab.code.index[[1]]), id.name = 
 names(sample_data$id.vocab.code.count)[1], aggregate.fun = sum, 
-id.sex = sample_data$id.sex)}
+id.sex = sample_data$id.sex)
 }

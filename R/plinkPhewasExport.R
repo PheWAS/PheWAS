@@ -21,16 +21,7 @@
 #' @importFrom utils write.table
 #' @export
 #'
-#' @examples \dontrun{
-#' #Generate some example data
-#' data <- sample_data
-#' #Extract the two parts from the returned list
-#' phenotype_data <- createPhenotypes(data$id.vocab.code.count,
-#'  id.sex = data$id.sex)
-#'  
-#' #Export the file for use in plink
-#' plinkPhewasExport(phenotype_data, file="my.example.pheno")
-#' }
+#' 
 plinkPhewasExport <- function(phenotypes, file="plink.pheno", translateIDs=TRUE) {
   if(translateIDs) {
     name_id=names(phenotypes)[1]

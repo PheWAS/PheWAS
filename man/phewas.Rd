@@ -122,10 +122,9 @@ that models are not returned. If they are, the \code{results} item of the
 returned list needs to be used.
 }
 \examples{
- \donttest{
 #Generate some example data
 test_phewas <- phewas(names(PheWAS:::test_data_phenotype_1)[-1], 
                          genotypes = c('rsEXAMPLE'), covariates = 'sex', 
                          data = PheWAS:::test_data_phenotype_2)
-}
+
 }
