@@ -12,7 +12,7 @@
 #'  the merge with the first column.
 #' Phecodes must be character vectors, otherwise they may have inaccurate
 #' mappings. If PheWAS codes are factors it will convert them to characters,
-#' ≥≤give a warning, and attempt to map them.
+#' give a warning, and attempt to map them.
 #' If a character (or factor) variable or vector is passed in, it will return
 #' code descriptions for those codes.
 #'
