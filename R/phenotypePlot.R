@@ -243,7 +243,7 @@ phenotypePlot <-
     #Check if we are using switch.axis
     if(!switch.axis) {
       #Generate the inital plot
-      plot=ggplot(d,ylab=y.axis.label,xlab=x.axis.label)
+      plot=ggplot(d) + labs(y=y.axis.label,x=x.axis.label)
 
       #Include lines for significance thresholds
       if (!missing(suggestive.line) && !is.na(suggestive.line)) plot=plot+geom_hline(yintercept=suggestive.line,colour="blue", alpha=I(1/3),linewidth=1)
@@ -282,7 +282,7 @@ phenotypePlot <-
       ####Generate plot with switch.axis
 
       #Generate the inital plot
-      plot=ggplot(d,xlab=y.axis.label,ylab=x.axis.label)
+      plot=ggplot(d) + labs( x=y.axis.label,y=x.axis.label)
 
       #Include lines for significance thresholds
       if (!missing(suggestive.line) && !is.na(suggestive.line)) plot=plot+geom_vline(xintercept=suggestive.line,colour="blue", alpha=I(1/3),linewidth=1)
