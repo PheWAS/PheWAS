@@ -15,7 +15,10 @@ createPhenotypes(
   vocabulary.map = PheWASmaps::phecode_map,
   rollup.map = PheWASmaps::phecode_rollup_map,
   exclusion.map = PheWASmaps::phecode_exclude,
-  gender.exclusion = PheWASmaps::gender_restriction
+  gender.exclusion = PheWASmaps::gender_restriction,
+  id.col = 1,
+  code.col = 2,
+  count.col = 3
 )
 }
 \arguments{
@@ -65,6 +68,12 @@ parent codes. By default uses the PheWASmaps::phecode_rollup_map.}
 uses the PheWASmaps::phecode_exclude.}
 
 \item{gender.exclusion}{Map determining sex-based exclusions}
+
+\item{id.col}{The column containing ID information.  Default 1}
+
+\item{code.col}{The column containing code information.  Default 3}
+
+\item{count.col}{The column containing count information. Default 4.}
 }
 \value{
 A data frame. The first column contains the supplied id for each

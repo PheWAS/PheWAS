@@ -47,7 +47,9 @@
 #' @param exclusion.map Map between phecodes and their exclusions. By default
 #'  uses the PheWASmaps::phecode_exclude.
 #' @param gender.exclusion Map determining sex-based exclusions
-#'
+#' @param id.col The column containing ID information.  Default 1
+#' @param code.col The column containing code information.  Default 3
+#' @param count.col The column containing count information. Default 4.
 #' @return A data frame. The first column contains the supplied id for each
 #'  individual (preserving the name of the original column). The following
 #'   columns are all present phewas codes. They contain T/F/NA for
@@ -68,7 +70,8 @@ createPhenotypes <-
            vocabulary.map=PheWASmaps::phecode_map,
            rollup.map=PheWASmaps::phecode_rollup_map,
            exclusion.map=PheWASmaps::phecode_exclude,
-           gender.exclusion = PheWASmaps::gender_restriction)
+           gender.exclusion = PheWASmaps::gender_restriction, id.col = 1,
+           code.col = 2, count.col = 3)
   {
     id.name=names(id.vocab.code.index)[1]
     #Warn if id.sex information is not provided.
@@ -78,10 +81,10 @@ createPhenotypes <-
       #Warn about exclusions if input is not translated and not phecodes. Same with id.sex
       if(add.phecode.exclusions & sum(tolower(id.vocab.code.index[[2]])=='phecode')!=nrow(id.vocab.code.index)){stop("Codes are not translated and vocab is not 'phecode' for every row, but exclusions are to be applied. Ensure that the code column has only phecodes or disable add.phecode.exclusions for accurate results.")}
       if(!missing(id.sex) & sum(tolower(id.vocab.code.index[[2]])=='phecode')!=nrow(id.vocab.code.index)){stop("Codes are not translated and vocab is not 'phecode' for every row, but id.sex is supplied for sex-based exclusions. Ensure that the code column has only phecodes or omit id.sex for accurate results.")}
-      phemapped=tbl_df(data.frame(id=id.vocab.code.index[[1]],code=id.vocab.code.index[[3]],index=id.vocab.code.index[[4]],stringsAsFactors = F))
+      phemapped=tbl_df(data.frame(id=id.vocab.code.index[[id.col]],code=id.vocab.code.index[[code.col]],index=id.vocab.code.index[[count.col]],stringsAsFactors = F))
     } else {
       #check to make sure numeric codes were not passed in
-      if(!class(id.vocab.code.index[[3]]) %in% c("character")) {stop("Please ensure character or factor code representation. Some vocabularies, eg ICD9CM, require strings to be represented accurately: E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
+      if(!class(id.vocab.code.index[[code.col]]) %in% c("character")) {stop("Please ensure character or factor code representation. Some vocabularies, eg ICD9CM, require strings to be represented accurately: E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
       names(id.vocab.code.index)=c("id","vocabulary_id","code","index")
       message("Mapping codes to phecodes...")
       phemapped=mapCodesToPhecodes(id.vocab.code.index, vocabulary.map=vocabulary.map, rollup.map=rollup.map) %>% transmute(id, code=phecode, index)
