@@ -2,13 +2,13 @@ mapICD9ToPhecodes <-
 function(..., icd9s, add.info=F, keep.icd9=F) {
   if(!missing(icd9s)) {
     if(missing(...)){
-      input=tbl_df(data.frame(icd9=icd9s))
+      input=as_tibble(data.frame(icd9=icd9s))
     } else {
-      input=tbl_df(data.frame(list(...),icd9=icd9s))
+      input=as_tibble(data.frame(list(...),icd9=icd9s))
     }
   }
   else {
-    input=tbl_df(data.frame(...))
+    input=as_tibble(data.frame(...))
   }
   if(sum(names(input)=="icd9")==0) {
     stop("Must supply a data frame with an 'icd9' column or specify the icd9s parameter")

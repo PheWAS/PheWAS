@@ -4,6 +4,7 @@ export(phewas, mapICD9ToPhecodes, mapPhecodesToExclusions, createPhewasTable, ph
        mapPheWAStoExclusions, mapICD9toPheWAS, plinkPhewasExport, phewasDT, phewas_ext,
        createPhenotypes, mapCodesToPhecodes)
 import(dplyr,tidyr, ggplot2, parallel)
+importFrom(tibble,as_tibble)
 importFrom(MASS,mvrnorm)
 importFrom(meta,metagen)
 importFrom(ggrepel,geom_text_repel)
