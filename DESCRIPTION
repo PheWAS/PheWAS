@@ -1,8 +1,8 @@
 Package: PheWAS
 Type: Package
 Title: Phenome Wide Association Studies (PheWAS)
-Version: 0.99.6-1
-Date: 2023-05-31
+Version: 0.99.6-2
+Date: 2026-10-13
 Author: Robert Carroll, Josh Denny, Lisa Bastarache, Laura Wiley
 Maintainer: Robert Carroll <Robert.Carroll@vumc.org>
 URL: http://www.ncbi.nlm.nih.gov/pubmed/24733291
@@ -11,5 +11,5 @@ Description: Functions to perform Phenome Wide Association
  phecodes (v1.2), statistical analysis, and plotting.
 License: GPL-3
 Depends: dplyr, tidyr, ggplot2 (>= 2.2.0), parallel
-Imports: MASS, meta, ggrepel, DT, survival, logistf, lmtest
+Imports: MASS, meta, ggrepel, DT, survival, logistf, lmtest, tibble
 LazyData: yes

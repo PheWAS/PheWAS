@@ -7,7 +7,7 @@ createPhewasTable <-
     if(!translate) {
       #Warn about exclusions if input is not translated.
       if(add.exclusions){warning("Codes are not translated, but exclusions are to be applied. Ensure that the icd9 column has phecodes or disable add.exclusions for accurate results.")}
-      phemapped=tbl_df(data.frame(id=id.icd9.count[,1],phe=id.icd9.count[,2],count=id.icd9.count[,3]))
+      phemapped=as_tibble(data.frame(id=id.icd9.count[,1],phe=id.icd9.count[,2],count=id.icd9.count[,3]))
     } else {
       #check to make sure numeric ICD9 codes were not passed in
       if(class(id.icd9.count[,2]) %in% c("integer","numeric")) {stop("Numeric ICD-9 codes passed in, so an accurate mapping is not possible. E.G.: 250, 250.0, and 250.00 are different codes and necessitate string representation")}
