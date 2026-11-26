@@ -92,17 +92,17 @@ function(phenotypes, genotypes, data, covariates=NA, outcomes, predictors, cores
   
   if(!missing(outcomes)) names(sig)[names(sig)=="phenotype"]="outcome"
   if(!missing(predictors)) names(sig)[names(sig)=="snp"]="predictor"
-  if(return.models){sig=list(results=sig,models=models)}
   if(!missing(quick.confint.level)) {
     if(quick.confint.level>=1|quick.confint.level<=0) {warning("Quick confidence interval requested, but a value in the range (0,1) was not supplied")}
     else {
       sig.names=names(sig)
       two.sided=(1-quick.confint.level)/2
-      sig=sig %>% mutate(lower.q=beta+se*qnorm(two.sided),upper.q=beta+se*qnorm(two.sided,lower.tail=F))
+      sig=sig %>% mutate(lower.q=beta+SE*qnorm(two.sided),upper.q=beta+SE*qnorm(two.sided,lower.tail=F))
       sig=sig  %>% mutate(lower.q=ifelse(sig$type=="logistic",exp(lower.q),lower.q),
                       upper.q=ifelse(sig$type=="logistic",exp(upper.q),upper.q))
       sig=sig[,c(sig.names[1:5],"lower.q","upper.q",sig.names[6:length(sig.names)])]
     }
   }
+  if(return.models){sig=list(results=sig,models=models)}
   return(sig)
 }

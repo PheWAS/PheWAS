@@ -172,7 +172,7 @@ function(phenotypes,genotypes,data,covariates=c(NA),adjustments=list(NA), outcom
     else {
       sig.names=names(sig)
       two.sided=(1-quick.confint.level)/2
-      sig=sig %>% mutate(lower.q=beta+se*qnorm(two.sided),upper.q=beta+se*qnorm(two.sided,lower.tail=F))
+      sig=sig %>% mutate(lower.q=beta+SE*qnorm(two.sided),upper.q=beta+SE*qnorm(two.sided,lower.tail=F))
       sig=sig  %>% mutate(lower.q=ifelse(sig$type=="logistic",exp(lower.q),lower.q),
                       upper.q=ifelse(sig$type=="logistic",exp(upper.q),upper.q))
       sig=sig[,c(sig.names[1:5],"lower.q","upper.q",sig.names[6:length(sig.names)])]
