@@ -12,7 +12,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c('pheinfo',
                   'color',
                   'description',
                   'snp',
-                  'se',
+                  'SE',
                   'lower.q',
                   'upper.q',
                   'gender_restriction'))
